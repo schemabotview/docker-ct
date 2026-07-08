@@ -1,10 +1,8 @@
 # What Docker is
 
-Ten answers, all partly right. "Docker" is a **platform** for running **containers** — here's the whole map.
-
 ## The container
 
-An **isolated process** sharing the **host kernel** — its own filesystem and network, via **namespaces** + **cgroups**. Not a VM: no guest OS, no second kernel. Starts in **milliseconds**, weighs **megabytes**.
+"Docker" is a **platform** for running **containers**. At heart: an **isolated process** sharing the **host kernel** — own filesystem and network, via **namespaces** + **cgroups**. Not a VM: no guest OS, no second kernel. Starts in **milliseconds**, weighs **megabytes**.
 
 ## The moving parts
 

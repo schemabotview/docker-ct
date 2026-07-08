@@ -9,11 +9,9 @@ image ─► created ─► running ─────────────► s
 
 ## The everyday verbs
 
-- **`stop`** — graceful: **SIGTERM**, wait 10s, then **SIGKILL**. Apps flush + close in that window.
-- **`start`** — resume a stopped container, writable layer intact.
-- **`restart`** — stop + start.
-- **`rm`** — delete a *stopped* container (`-f` forces a running one).
-- **`kill`** — immediate SIGKILL, no grace.
+- **`stop`** — graceful: **SIGTERM**, wait 10s, then **SIGKILL**. Apps flush in that window.
+- **`start`** / **`restart`** — resume a stopped container (layer intact) / stop + start.
+- **`rm`** — delete a *stopped* container (`-f` forces one); **`kill`** — instant SIGKILL.
 
 ## Exit codes — how it ended
 

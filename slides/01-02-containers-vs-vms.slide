@@ -10,7 +10,7 @@ A container is an **isolated process** sharing the **host kernel** — not a tin
 
 ## The punchline
 
-A container **shares the host kernel** — no guest OS, no second kernel. A **VM** virtualises the **hardware**, so each guest ships a full OS + kernel.
+A container **shares the host kernel** — no guest OS, no second kernel; a **VM** virtualises the **hardware**, so each guest ships a full OS + kernel. Kernel-strong isolation, not hypervisor-strong.
 
 ```
    VM:  App | Guest OS | Hypervisor | Hardware   ← seconds, GBs
@@ -21,6 +21,4 @@ A container **shares the host kernel** — no guest OS, no second kernel. A **VM
 
 - **namespaces** — isolate PIDs, mounts, net, users
 - **cgroups** — cap CPU, memory, I/O
-- **capabilities** · **seccomp** / **AppArmor** — shrink what root can do
-
-Kernel-strong isolation, not hypervisor-strong.
+- **capabilities** · **seccomp** / **AppArmor** — shrink root

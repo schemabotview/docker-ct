@@ -1,10 +1,8 @@
 # Images vs. containers
 
-Two everyday words, **not** the same thing.
-
 ## Image = the template
 
-A frozen, **read-only** snapshot of a filesystem + metadata. It doesn't *do* anything — a blueprint. Like a **class**.
+Two everyday words, **not** the same thing. An image is a frozen, **read-only** snapshot of a filesystem + metadata — a blueprint that doesn't *do* anything. Like a **class**.
 
 ## Container = a running instance
 
@@ -14,7 +12,6 @@ Created from an image, with its own state + a thin **writable layer** on top. Li
 |---|---|---|
 | OOP | class | object |
 | Cooking | recipe | the dish |
-| Software | installer | running program |
 
 ## The verbs follow the split
 
