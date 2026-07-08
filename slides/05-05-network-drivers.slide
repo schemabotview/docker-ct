@@ -1,4 +1,4 @@
-## The five built-in drivers
+# The five built-in drivers
 
 | Driver | What | When |
 |---|---|---|
@@ -7,8 +7,6 @@
 | **`none`** | only `lo`, no connectivity | sandbox, forensics |
 | **`overlay`** | one net across **many hosts** (VXLAN) | Swarm (module 09) |
 | **`macvlan`/`ipvlan`** | own MAC/IP on the **physical LAN** | legacy LAN, IoT — niche |
-
-## The shape
 
 **`bridge` is the workhorse** — private IP, NAT out, publish in — assume it unless a need pushes you off.
 
