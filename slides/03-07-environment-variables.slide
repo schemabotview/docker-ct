@@ -1,0 +1,24 @@
+# Environment variables
+
+Apps read config from **env vars** (12-factor) — the same image is dev or prod by run.
+
+## Two ways to set them
+
+- **`-e KEY=val`** — one per flag.
+- **`--env-file api.env`** — bulk `KEY=value` lines.
+
+```bash
+docker run -e LOG_LEVEL=info --env-file=api.env myorg/api
+```
+
+## Precedence (low → high)
+
+1. `ENV` baked in the image
+2. `--env-file` (later files win)
+3. `-e` flags (rightmost wins)
+
+**`-e VAR`** with no value **inherits from your shell** — pass a token without echoing it.
+
+## Not for secrets
+
+Env vars leak via `inspect`, `/proc`, crash dumps, and child processes. Fine for a log level; use real **secrets** for credentials (module 08).

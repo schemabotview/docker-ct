@@ -1,0 +1,19 @@
+# Resource limits
+
+By default a container can eat **all** host CPU + memory. Docker caps it via kernel **cgroups**.
+
+## Memory
+
+- **`--memory=512m`** — hard cap; exceed it → **OOM killed**, exit **137**.
+- **`--memory-swap=512m`** — memory + swap total; set `= --memory` to disable swap.
+- **`--memory-reservation`** — *soft* limit under pressure.
+
+## CPU
+
+- **`--cpus=1.5`** — 1.5 cores' worth of time. The modern flag.
+- **`--cpu-shares=512`** — relative weight (default 1024), only under contention.
+- **`--cpuset-cpus="0,1"`** — pin to cores.
+
+## Live retune — `docker update`
+
+`docker update --memory=1g --cpus=2 web` changes **limits + restart policy** in place. But **net, mounts, env, image, entrypoint can't change live** — stop, `rm`, re-create.

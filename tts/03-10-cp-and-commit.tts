@@ -1,0 +1,9 @@
+Moving files, and snapshotting.
+
+Two commands reach into a container's filesystem from the outside: one to move files, and one to freeze the whole thing into an image. Both touch the container's mount namespace, its private filesystem view from module one.
+
+The first is docker c-p, which copies files or directories between the host and the container, and it works on both running and stopped containers. You can copy a config file from the host into the container, copy a log file from the container back out to the host, or copy a whole directory. The container path is always absolute; the host path may be relative. This is for ad-hoc moves: pulling out a log, or dropping in a config to test. It is not persistent storage. Anything you copy in vanishes when the container is removed. Data that must survive belongs in a volume, which is module four.
+
+The second is docker commit, which snapshots a container's current filesystem into a new image. It works. But you should almost never use it. The result is opaque: there's no record of how it was built, no docker file to review, no diff against the base. It's the save-game of images: convenient, but you've lost the recipe.
+
+When is commit okay? For exploration, where you save a poking-around state before you destroy the container. Or for a forensic snapshot of a crashed container, to debug it later. When is it not okay? For anything you'll rebuild, anything you'll share with a teammate, or anything you'll ship to production. For all of those, write a docker file, from module two: a reviewable, reproducible recipe beats an opaque snapshot every single time. And that principle closes the module. Prefer declared, rebuildable images and observable, disposable containers, over hand-tweaked, mutable ones.

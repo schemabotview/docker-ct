@@ -1,0 +1,17 @@
+# Foreground, detached & interactive
+
+Memorised as `-it` and `-d` — but each flag does one thing.
+
+## The three flags
+
+- **`-d`** — **detached**: runs in the background, returns the ID. Output still goes to `docker logs`. *(Skip it to watch output + block till exit.)*
+- **`-i`** — keeps **stdin** open, so typed bytes reach the container. Without it, `bash` sees EOF and exits.
+- **`-t`** — allocates a **TTY**: prompt, line editing, colours — the feel of a real shell.
+
+## The combinations
+
+- **`-it`** → interactive shell: `docker run -it ubuntu bash`.
+- **`-d`** → background service: `docker run -d nginx`.
+- **`-dit`** → background, but stdin+TTY held for later `attach`/`exec`.
+
+Rule: **`-it` when a human interacts; `-d` when nothing should attach.**

@@ -1,0 +1,11 @@
+The container lifecycle, and restart policies.
+
+Module one sketched the lifecycle. Here's the fuller picture, plus how production keeps a container alive.
+
+Start with the states. Create makes a container from an image without starting it; it allocates the writable layer, the config, and the name. It's rare on its own, but it's the half of run that you don't usually see. Start moves that container to running. From running, stop, kill, or exiting on its own takes it to stopped, and from stopped, start can bring it back, or remove can delete it. There's also a side branch: pause and unpause freeze and thaw every process in the container, using the freezer see-group, which lets you momentarily halt a container without losing its state.
+
+Now, restart policies. By default an exited container stays exited, but a production service must survive crashes and host reboots. The restart flag sets that, and there are four policies.
+
+No, the default, means never restart. On-failure means restart only when the container exits non-zero, with an optional maximum retry count. Always means restart on any exit, and also when the daemon starts, so the container comes back after a reboot; even if you stop it manually, it returns on the next boot. And unless-stopped is like always, except that a manual docker stop sticks across daemon restarts. That last one is the usual production choice. A typical line is docker run, dash d, restart unless-stopped, name api, and the image.
+
+A few details that bite. The policy only applies after the first successful start, so a container that never starts at all isn't retried. The backoff is exponential, capped near a minute, to avoid hammering the host in a crash loop. And the restart counter resets after the container has run healthily for ten seconds.

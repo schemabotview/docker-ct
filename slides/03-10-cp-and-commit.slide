@@ -1,0 +1,23 @@
+# Moving files & snapshotting
+
+Two commands reach into a container's filesystem (its **mount namespace**).
+
+## `docker cp` — move files
+
+Works on **running *and* stopped** containers:
+
+```bash
+docker cp ./config.yaml web:/app/config.yaml   # host → ctr
+docker cp web:/var/log/app.log ./              # ctr → host
+```
+
+Container path is **absolute**. **Ad-hoc only** — copied-in files vanish on `rm`. Persistent data → **volumes** (module 04).
+
+## `docker commit` — snapshot to an image
+
+`docker commit lab my-image` works, but **almost never use it** — the result is **opaque** (no Dockerfile, no history).
+
+- **OK:** exploration, a forensic snapshot of a crash.
+- **Not OK:** anything to rebuild, share, or ship → write a **Dockerfile**.
+
+Prefer declared images + disposable containers.

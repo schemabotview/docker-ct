@@ -1,0 +1,11 @@
+Looking inside a running container.
+
+The container is running, and you want to know what it's doing. A handful of tools open it up without disturbing the main process.
+
+The first, and the single most-used debugging command, is docker exec, dash i-t, then the container, then a shell. Exec runs a new command inside the running container. It drops you, or a script, into the container as a sibling of the main process, so when you exit your shell, the container keeps running. You can also run a one-shot command, or run as a specific user with the dash u flag.
+
+Contrast that with docker attach, which is different. Attach connects your terminal to the existing main process, process I-D one, rather than spawning a new one. So control-c there sends the interrupt signal to process I-D one, and usually kills the container. To detach safely instead, use the sequence control-p, control-q. Reach for exec almost always; use attach only when you want to watch process I-D one's live output.
+
+Then there are the read-only observers. Docker inspect dumps the full j-son state: the image, command, environment, mounts, network, and restart policy; use the format flag to pull out just one field, as in module one. Docker stats gives a live, top-style stream of per-container processor, memory, network, and block input-output; it's the fastest way to catch a memory leak or a processor hog. Docker top shows the processes running inside the container, from the host's point of view. And docker diff shows every file added, changed, or deleted in the container's writable layer compared with its image, a neat way to see exactly what a running container has touched.
+
+Together these are the debugging loop: stats to spot trouble, exec to get in, and inspect, top, and diff to see the details, all without a rebuild or a restart.

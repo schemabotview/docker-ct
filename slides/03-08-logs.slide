@@ -1,0 +1,18 @@
+# Logs
+
+The daemon captures the main process's **stdout + stderr** — so log to stdout, not a file inside the container.
+
+## `docker logs`
+
+- **`logs web`** — everything so far.
+- **`logs -f web`** — follow live (`tail -f`); Ctrl-C detaches.
+- **`logs --tail=100 web`** — last 100 lines.
+- **`logs --since=10m web`** — window by time (+ `--until`).
+- **`logs -t web`** — timestamp each line.
+
+## Where they live
+
+The active **logging driver** decides. Default **`json-file`** → `/var/lib/docker/containers/<id>/…-json.log`.
+
+- **`docker logs` only works with `json-file` + `journald`.** Other drivers (`syslog`, `awslogs`, `fluentd`) → read at the destination.
+- `json-file` **grows unbounded** — cap with `--log-opt max-size=10m max-file=3` (module 10).

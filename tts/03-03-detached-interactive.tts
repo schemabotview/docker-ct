@@ -1,0 +1,11 @@
+Foreground, detached, and interactive.
+
+These three flags get combined constantly, as dash i-t, or dash d, and people memorise the combinations without knowing what each one actually does. Separate them, and they're simple.
+
+First, dash d, for detached. Without it, docker run attaches your terminal to the container's output. The output streams to your terminal, and run blocks until the container exits; hitting control-c sends the interrupt signal to it. With dash d, the container runs in the background, and run immediately returns its I-D. The output is still captured, so you can read it later with docker logs; it's just not streamed to your terminal. Use dash d for long-lived services like web servers and databases. Skip it for one-shot commands, where you want to watch the output and have run block until it's done.
+
+Second, dash i, for interactive. This keeps standard input open. Without it, the container's input is closed immediately, so any program that reads input sees end-of-file and exits. That's fine for n-ginx, but broken for bash. With dash i, what you type is piped into the container.
+
+Third, dash t, which allocates a t-t-y, a pseudo-terminal. That gives you a prompt, line editing, colours, and job control, the feel of a real shell rather than a raw pipe.
+
+The famous combinations follow directly. Dash i-t gives an interactive shell, like docker run, dash i-t, ubuntu, bash; you need both, dash i to send keystrokes and dash t for the terminal feel. Dash d on its own gives a background service. And dash d-i-t runs in the background but holds standard input and a t-t-y open, so you can attach or exec into it later. The rule of thumb: use dash i-t when a human will interact, and dash d when nothing should be attached.

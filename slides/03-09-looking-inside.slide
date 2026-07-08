@@ -1,0 +1,17 @@
+# Looking inside — `exec`, `inspect`, `stats`
+
+Open a running container **without disturbing PID 1.**
+
+## Get in
+
+- **`docker exec -it web sh`** — run a *new* command; a **sibling** of the main process. Exit your shell, container runs on. The go-to debug command.
+- **`docker attach web`** — connects to **PID 1** itself; Ctrl-C kills it — detach with `Ctrl-P Ctrl-Q`. Rarely what you want.
+
+## Observe (read-only)
+
+- **`inspect web`** — full JSON state (`--format` pulls one field).
+- **`stats`** — live CPU / mem / net / I/O per container.
+- **`top web`** — processes inside, from the host.
+- **`diff web`** — files **A**dded / **C**hanged / **D**eleted vs the image.
+
+The loop: **`stats`** spot → **`exec`** get in → **`inspect`/`top`/`diff`** detail. No rebuild, no restart.

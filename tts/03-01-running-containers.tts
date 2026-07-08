@@ -1,0 +1,13 @@
+Running and inspecting containers.
+
+Modules one and two took you from, what is a container, to, how images are built. This module is the day-to-day craft in between: running containers deliberately, and seeing inside them when something goes wrong. You already met docker run in module one. Here we take it apart flag by flag, and then cover the tools that let you observe, adjust, and debug a container that's already up.
+
+The whole module lives in one region of the map, the Containers box on the docker host, and it circles three questions.
+
+The first: how do I start it the way I want? Docker run is the busiest command in Docker, and its flags fall into clean buckets. Attachment, like detached, interactive, and t-t-y. Identity, like the name and remove-on-exit flags. Environment, with dash e. And resource limits, like the memory and cpus flags. Learn the buckets, and the command stops being a wall of options.
+
+The second: how do I keep it alive? That's the lifecycle, from created, to running, to stopped, plus restart policies that bring a service back after a crash or even a host reboot.
+
+And the third: how do I see what it's doing? Logs, for its output, and exec, inspect, stats, and top, to look inside a running container. That's the debugging loop you'll run a hundred times a day.
+
+So picture it: docker run starts a container into the running state. From there you observe it with logs, exec, inspect, and stats; you adjust it with update and copy; and you move it through its lifecycle with stop, remove, and restart. By the end of this module, you can launch a container exactly as intended, keep it running, and open it up when it misbehaves, all without ever rebuilding the image.

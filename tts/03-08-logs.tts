@@ -1,0 +1,9 @@
+Logs.
+
+When you run a container detached, its output doesn't vanish. The daemon captures whatever the main process writes to standard output and standard error, and docker logs reads it back. That, by the way, is exactly why a containerised app should log to standard output, not to a file inside the container: Docker is already capturing the stream for you.
+
+Here are the commands and flags you'll actually use. Docker logs, with a container name, prints everything since the container started. Add dash f to follow new output live, in the style of tail dash f; control-c just detaches. The tail flag, say tail equals one hundred, shows only the last hundred lines, which is great before you follow a chatty service. The since flag, say since equals ten minutes, shows only the last ten minutes, and it also accepts something like one hour, or a timestamp; pair it with the until flag to window a range. And dash t prefixes each line with the daemon's timestamp.
+
+Now, where do logs actually live? The daemon hands the stream to the active logging driver. The default driver, called j-son file, writes to a file under slash var slash lib slash docker slash containers, and docker logs reads from there.
+
+Two consequences are worth knowing now. First, docker logs only works with the j-son file driver, the default, and the journal-d driver. If you switch to sys-log, a-w-s logs, fluent-d, or splunk, the output goes straight to that system, and docker logs returns nothing; you read it at the destination instead. Second, j-son file logs grow without bound by default, and can fill a disk. In production you cap them, with a max-size option like ten megabytes and a max-file option like three, either per container or as a daemon default, which is module ten.

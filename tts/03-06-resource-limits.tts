@@ -1,0 +1,9 @@
+Resource limits.
+
+By default, a container can consume all of the host's memory and processor, which means one runaway container can starve everything else. Docker exposes the kernel's see-group limits, module one's isolation primitive, through a few run flags.
+
+Let's start with memory. The memory flag, say memory equals five hundred and twelve megabytes, is a hard cap. If the container exceeds it, the kernel's out-of-memory killer kills the process, and the container exits with code one thirty-seven, the exit code we saw in module one. The memory-swap flag sets the total of memory plus swap; set it equal to the memory flag to disable swap for predictable behaviour. And the memory-reservation flag is a soft limit: under pressure, the kernel tries to pull the container back toward it, but doesn't kill it.
+
+Now the processor. The cpus flag, say cpus equals one point five, means one and a half processors' worth of time; it's the easy, modern flag. The cpu-shares flag is a relative weight, defaulting to ten twenty-four, that only matters under contention: five twelve versus ten twenty-four means half the processor time when both want it. And the cpu-set flag pins the container to specific cores.
+
+Finally, you can change some limits on a live container, without a restart, using docker update. For example, docker update, memory equals one gigabyte, cpus equals two, web. Update can change resource limits and the restart policy in place. The classic use is: this container keeps getting killed for using too much memory, so raise its limit without losing its state. But networking, mounts, environment variables, the image, and the entry-point cannot change on a live container. For any of those, you must stop, remove, and re-create it. That immutability is deliberate: a container's shape is fixed at run time.

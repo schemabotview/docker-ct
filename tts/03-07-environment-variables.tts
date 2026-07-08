@@ -1,0 +1,13 @@
+Environment variables.
+
+Containerised apps read their configuration from environment variables. That's the twelve-factor pattern, and it's why the very same image can be dev in one run and prod in another. Docker sets them two ways.
+
+The first is inline, with dash e, one variable per flag. For example, docker run, dash e, database u-r-l equals something, dash e, log level equals info, then the image.
+
+The second is in bulk, with the env-file flag, which points at a file of key-equals-value lines, using the hash symbol for comments. So you might have an api-dot-env file listing the database u-r-l and the log level, and then run docker run, env-file equals api-dot-env, then the image.
+
+When the same key appears in more than one place, precedence runs from lowest to highest as follows. Lowest is an env value baked into the image back in module two. Next are env-file files, where later files beat earlier ones. And highest are dash e flags, where the rightmost one wins.
+
+There's a handy shorthand: dash e, with a variable name but no value, inherits the value from your host shell. That's great for passing a token without echoing it on the command line. For instance, you export a github token in your shell, then run docker run, dash e, github token, and the image, and the value comes across without ever appearing in the command.
+
+One caution about secrets. Environment variables are widely used for configuration, but they're a poor home for actual secrets. They leak through docker inspect, through the process's slash-proc environment, and through crash dumps, and child processes inherit them. They're fine for a log level or a feature flag. But for real credentials, use proper secrets, Compose secrets, Swarm secrets, or build-kit secret mounts, which module eight covers.

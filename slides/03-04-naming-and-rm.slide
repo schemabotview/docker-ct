@@ -1,0 +1,18 @@
+# Naming, hostname & `--rm`
+
+Two flags identify a container; one decides if it lingers.
+
+## `--name` / `--hostname`
+
+- **`--name web`** — a stable handle: `docker stop web`, not `docker stop 4f8a…`. Skip it → a random `quirky_borg`.
+- Names are **unique per host** — a stopped `web` still holds the name (the "name already in use" error after a crash).
+- **`--hostname`** — the name *inside* the container (`hostname`, logs). Separate from `--name`.
+
+## `--rm` — auto-cleanup
+
+Removes the container **on exit** — no `Exited` graveyard in `docker ps -a`.
+
+- **Use** for one-shot: `docker run --rm -it ubuntu bash`.
+- **Skip** for services you may `start` again, or want to inspect after a crash.
+
+**`--rm` and `--restart` are mutually exclusive** — pick one.

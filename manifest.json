@@ -262,6 +262,128 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "03-running-and-inspecting-containers",
+      "title": "Running & Inspecting Containers",
+      "sections": [
+        {
+          "heading": "Running & inspecting containers",
+          "notebook": "notebooks/03-01-running-containers.ipynb",
+          "slide": "slides/03-01-running-containers.slide",
+          "audio": "audio/03-01-running-containers.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "The anatomy of `docker run`",
+          "notebook": "notebooks/03-02-docker-run-anatomy.ipynb",
+          "slide": "slides/03-02-docker-run-anatomy.slide",
+          "audio": "audio/03-02-docker-run-anatomy.wav",
+          "scene": "docker",
+          "focus": "dk-cli",
+          "highlight": [
+            "dk-run"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Foreground, detached & interactive — `-d`, `-i`, `-t`",
+          "notebook": "notebooks/03-03-detached-interactive.ipynb",
+          "slide": "slides/03-03-detached-interactive.slide",
+          "audio": "audio/03-03-detached-interactive.wav",
+          "scene": "docker",
+          "focus": "dk-cli",
+          "highlight": [
+            "dk-run"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Naming, hostname & `--rm`",
+          "notebook": "notebooks/03-04-naming-and-rm.ipynb",
+          "slide": "slides/03-04-naming-and-rm.slide",
+          "audio": "audio/03-04-naming-and-rm.wav",
+          "scene": "docker",
+          "focus": "dk-container",
+          "spine": true
+        },
+        {
+          "heading": "The container lifecycle & restart policies",
+          "notebook": "notebooks/03-05-lifecycle.ipynb",
+          "slide": "slides/03-05-lifecycle.slide",
+          "audio": "audio/03-05-lifecycle.wav",
+          "scene": "docker",
+          "focus": "dk-lifecycle",
+          "highlight": [
+            "dk-create",
+            "dk-start",
+            "dk-stop",
+            "dk-rm"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Resource limits",
+          "notebook": "notebooks/03-06-resource-limits.ipynb",
+          "slide": "slides/03-06-resource-limits.slide",
+          "audio": "audio/03-06-resource-limits.wav",
+          "scene": "docker",
+          "focus": "dk-container",
+          "highlight": [
+            "dk-cgroups"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Environment variables — `-e` and `--env-file`",
+          "notebook": "notebooks/03-07-environment-variables.ipynb",
+          "slide": "slides/03-07-environment-variables.slide",
+          "audio": "audio/03-07-environment-variables.wav",
+          "scene": "docker",
+          "focus": "dk-container",
+          "spine": true
+        },
+        {
+          "heading": "Logs",
+          "notebook": "notebooks/03-08-logs.ipynb",
+          "slide": "slides/03-08-logs.slide",
+          "audio": "audio/03-08-logs.wav",
+          "scene": "docker",
+          "focus": "dk-cli",
+          "highlight": [
+            "dk-logs"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Looking inside — `exec`, `inspect`, `stats`",
+          "notebook": "notebooks/03-09-looking-inside.ipynb",
+          "slide": "slides/03-09-looking-inside.slide",
+          "audio": "audio/03-09-looking-inside.wav",
+          "scene": "docker",
+          "focus": "dk-cli",
+          "highlight": [
+            "dk-exec",
+            "dk-inspect",
+            "dk-ps"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Moving files & snapshotting — `docker cp`, `docker commit`",
+          "notebook": "notebooks/03-10-cp-and-commit.ipynb",
+          "slide": "slides/03-10-cp-and-commit.slide",
+          "audio": "audio/03-10-cp-and-commit.wav",
+          "scene": "docker",
+          "focus": "dk-container",
+          "highlight": [
+            "dk-ns-mnt"
+          ],
+          "spine": true
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,23 @@
+# Lifecycle & restart policies
+
+```
+create      start      stop/kill/exit      rm
+image ─► created ─► running ─────► stopped ─► gone
+                     │ ▲  pause      │
+                     ▼ │  unpause    │ start
+                    paused ──────────┘
+```
+
+- **`create`** — the unseen half of `run` (writable layer + config, not started).
+- **`pause` / `unpause`** — freeze/thaw all processes via the freezer cgroup.
+
+## Restart policies (survive crashes + reboots)
+
+| Policy | Behaviour |
+|---|---|
+| **`no`** | default — never. |
+| **`on-failure[:N]`** | only on non-zero exit. |
+| **`always`** | any exit + daemon start (back after reboot). |
+| **`unless-stopped`** | like `always`, but a manual `stop` sticks. **Prod choice.** |
+
+Backoff is **exponential** (~1 min cap); the counter resets after 10s healthy.

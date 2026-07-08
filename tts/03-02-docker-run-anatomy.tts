@@ -1,0 +1,13 @@
+The anatomy of docker run.
+
+Docker run is the busiest command in Docker. Its full shape is: docker run, then options, then the image, optionally with a tag or digest, and then optionally a command and its arguments.
+
+The image is the only required part. Everything in the options tunes how it runs. And everything after the image overrides the default command baked into the image, the command or entry-point from module two. So docker run ubuntu echo hi runs echo hi, instead of ubuntu's default command.
+
+The options look overwhelming as one flat list, but they fall into a handful of mental buckets, and once you see the buckets, you can guess where any flag lives.
+
+The first bucket is attachment and lifecycle: detached, interactive, t-t-y, remove-on-exit, name, and hostname. The second is environment: dash e, the env-file flag, the working-directory flag, and the user flag. The third is resource limits: the memory flag, the cpus flag, the p-i-d-s-limit flag. The fourth is restart and init. Those four buckets are what we cover in this module.
+
+The remaining buckets each get their own module later. Networking, with publish, network, and d-n-s, is module five. Storage, with the volume and mount flags, is module four. And security, with capability and security-option flags, is module eight.
+
+So that's the map for the whole module. A useful reflex, whenever a docker run line looks dense: sort its flags into these buckets. Suddenly it reads as four or five small decisions, instead of one big intimidating one.

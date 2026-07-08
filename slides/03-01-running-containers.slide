@@ -1,0 +1,20 @@
+# Running & inspecting containers
+
+The day-to-day craft: **run containers deliberately, and see inside them when something's wrong.** All in the **Containers** box of the host.
+
+## Three questions
+
+- **Start it right** — `docker run` flags in buckets: attach (`-d -i -t`), identity (`--name --rm`), env (`-e`), limits (`--memory --cpus`).
+- **Keep it alive** — the lifecycle + **restart policies** (survive crashes & reboots).
+- **See what it's doing** — `logs`, then `exec` / `inspect` / `stats` to debug live.
+
+## The loop
+
+```
+docker run ─► [ running ]
+   logs · exec · inspect · stats   observe
+   update · cp                     adjust
+   stop / rm / restart             lifecycle
+```
+
+Launch it as intended, keep it up, open it when it misbehaves — **no rebuild needed.**
