@@ -1,0 +1,22 @@
+# Publishing ports
+
+Container ports are **private** by default. **Publish** to let traffic in:
+
+```bash
+docker run -d -p 8080:80 nginx:alpine
+```
+
+"Host's 8080 → container's 80." Then `curl localhost:8080` hits it. **Host left, container right** — the classic mix-up.
+
+## The variations
+
+- **`-p 8080:80`** — all interfaces (`0.0.0.0`), reachable network-wide.
+- **`-p 127.0.0.1:8080:80`** — **localhost only**. Safer for dev.
+- **`-p 8080:80/udp`** — pick protocol (default TCP).
+- **`-p 80`** — random free host port; read with `docker port`.
+
+## Publish vs `EXPOSE`
+
+`EXPOSE` (module 02) is **just docs** — publishes nothing. **`-P`** auto-publishes every `EXPOSE`d port to random ports.
+
+Habit: **default to `127.0.0.1:` for local services.** A stray `-p 5432:5432` is how dev Postgres reaches the internet.

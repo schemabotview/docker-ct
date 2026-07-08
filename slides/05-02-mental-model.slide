@@ -1,0 +1,23 @@
+# The networking mental model
+
+A container gets its own **network namespace** — isolation applied to the network.
+
+## What's in the namespace
+
+- Own interfaces (`lo` + a virtual `eth0`)
+- Own IP, routing table, `iptables` rules, open ports
+
+Its `eth0` is one end of a **veth pair**; the other plugs into a host **bridge** (`docker0`, or `br-xxxx`).
+
+```
+Container            Host
+ eth0 ===veth===►  docker0 bridge 172.17.0.1
+ 172.17.0.2         (NAT out to eth0 → LAN)
+```
+
+## Two consequences
+
+- **Same bridge = direct talk** on container ports (why no `-p` between them).
+- **Outbound NAT'd** (container reaches internet), **inbound blocked** (bridge is private) → must **publish** to come in.
+
+Everything else is a variation on this one picture.

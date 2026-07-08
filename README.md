@@ -14,8 +14,8 @@ the plan we author against; the machine source of truth for structure is `manife
 **Status:** scaffolded + scene ported + full section spine settled (10 modules × 10 =
 **100 sections**, all mapped to a real `dk-*` scene node). The `docker` scene is **ported into
 graphl-movie** (`src/scenes/docker.ts`, registered + `catalog.ts` `docker` concept entry).
-**Modules 01–04 authored end-to-end** (40 sections: `.ipynb` + `.slide` + `.tts`) and wired in
-`manifest.json`; **modules 01–03 pushed**. Next: modules 05–10, one at a time — split from the
+**Modules 01–05 authored end-to-end** (50 sections: `.ipynb` + `.slide` + `.tts`) and wired in
+`manifest.json`; **modules 01–04 pushed**. Next: modules 06–10, one at a time — split from the
 matching `../docker-content` notebook. `audio/` stays empty until the **owner** generates the
 `.wav`s from `tts/` via Colab.
 
@@ -146,8 +146,9 @@ writable layer. Source: 13 content headings → 10. Authored end-to-end (`.ipynb
 | 9 | Backup, restore & migrate *(+ where data lives)* | `04-09-backup-restore` | `dk-volumes` |
 | 10 | Gotchas — UID/GID & the Mac/Windows sync caveat | `04-10-gotchas` | `dk-container` → `dk-ns-user` |
 
-### 05 — Networking & Port Publishing  ⏳ draft (proposed 10)
+### 05 — Networking & Port Publishing  ✅ authored (10)
 Frames the `dk-resources` band → `dk-networks` + `dk-ports`. Source: 13 content headings → 10.
+Authored end-to-end (`.ipynb` + `.slide` + `.tts`) and wired in `manifest.json`.
 
 | # | Section | slug | focus → highlight |
 |---|---|---|---|

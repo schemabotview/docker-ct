@@ -1,0 +1,19 @@
+# The default `bridge` network
+
+Out of the box: three networks + a host `docker0` bridge.
+
+```bash
+docker network ls
+# bridge  bridge  local   ← every container lands here w/o --network
+# host    host    local
+# none    null    local
+```
+
+## Two limitations
+
+1. **No embedded DNS** — containers reach each other only by **IP**. `--name api` doesn't resolve from `web`; you'd dig it out of `inspect`. IPs change on restart.
+2. **Weak isolation** — *every* no-`--network` container shares one bridge. An unrelated test container can reach your dev Postgres.
+
+## Takeaway
+
+The default bridge is a **historical default — don't rely on it.** The moment two containers talk, make a **user-defined bridge** (next) → name DNS + isolation. You never pick it on purpose; it's just where containers fall.

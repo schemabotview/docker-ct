@@ -1,0 +1,21 @@
+# Advanced — `overlay` & `macvlan`
+
+Beyond single-host. Rare, but know what they're for.
+
+## `overlay` — one net across many hosts
+
+Containers on host A ↔ host B as if one LAN. Uses **VXLAN**: each packet wrapped in UDP, sent over the physical net, unwrapped on arrival.
+
+```bash
+docker network create -d overlay app-overlay   # in a Swarm
+```
+
+Created **inside a Swarm** (module 09). One-liner: **overlay is how Swarm services on different machines talk.**
+
+## `macvlan` / `ipvlan` — real LAN IP
+
+Container gets its own **MAC/IP on the physical LAN** — looks like a real machine, **no NAT**. (`ipvlan` shares the host MAC.)
+
+Only for niche cases: legacy apps that **broadcast on the LAN** (mDNS, DLNA), IoT bridges, packet-capture. Else **`bridge` + `-p`** is simpler + portable.
+
+Close: **bridge for almost everything**; these two for multi-host + physical-LAN edges.

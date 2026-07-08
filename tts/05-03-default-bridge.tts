@@ -1,0 +1,11 @@
+The default bridge network.
+
+When you install Docker, you get three networks out of the box, plus a Linux bridge called docker-zero on the host. If you list the networks, you'll see bridge, with the bridge driver; host, with the host driver; and none, with the null driver. Every container you start without the network flag joins that default bridge.
+
+It works, but it has two limitations that make it the wrong choice for anything real.
+
+The first: no embedded d-n-s. Containers on the default bridge can only reach each other by eye-pee address. If you run one container named web and another named a-p-i, then from inside web, the hostname a-p-i does not resolve. You'd have to dig the address out of docker inspect. And that's brittle, because addresses change when containers restart.
+
+The second: weak isolation. Every container without an explicit network flag shares this one bridge. So an unrelated container that you spun up for a quick test can talk to your dev Postgres, simply because both landed on docker-zero.
+
+The takeaway is short. The default bridge is a historical default; don't rely on it. The moment two containers need to talk, create a user-defined bridge, which is the next section, and which fixes both problems at once: name-based d-n-s, and per-network isolation. You'll essentially never choose the default bridge on purpose. It's just where containers fall when you forget to say otherwise.

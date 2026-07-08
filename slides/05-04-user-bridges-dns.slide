@@ -1,0 +1,22 @@
+# User-defined bridges & DNS
+
+```bash
+docker network create app-net
+docker run -d --name db  --network app-net postgres:16
+docker run -d --name api --network app-net --env DB_HOST=db myorg/api
+```
+
+Inside `api`, **`db` resolves to the db container's IP** — no `-p` between them. Free name-based service discovery.
+
+## What you gain over the default
+
+**Embedded DNS** (resolve by `--name`) · **isolation** (only attached containers) · runtime **connect/disconnect**.
+
+## How DNS works
+
+`/etc/resolv.conf` → embedded resolver `127.0.0.11`: resolves same-network **names** + aliases; forwards the rest upstream.
+
+- **`--network-alias web`** — extra names (shared alias = round-robin).
+- **`--add-host name:IP`** — static `/etc/hosts` entry.
+
+Rule: **one bridge per app; find each other by `--name`.**

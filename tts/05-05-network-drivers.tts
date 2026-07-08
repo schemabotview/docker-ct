@@ -1,0 +1,15 @@
+The five built-in drivers.
+
+Docker ships several network drivers. Five are worth knowing, and one of them does almost all the work.
+
+The first is bridge, the default. Each container gets a private address on a host bridge; outbound traffic is network-address-translated, and inbound comes only through a published port. This handles about ninety-nine percent of single-host work.
+
+The second is host. The container shares the host's own network namespace, so there's no isolation; it binds the host's interfaces directly. You'd use it for maximum throughput, or for raw sockets and host-level firewall access.
+
+The third is none. The container gets a namespace with only loopback, and no connectivity at all. It's for sandboxed jobs, and forensic analysis.
+
+The fourth is overlay. It spans multiple hosts, using v-x-lan, so containers on different physical machines share one virtual network. That's for Swarm clusters, which is module nine.
+
+And the fifth is mac-v-lan, along with its cousin i-p-v-lan. These give the container its own hardware address, or just its own address, on the physical local network, so it looks like a real machine, with no translation. That's a niche case: legacy local-network apps, and I-o-T bridges.
+
+The shape to remember is this: bridge is the workhorse. Private address, translation out, publish to come in. Assume bridge unless a specific need pushes you off it. Host and none are the two extremes, all of the host's network, or none at all. And overlay and mac-v-lan are for multi-host and physical-local-network cases you'll meet later. The next sections drill into the ones you'll actually touch: the two extremes, then port publishing on bridge, and finally a preview of overlay and mac-v-lan at the module's end.

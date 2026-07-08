@@ -498,6 +498,122 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "05-networking-and-port-publishing",
+      "title": "Networking & Port Publishing",
+      "sections": [
+        {
+          "heading": "Networking & port publishing",
+          "notebook": "notebooks/05-01-networking.ipynb",
+          "slide": "slides/05-01-networking.slide",
+          "audio": "audio/05-01-networking.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "The networking mental model",
+          "notebook": "notebooks/05-02-mental-model.ipynb",
+          "slide": "slides/05-02-mental-model.slide",
+          "audio": "audio/05-02-mental-model.wav",
+          "scene": "docker",
+          "focus": "dk-networks",
+          "spine": true
+        },
+        {
+          "heading": "The default `bridge` network",
+          "notebook": "notebooks/05-03-default-bridge.ipynb",
+          "slide": "slides/05-03-default-bridge.slide",
+          "audio": "audio/05-03-default-bridge.wav",
+          "scene": "docker",
+          "focus": "dk-networks",
+          "highlight": [
+            "dk-net-bridge"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "User-defined bridges & DNS",
+          "notebook": "notebooks/05-04-user-bridges-dns.ipynb",
+          "slide": "slides/05-04-user-bridges-dns.slide",
+          "audio": "audio/05-04-user-bridges-dns.wav",
+          "scene": "docker",
+          "focus": "dk-networks",
+          "highlight": [
+            "dk-net-bridge"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The five built-in drivers",
+          "notebook": "notebooks/05-05-network-drivers.ipynb",
+          "slide": "slides/05-05-network-drivers.slide",
+          "audio": "audio/05-05-network-drivers.wav",
+          "scene": "docker",
+          "focus": "dk-networks",
+          "spine": true
+        },
+        {
+          "heading": "`host` & `none` modes",
+          "notebook": "notebooks/05-06-host-and-none.ipynb",
+          "slide": "slides/05-06-host-and-none.slide",
+          "audio": "audio/05-06-host-and-none.wav",
+          "scene": "docker",
+          "focus": "dk-networks",
+          "highlight": [
+            "dk-net-host",
+            "dk-net-none"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Publishing ports",
+          "notebook": "notebooks/05-07-publishing-ports.ipynb",
+          "slide": "slides/05-07-publishing-ports.slide",
+          "audio": "audio/05-07-publishing-ports.wav",
+          "scene": "docker",
+          "focus": "dk-ports",
+          "highlight": [
+            "dk-port-publish",
+            "dk-port-expose"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "What `-p` actually does under the hood",
+          "notebook": "notebooks/05-08-p-under-the-hood.ipynb",
+          "slide": "slides/05-08-p-under-the-hood.slide",
+          "audio": "audio/05-08-p-under-the-hood.wav",
+          "scene": "docker",
+          "focus": "dk-ports",
+          "highlight": [
+            "dk-port-publish"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Inspecting networks & runtime connect/disconnect",
+          "notebook": "notebooks/05-09-inspect-and-connect.ipynb",
+          "slide": "slides/05-09-inspect-and-connect.slide",
+          "audio": "audio/05-09-inspect-and-connect.wav",
+          "scene": "docker",
+          "focus": "dk-networks",
+          "spine": true
+        },
+        {
+          "heading": "Advanced — `overlay` & `macvlan` / `ipvlan`",
+          "notebook": "notebooks/05-10-overlay-macvlan.ipynb",
+          "slide": "slides/05-10-overlay-macvlan.slide",
+          "audio": "audio/05-10-overlay-macvlan.wav",
+          "scene": "docker",
+          "focus": "dk-networks",
+          "highlight": [
+            "dk-net-overlay"
+          ],
+          "spine": true
+        }
+      ]
     }
   ]
 }

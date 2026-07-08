@@ -1,0 +1,19 @@
+# Networking & port publishing
+
+Real apps talk — web to DB, world to service. Two questions, in the **Networks + Ports** corner.
+
+## The model
+
+A container gets its own **network namespace** (interfaces, IP, routes, firewall) plugged into a host **bridge**.
+
+## Two moving parts
+
+- **Networks — container↔container.** Same **user-defined bridge** → resolve each other by `--name` (DNS), no `-p`. Drivers: `bridge` (~99%), `host`, `none`, `overlay`, `macvlan`.
+- **Ports — world→container.** Private by default; **publish** with `-p host:container` (an iptables rule underneath).
+
+```
+outside ─► host:8080 ─►[ -p ]─► container:80
+api ────────────────► db   (by name, same bridge)
+```
+
+Pick the network, find containers by name, publish safely, know what `-p` really does.

@@ -1,0 +1,9 @@
+Host mode, and none mode.
+
+Two drivers sit at the opposite extremes of how much network a container gets: all of the host's, or none at all.
+
+Start with network host, which shares the host's stack. The container gets no namespace of its own; it sees and binds the host's interfaces directly. So if you run n-ginx with network host, n-ginx now listens on the host's own port eighty, not a container port.
+
+What do you lose? Port mapping: dash p is simply ignored, because you bind host ports directly. Isolation: two host-mode containers can't both take port eighty. And the bridge: there's no docker-zero, and no embedded d-n-s. What do you gain? No translation overhead, which is useful for very-high-throughput servers, load balancers, and packet inspection. And raw access to the host's network configuration; tools like net-stat, t-c-p-dump, and i-p-tables, run inside the container, see exactly what the host sees. The trade-off is that host mode breaks the container-is-isolated promise, for networking specifically. Use it sparingly, with a specific reason. And note that on Docker Desktop, on Mac and Windows, it's only partially supported: it shares the virtual machine's network, not your laptop's, so don't rely on it cross-platform.
+
+Now the opposite: network none. Here the namespace contains only loopback: no eth-zero, no d-n-s, no outbound. You'd use it for sandboxed batch jobs that should never phone home, or for forensic analysis of an untrusted image. And it isn't necessarily permanent; you can connect a network later to add an interface. Between these two extremes sits bridge, the default, where the rest of the module lives: private by default, and traffic comes in only when you publish a port, which is next.

@@ -1,0 +1,9 @@
+The networking mental model.
+
+When a container starts on a normal, non-host, network, the kernel gives it a network namespace of its own. It's the module-one isolation primitive, applied to networking. That namespace has its own set of interfaces, usually just loopback and a virtual eth-zero; its own eye-pee address or addresses; its own routing table; its own i-p-tables firewall rules; and its own set of open ports.
+
+From inside the container, this looks like a tiny, isolated machine on a network. From the host's point of view, the container's eth-zero is one end of a virtual ethernet pair, called a v-eth pair. The other end plugs into a Linux bridge: docker-zero for the default network, or a b-r bridge for a user-defined one.
+
+So picture container A, with its eth-zero at some address, connected by a v-eth pair into the docker-zero bridge on the host, and the host in turn does network address translation out to its real interface and onto the wider network.
+
+Two consequences explain almost everything that follows. First, containers on the same bridge talk to each other directly, on their container ports; the bridge is essentially a virtual switch between them. That's exactly why two containers on the same network need no dash p between them. Second, outbound traffic is network-address-translated through the host's real interface, so a container can reach the internet. But inbound traffic is blocked by default, because the bridge is private. Getting traffic in requires publishing a port, which is section seven. Everything in this module is a variation on this one picture: namespaces on a bridge, translation on the way out, and publishing to let traffic in.

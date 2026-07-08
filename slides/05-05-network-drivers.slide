@@ -1,0 +1,17 @@
+# The five built-in drivers
+
+| Driver | What | When |
+|---|---|---|
+| **`bridge`** | private IP on a host bridge; NAT out, `-p` in | **~99% single-host** |
+| **`host`** | shares host's net namespace, no isolation | max throughput, raw sockets |
+| **`none`** | only `lo`, no connectivity | sandbox, forensics |
+| **`overlay`** | one net across **many hosts** (VXLAN) | Swarm (module 09) |
+| **`macvlan`/`ipvlan`** | own MAC/IP on the **physical LAN** | legacy LAN, IoT — niche |
+
+## The shape
+
+**`bridge` is the workhorse** — private IP, NAT out, publish in — assume it unless a need pushes you off.
+
+`host` / `none` are the two extremes (all of the host's net, or none); `overlay` / `macvlan` are multi-host and physical-LAN.
+
+Next: the extremes (`host`/`none`), then publishing on `bridge`, then `overlay`/`macvlan`.

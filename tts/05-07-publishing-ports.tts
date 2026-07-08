@@ -1,0 +1,9 @@
+Publishing ports.
+
+A container's processes bind their ports inside their own namespace, and the bridge is private, so by default nothing outside the host can reach them. To let traffic in, you publish a port, with dash p, host colon container. For example, run n-ginx with dash p, eighty-eighty, colon, eighty.
+
+That reads: take whatever arrives on the host's port eighty-eighty, and forward it to the container's port eighty. Now, curling local-host colon eighty-eighty hits the n-ginx inside. And here's the classic mix-up to get right: the host port is on the left, and the container port is on the right.
+
+Here are the variations you'll actually use. Dash p, eighty-eighty colon eighty, binds on all of the host's interfaces, so it's reachable from the whole network. Dash p, one twenty-seven dot zero dot zero dot one, then eighty-eighty colon eighty, binds only on local-host; it's reachable from your laptop, but not from the wider network. Use that for any dev service that needn't be remote; it's much safer. Dash p with a slash u-d-p chooses the protocol; the default is t-c-p. And dash p with just a container port, and the host port omitted, makes Docker pick a random free host port, which you read back with docker port, or the ports column of docker p-s.
+
+Now, publish versus expose. Recall that the expose instruction, from module two, is just documentation in the image; it publishes nothing. A related shortcut ties them together: a capital dash P auto-publishes every exposed port to a random host port, which is handy for a quick test, but rarely for real use. The safety habit worth forming now: default to local-host-bound publishes for anything local, and only bind all interfaces when a service genuinely needs to be reachable from other machines. An accidental dash p, fifty-four thirty-two colon fifty-four thirty-two, on a database, is exactly how a dev Postgres ends up open to the internet.

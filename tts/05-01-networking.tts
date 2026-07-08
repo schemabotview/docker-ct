@@ -1,0 +1,11 @@
+Networking, and port publishing.
+
+A container in isolation isn't much use. Real apps talk: a web server to its database, an a-p-i to a cache, the outside world to your service. This module is about how that traffic flows. It sits in the resources, networks, and ports corner of the map, and it answers two questions: how do containers reach each other, and how does outside traffic reach a container.
+
+The mental model underneath everything is this. A container, on a normal network, gets its own network namespace: its own interfaces, its own eye-pee address, its own routing table, and its own firewall rules, all plugged into a Linux bridge on the host. From inside, it looks like a tiny, isolated machine on a network.
+
+Two moving parts carry the module. The first is networks, which is container-to-container. Attach containers to the same user-defined bridge, and they resolve each other by name, using embedded d-n-s, with no port mapping at all. Docker ships several drivers, bridge, host, none, overlay, and mac-v-lan, but bridge covers about ninety-nine percent of single-host work.
+
+The second is ports, which is world-to-container. A container's ports are private by default. You publish one, with dash p, host colon container, to let outside traffic in, and under the hood that's really just an i-p-tables rule.
+
+So picture it. From the outside, traffic hits the host's port eighty-eighty, passes through a published-port rule, and arrives at the container's port eighty. Meanwhile, the a-p-i container reaches the database just by name, because they're on the same bridge. By the end of this module, you'll pick the right network, let containers find each other by name, publish ports safely, and know what dash p really does when it misbehaves.

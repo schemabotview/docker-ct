@@ -1,0 +1,23 @@
+# Inspecting & runtime connect
+
+## See the wiring
+
+```bash
+docker network ls                  # all networks
+docker network inspect app-net     # subnet, gateway, containers
+docker port web                    # published mappings
+```
+
+`inspect` is the source of truth. A container on several networks has **several IPs — one per network.**
+
+## Rewire live (no restart)
+
+```bash
+docker network connect db-net api      # api on BOTH
+docker network disconnect web-net api  # now only db-net
+```
+
+- **Tiered isolation** — proxy on `web-net`, DB on `db-net`, API on **both**. Proxy can't see DB; DB not public. Segmentation by *attachment*.
+- **Drop-in debug** — attach a `tcpdump` sidecar network, disconnect after.
+
+`--network` at `run` takes **one** net; `connect` the rest at startup.

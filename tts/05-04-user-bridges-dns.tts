@@ -1,0 +1,11 @@
+User-defined bridges, and d-n-s.
+
+Creating a user-defined bridge is one command, docker network create, and a name. And it's the network you'll actually use.
+
+Compared with the default bridge, it gives you three things that matter: embedded d-n-s, so you resolve other containers by their name; isolation, so only the containers you attach can talk; and easy connect and disconnect at runtime. The standard pattern is one bridge per application unit, a service plus its database and cache, with everything attached to it. So you create a network called app-net, run Postgres on it named d-b, and run your a-p-i on it too, passing the database host as d-b.
+
+Now, inside the a-p-i container, the hostname d-b resolves to the database container's address. There's no dash p between them, because containers on the same bridge already talk on their container ports. This is the everyday networking move: name-based service discovery, for free.
+
+How does the d-n-s work? On a user-defined network, the container's resolver config points at Docker's embedded resolver, at address one twenty-seven dot zero dot zero dot eleven. That resolver resolves other container names, and any network aliases, on the same network, to their addresses, and it forwards everything else to the host's upstream d-n-s.
+
+A few knobs, when you need them. The network-alias flag gives a container extra names it answers to, and several containers can share one alias to round-robin between them. The add-host flag adds a static hosts entry, a fixed name-to-address with no d-n-s. And the d-n-s flag overrides the upstream resolver. The rule of thumb: one user-defined bridge per app, and let containers find each other by name. That single habit replaces almost all manual address wrangling.

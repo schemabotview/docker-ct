@@ -1,0 +1,21 @@
+# `host` & `none` modes
+
+The two extremes: **all** of the host's network, or **none.**
+
+## `--network host`
+
+No namespace — binds the host's interfaces directly.
+
+```bash
+docker run --network host nginx   # listens on the HOST's port 80
+```
+
+- **Lose:** `-p` (ignored), isolation, the bridge + DNS.
+- **Gain:** no NAT overhead (high-throughput, packet inspection); `tcpdump`/`iptables` see what the host sees.
+- Breaks isolation — use sparingly. **Desktop:** shares the *VM's* net, not your laptop's.
+
+## `--network none`
+
+Only `lo` — no `eth0`, DNS, or outbound (`docker run --network none …`). Sandboxed jobs that must never phone home; forensics. Not permanent — `network connect` adds an interface later.
+
+Between them sits `bridge` — private, in only via **publish** (next).

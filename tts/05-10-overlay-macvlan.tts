@@ -1,0 +1,9 @@
+Advanced networking: overlay, and mac-v-lan.
+
+Everything so far was single-host: all containers on one daemon, on a bridge. Two drivers step beyond that. You won't reach for them often, but you should know what they're for.
+
+First, overlay: one network across many hosts. When containers on host A must reach containers on host B, as if they were on the same local network, you need an overlay. It uses v-x-lan: each cross-host packet is wrapped in a u-d-p datagram, sent over the physical network between the hosts, and unwrapped on arrival. The hosts gossip about which container lives where, so routing stays in sync. Overlay networks are created inside a Swarm cluster, and module nine covers Swarm and overlay end to end. The one line to keep: overlay is how Swarm services on different machines talk. If you're not in a Swarm, you won't use it.
+
+Second, mac-v-lan, and its cousin i-p-v-lan: a real address on the physical local network. Mac-v-lan gives the container its own hardware address on the host's local network, so to switches, routers, and the address server, it looks like a wholly separate machine, with a real local address, and no translation. I-p-v-lan is similar, but shares the host's hardware address, for switches that reject unknown ones.
+
+Reach for this only in niche cases: a legacy app that broadcasts on the local network, like m-d-n-s, or old industrial protocols; I-o-T and home-automation bridges; or packet-capture appliances that need promiscuous mode. For everything else, bridge plus dash p is simpler, more portable, and doesn't depend on your physical network. And one gotcha: by default, the host itself can't reach its own mac-v-lan containers. That closes networking: bridge for almost everything, and these two for the multi-host and physical-local-network edges.

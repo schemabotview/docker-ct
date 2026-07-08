@@ -1,0 +1,9 @@
+What dash p actually does under the hood.
+
+Dash p feels like magic, but it's really two concrete mechanisms, and knowing them turns, the port doesn't work, from guesswork into a checklist. When you run n-ginx with dash p, eighty-eighty colon eighty, the daemon sets up two things.
+
+The first is an i-p-tables translation rule. On Linux, it inserts a rule that rewrites traffic destined for the host's port eighty-eighty into traffic destined for the container's address, port eighty. You can see it with i-p-tables, listing the docker chain in the n-a-t table. This is the fast path: it runs in kernel space, with zero copying.
+
+The second is a userland proxy fallback, a small process called docker-proxy. For traffic the translation rule can't catch, notably local-host to local-host, the daemon runs this process listening on the host port and forwarding to the container. This is the slow path, a system-call round-trip per packet. You can turn it off, by setting userland-proxy to false in the daemon config, which is module ten, but most teams leave it on.
+
+Why is this worth knowing? For debugging, when you can't reach a port. If a published port doesn't respond from the host, the i-p-tables rule is the prime suspect, and listing the rules is your tool. A common cause is a firewall, like u-f-w or firewall-d, or a second daemon, flushing Docker's chains. For the, port is already allocated, error: if something on the host already listens on that port, the publish fails, and you find the culprit by listing listening sockets. And for performance: for most apps the cost is invisible; only very heavy network workloads need to measure dash p's impact, and that's often the reason to reach for host mode. The point of the section: dash p isn't opaque. It's a translation rule plus an optional proxy, and both are inspectable, so port problems have a definite place to look.

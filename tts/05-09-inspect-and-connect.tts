@@ -1,0 +1,9 @@
+Inspecting networks, and connecting at runtime.
+
+Two everyday skills close out single-host networking: seeing the wiring, and rewiring it live.
+
+First, inspecting. There are a few commands you'll run constantly. Docker network list shows all networks. Docker network inspect, with a network name, shows the full details as j-son: the subnet, the gateway, and the containers attached. Docker port, with a container, shows that container's published port mappings. And docker inspect, with a format string, pulls one container's address on a specific network. That network-inspect command is the source of truth for, what's on this network, and at which address. And note: a container attached to several networks has several addresses, one per network.
+
+Second, connecting and disconnecting at runtime. A container can be on multiple networks at once, and you can change that without restarting it. So you might create a web network and a database network, run your a-p-i on the web network, then connect the database network to it, so the a-p-i is now on both, and later disconnect the web network, so it's only on the database network.
+
+Two patterns this enables. The first is tiered isolation: a reverse proxy on the web network, a database on the database network, and the a-p-i attached to both. The proxy can't see the database, and the database isn't reachable from the public side. That's segmentation by attachment, not by firewall rules. The second is drop-in debugging: attach a running container to a temporary network, alongside a t-c-p-dump or wireshark sidecar, then disconnect when you're done. One detail: the network flag at docker run takes only one network. To start on several, run with one, and connect the rest before the app starts caring. This connect-and-disconnect flexibility is what makes user-defined bridges a real segmentation tool, not just name resolution.

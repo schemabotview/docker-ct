@@ -1,0 +1,14 @@
+# What `-p` does under the hood
+
+`-p 8080:80` is **two mechanisms**, not magic:
+
+1. **iptables DNAT rule** — rewrites `host:8080` → `container-ip:80` in the `nat` table's `DOCKER` chain. **Fast path** (kernel-space). See: `iptables -t nat -L DOCKER -n`.
+2. **`docker-proxy` fallback** — a userland process for traffic DNAT can't catch (localhost↔localhost). **Slow path** (syscall per packet). Off via `"userland-proxy": false`.
+
+## Why it matters
+
+- **"Can't reach the port"** → the iptables rule is the suspect (`iptables -L -n -v`); a firewall (ufw/firewalld) often flushed Docker's chains.
+- **"Port already allocated"** → something else listens: `ss -ltnp | grep 8080`.
+- **Perf** — invisible for most apps; only heavy net loads measure it (→ `host` mode).
+
+Port problems have a **definite place to look**.
