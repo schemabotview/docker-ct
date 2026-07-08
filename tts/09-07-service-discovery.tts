@@ -1,0 +1,11 @@
+Service discovery, and d-n-s.
+
+A service named a-p-i is reachable on its overlay network by the hostname a-p-i. But how that name resolves comes in two flavours, and picking the right one matters.
+
+The default is virtual-address mode. Here, a-p-i resolves to a single, stable virtual address. The kernel, using i-p-v-s, load-balances incoming connections across all healthy tasks, behind that one address. Clients see one address, and never need to know how many replicas exist, or where they live; tasks coming and going is completely transparent.
+
+The alternative is d-n-s round-robin mode. Here, a-p-i resolves to the addresses of all current tasks, and each d-n-s lookup returns a different one. The client does its own load-balancing, and if a task dies, a client may get a stale address and have to retry. You switch modes in the service definition, by setting the endpoint-mode to d-n-s-r-r, or v-i-p, the default.
+
+Use virtual-address mode for almost everything; it's stable, kernel-fast, and hides replica churn. Use round-robin mode only for clients that load-balance themselves and want the raw target addresses, like some service meshes, or custom gossip protocols.
+
+And here's one boundary worth internalising: Swarm's d-n-s resolves only within the same overlay network. A service on the frontend network cannot resolve a service that's only on the backend network, by design. That's the same segmentation-by-attachment idea from module five, now the backbone of cluster security. Put your public tier and your data tier on separate overlays, attach only what must talk to both, and the d-n-s boundary enforces the isolation for you. Service discovery isn't just convenience; it's how you structure who can reach whom, across the cluster.

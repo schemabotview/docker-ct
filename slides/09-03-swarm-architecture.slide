@@ -1,0 +1,23 @@
+# Swarm architecture & init
+
+Nodes in two roles:
+
+- **Manager** — control plane: API, scheduling, state via **raft**. (Also runs work.)
+- **Worker** — runs the containers (**tasks**) managers assign.
+
+```
+Manager1(leader) ─raft─ Manager2 ─raft─ Manager3
+      └─ schedules → Worker1  Worker2  Worker3
+```
+
+Managers are **odd** (1/3/5/7) for raft **quorum** — tolerates `(N-1)/2` losses (3 → survive 1). Workers unlimited. **3 managers = standard HA.**
+
+## Init in one command
+
+```bash
+docker swarm init --advertise-addr <THIS-IP>
+```
+
+→ becomes a manager, mints **join tokens** (`docker swarm join --token … <MGR-IP>:2377`), starts raft, creates the `ingress` overlay.
+
+Ports: **2377** mgmt · **7946** gossip · **4789** overlay.

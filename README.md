@@ -14,8 +14,8 @@ the plan we author against; the machine source of truth for structure is `manife
 **Status:** scaffolded + scene ported + full section spine settled (10 modules × 10 =
 **100 sections**, all mapped to a real `dk-*` scene node). The `docker` scene is **ported into
 graphl-movie** (`src/scenes/docker.ts`, registered + `catalog.ts` `docker` concept entry).
-**Modules 01–08 authored end-to-end** (80 sections: `.ipynb` + `.slide` + `.tts`) and wired in
-`manifest.json`; **modules 01–07 pushed**. Next: modules 09–10, one at a time — split from the
+**Modules 01–09 authored end-to-end** (90 sections: `.ipynb` + `.slide` + `.tts`) and wired in
+`manifest.json`; **modules 01–08 pushed**. Next: module 10 (the finale) — split from the
 matching `../docker-content` notebook. `audio/` stays empty until the **owner** generates the
 `.wav`s from `tts/` via Colab. (Slides lead with a single `#` title; `##` for sub-labels.)
 
@@ -215,8 +215,9 @@ in `manifest.json`.
 | 9 | Secrets *(and why env vars aren't secret)* | `08-09-secrets` | `dk-security` → `dk-sec-secrets` |
 | 10 | Supply-chain — signing, SBOMs & the hardened service | `08-10-supply-chain` | `dk-security` → `dk-sec-sbom`,`dk-sec-scan` |
 
-### 09 — Orchestration with Swarm  ⏳ draft (proposed 10)
+### 09 — Orchestration with Swarm  ✅ authored (10)
 Frames the `dk-orchestrate` band → `dk-swarm` + `dk-sw-net`. Source: 15 content headings → 10.
+Authored end-to-end (`.ipynb` + `.slide` + `.tts`) and wired in `manifest.json`.
 
 | # | Section | slug | focus → highlight |
 |---|---|---|---|

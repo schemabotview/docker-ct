@@ -1,0 +1,22 @@
+# Rolling updates & rollback
+
+```bash
+docker service update --image myorg/api:1.2.4 api
+```
+
+**One task at a time:** stop old → start new → wait ready → next. Old + new run side by side → **no downtime.**
+
+## Tuning the roll
+
+```bash
+--update-parallelism 2      # N per batch
+--update-delay 10s          # pause between
+--update-monitor 30s        # WATCH new task this long
+--update-max-failure-ratio 0.2
+--update-failure-action rollback
+```
+
+- **`--update-monitor`** — catches "starts fine, crashes at 20s" (the flag people forget + most need).
+- **`failure-action rollback`** — too many fail → Swarm **auto-reverts** to the last good image.
+
+Manual anytime: `docker service rollback api`. Bad deploys **self-correct**.

@@ -1,0 +1,9 @@
+Rolling updates, and rollback.
+
+Deploying a new version is one of the most common Swarm operations, and it happens without downtime. The default is simple: docker service update, image, the new version, and the service name.
+
+Swarm updates one task at a time: stop an old task, start a new one, wait for it to be ready, and move on. The old and new tasks run side by side during the roll, so the service keeps serving throughout. You tune the rollout with a handful of flags, which you can also set at service-create time, so the policy travels with the service.
+
+Let's go through them. Update-parallelism N updates N tasks per batch; the default is one. Update-delay pauses between batches. Update-monitor, say thirty seconds, is the important one: after starting a task, it watches the task for that long before calling it a success. That catches the, starts fine, crashes after twenty seconds, class of bug. Update-max-failure-ratio, say zero point two, aborts the whole rollout if more than twenty percent of tasks fail their monitor window. And update-failure-action rollback means, on abort, automatically revert to the previous image, as opposed to pausing or continuing.
+
+That combination is what makes a bad deploy self-correcting. Swarm rolls forward, watches each new task, and if too many fail their monitor window, it rolls itself back to the last good image, with no human in the loop. You can also revert manually, any time, with docker service rollback. The monitor window is the flag people forget, and most need: without it, a container that starts and then crash-loops still counts as, updated successfully.

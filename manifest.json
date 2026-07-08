@@ -976,6 +976,133 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "09-orchestration-with-swarm",
+      "title": "Orchestration with Swarm",
+      "sections": [
+        {
+          "heading": "Orchestration with Swarm",
+          "notebook": "notebooks/09-01-orchestration.ipynb",
+          "slide": "slides/09-01-orchestration.slide",
+          "audio": "audio/09-01-orchestration.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "Why orchestration & Swarm vs Kubernetes",
+          "notebook": "notebooks/09-02-why-orchestration.ipynb",
+          "slide": "slides/09-02-why-orchestration.slide",
+          "audio": "audio/09-02-why-orchestration.wav",
+          "scene": "docker",
+          "focus": "dk-orchestrate",
+          "highlight": [
+            "dk-swarm"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Swarm architecture & initialising a cluster",
+          "notebook": "notebooks/09-03-swarm-architecture.ipynb",
+          "slide": "slides/09-03-swarm-architecture.slide",
+          "audio": "audio/09-03-swarm-architecture.wav",
+          "scene": "docker",
+          "focus": "dk-swarm",
+          "highlight": [
+            "dk-sw-manager",
+            "dk-sw-worker"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Services, not containers",
+          "notebook": "notebooks/09-04-services.ipynb",
+          "slide": "slides/09-04-services.slide",
+          "audio": "audio/09-04-services.wav",
+          "scene": "docker",
+          "focus": "dk-swarm",
+          "highlight": [
+            "dk-sw-service",
+            "dk-sw-task"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Rolling updates & rollback",
+          "notebook": "notebooks/09-05-rolling-updates.ipynb",
+          "slide": "slides/09-05-rolling-updates.slide",
+          "audio": "audio/09-05-rolling-updates.wav",
+          "scene": "docker",
+          "focus": "dk-swarm",
+          "highlight": [
+            "dk-sw-service"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Overlay networks & the routing mesh",
+          "notebook": "notebooks/09-06-overlay-routing-mesh.ipynb",
+          "slide": "slides/09-06-overlay-routing-mesh.slide",
+          "audio": "audio/09-06-overlay-routing-mesh.wav",
+          "scene": "docker",
+          "focus": "dk-sw-net",
+          "highlight": [
+            "dk-sw-overlay-net",
+            "dk-sw-mesh"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Service discovery & DNS",
+          "notebook": "notebooks/09-07-service-discovery.ipynb",
+          "slide": "slides/09-07-service-discovery.slide",
+          "audio": "audio/09-07-service-discovery.wav",
+          "scene": "docker",
+          "focus": "dk-sw-net",
+          "highlight": [
+            "dk-sw-overlay-net"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Stacks — the Compose file in cluster form",
+          "notebook": "notebooks/09-08-stacks.ipynb",
+          "slide": "slides/09-08-stacks.slide",
+          "audio": "audio/09-08-stacks.wav",
+          "scene": "docker",
+          "focus": "dk-swarm",
+          "highlight": [
+            "dk-sw-service"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Secrets, configs & placement",
+          "notebook": "notebooks/09-09-secrets-placement.ipynb",
+          "slide": "slides/09-09-secrets-placement.slide",
+          "audio": "audio/09-09-secrets-placement.wav",
+          "scene": "docker",
+          "focus": "dk-swarm",
+          "highlight": [
+            "dk-sw-task"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Node management & the realities of Swarm",
+          "notebook": "notebooks/09-10-nodes-and-realities.ipynb",
+          "slide": "slides/09-10-nodes-and-realities.slide",
+          "audio": "audio/09-10-nodes-and-realities.wav",
+          "scene": "docker",
+          "focus": "dk-swarm",
+          "highlight": [
+            "dk-sw-manager",
+            "dk-sw-worker"
+          ],
+          "spine": true
+        }
+      ]
     }
   ]
 }

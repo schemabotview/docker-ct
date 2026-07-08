@@ -1,0 +1,11 @@
+Services, not containers.
+
+The Swarm primitive isn't a container; it's a service, which is a declaration. It says: I want N replicas of image X across the cluster, with these networks, secrets, environment, resources, and update policy. Make it so. Swarm decomposes a service into tasks, one per replica, schedules each task onto a node, and creates a container to run it. The container is just an implementation detail; you reason at the service level.
+
+So you run, docker service create, replicas three, name web, publish eighty-eighty to eighty, n-ginx. Docker service list shows web as replicated, three out of three. And docker service p-s web shows the individual tasks, and which node each one is on.
+
+The payoff is self-healing. If a node hosting a task crashes, the manager notices, reschedules that task elsewhere, and three out of three is restored automatically, with nobody paged. That reconciliation loop is the entire point of an orchestrator.
+
+There are two service modes. Replicated is the default: N tasks, and the scheduler picks where; that's the ninety-percent case. Global runs exactly one task per node, used for per-node agents, like log shippers or monitoring.
+
+The service is also the unit of every operation; the single-host verbs move up a level. Service create declares a service, and most docker run flags apply. Service list and service p-s show desired-versus-running, and per-task placement. Service scale changes the replica count. Service update changes the definition, triggering a rolling update, which is next. Service rollback reverts the last update. And service remove deletes it and all its tasks. Here's the mental shift: you don't stop or start a service. You scale it, to zero to stop it, or you update it. The state is desired, not imperative.

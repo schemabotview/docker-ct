@@ -1,0 +1,9 @@
+Overlay networks, and the routing mesh.
+
+Module five met overlay networks as, the multi-host bridge. In Swarm, they're how every service talks across nodes. You create one with docker network create, driver overlay, and, dash dash attachable. The overlay driver is required for multi-host; attachable lets standalone containers join too, which is handy for debugging.
+
+Under the hood it's v-x-lan: each cross-node packet is wrapped in a u-d-p datagram, over port forty-seven eighty-nine, so to the containers it looks like one flat local network. Attach services to it, and they reach each other by service name, cluster-wide; that's the module-five embedded d-n-s, now spanning hosts. So web calls h-t-t-p, slash slash, a-p-i, and Swarm resolves it. And the tasks of one service share a virtual address, with the kernel's i-p-v-s load-balancing across all healthy tasks, wherever they run.
+
+The routing mesh is the killer feature, and it's hidden behind an ordinary publish flag. When a service publishes a port, Swarm opens that port on every node in the cluster, even nodes running no replica. So a request to any node, on port eighty-eighty, is caught by i-p-v-s, routed over the encrypted ingress overlay to a healthy task's node, and delivered locally. That means you can put any node's address behind your d-n-s or load balancer, and it just works; the cluster handles internal routing.
+
+That's the default for the publish flag in Swarm. If you'd rather publish only on the nodes actually running a replica, for instance, to front it with an external load balancer, you use host-mode publishing instead. The routing mesh is what makes a Swarm service feel like one endpoint, no matter how many machines it spans.

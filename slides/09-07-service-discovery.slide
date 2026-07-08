@@ -1,0 +1,21 @@
+# Service discovery & DNS
+
+`api` resolves on its overlay — but *how* comes in two flavours.
+
+## VIP mode (default)
+
+`api` → one stable **virtual IP**; IPVS load-balances across healthy tasks. Clients see one address; replica churn is invisible. **Use for almost everything.**
+
+## DNSRR mode
+
+`api` → **all task IPs**, round-robin per lookup. Client load-balances itself; a dead task = a stale IP + retry.
+
+```yaml
+deploy: { endpoint_mode: dnsrr }   # or vip
+```
+
+**DNSRR only** for self-balancing clients (some meshes, gossip).
+
+## The boundary = security
+
+DNS resolves **only within the same overlay**. `frontend` can't reach a `backend`-only service — *by design*. Split public + data tiers onto **separate overlays**; the DNS boundary **enforces isolation.**

@@ -1,0 +1,9 @@
+Why orchestration, and Swarm versus Kubernetes.
+
+Compose runs a stack on one host. Five questions expose its ceiling, and they define what an orchestrator is for. What if one host isn't enough capacity? What happens when that host dies? Compose has no answer; you're down until you rebuild it. How do you do a rolling deploy without dropping traffic? How do you keep secrets off disk, on every machine? And how do services on different hosts talk by hostname?
+
+An orchestrator answers all five. It manages a pool of hosts, a cluster, accepts a desired state, like, three replicas everywhere, and continuously reconciles reality toward it. A node dies, and it launches replacements elsewhere. A new image lands, and replicas roll forward one at a time. A service publishes a port, and traffic is routed to a healthy replica. Declarative desired state, reconciled by a control loop; that's the whole idea.
+
+Two orchestrators matter, and both run the same o-c-i images you already build. Installation: Swarm is one command, docker swarm init; Kubernetes is kube-adm, or a managed service, and it's nontrivial. The command line: Swarm uses docker, the client you know; Kubernetes uses kube-control, a separate model. Concepts: Swarm has service, task, stack, and secret; Kubernetes has pods, deployments, services, ingresses, persistent volume claims, and dozens more. Networking: Swarm has built-in overlay and routing mesh; Kubernetes leaves it to you, via c-n-i plugins. And ecosystem: Swarm's is small and Docker-shipped; Kubernetes's is vast.
+
+So, Swarm is simpler and near-instant; Kubernetes is more powerful, and the industry default for non-trivial production. This module teaches Swarm. It's d-c-a content, and its small model makes the concepts of orchestration clear, before you meet Kubernetes's complexity.

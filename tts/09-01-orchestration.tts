@@ -1,0 +1,9 @@
+Orchestration with Swarm.
+
+Compose, in module six, got you to, a multi-container app on one host. That's genuinely useful, and it hits a wall: one host is a single point of failure, and a capacity ceiling. This module is about crossing that wall with an orchestrator, a system that runs your containers across a pool of hosts, keeps them alive when a machine dies, and rolls out new versions without downtime. The orchestrator we use is Docker Swarm: built into Docker, driven by the same docker command line, and the one the d-c-a exam tests.
+
+The module lives in the orchestrate and swarm region of the map, and it turns on one idea: declare a desired state, and let the cluster reconcile reality to it.
+
+There's a cluster of nodes. Managers run the control plane, doing scheduling and holding state via raft; workers run the containers, which are called tasks. There are services, not containers: you ask for three replicas of image X, and Swarm schedules the tasks, replaces them when nodes die, and rolls updates one at a time. And there's cluster-wide networking: an overlay network lets services on different hosts talk by name, and the routing mesh publishes a port on every node.
+
+So picture running, docker service create, replicas three, web. The manager schedules three tasks, one each onto node A, node B, and node C. If a node dies, the manager reschedules its task, and you're back to three out of three, automatically. By the end of this module, you'll initialise a cluster, deploy services and stacks, do rolling updates, wire up overlay networking and the routing mesh, and manage secrets, placement, and nodes, with a clear-eyed view of where Swarm fits, versus Kubernetes.

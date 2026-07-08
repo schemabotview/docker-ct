@@ -1,0 +1,23 @@
+# Nodes & the realities of Swarm
+
+## Availability states
+
+- **`active`** — takes new tasks (default)
+- **`pause`** — keeps tasks, no new ones
+- **`drain`** — no new **+** reschedules existing off
+
+**Rolling host upgrade** — patch a node, zero downtime:
+
+```bash
+docker node update --availability drain nodeX   # tasks move off
+docker node update --availability active nodeX   # after patch
+```
+
+`promote`/`demote` grow/shrink the manager set in place; `swarm leave` removes.
+
+## Swarm in 2026 — honest
+
+- **Works:** 2-min setup, small model, great for small/medium single-region + edge/IoT.
+- **Doesn't:** ecosystem stagnated post-K8s; no native canary/blue-green; smaller hiring pool.
+
+**DCA:** Swarm is core. **Career:** know both — Swarm clarifies the *concepts*, the on-ramp to K8s.

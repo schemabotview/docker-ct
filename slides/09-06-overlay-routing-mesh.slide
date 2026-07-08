@@ -1,0 +1,20 @@
+# Overlay networks & routing mesh
+
+```bash
+docker network create --driver overlay --attachable app-net
+```
+
+Multi-host via **VXLAN** (UDP/4789) — looks like one flat LAN. Services talk **by name** cluster-wide (module-05 DNS, now across hosts); tasks share a **VIP**, IPVS load-balances.
+
+## The routing mesh — the killer feature
+
+Publish a port → Swarm opens it on **every node**, even ones running no replica:
+
+```
+Internet ─► Node A:8080 ──mesh──► task on Node C
+         ─► Node C:8080 ──local─► task on Node C
+```
+
+Any `node:8080` → IPVS → routed over the `ingress` overlay → a healthy task. Put **any node's IP** behind your LB and it works.
+
+Default for `-p` in Swarm. Want per-node only? `--publish mode=host`.

@@ -1,0 +1,18 @@
+# Orchestration with Swarm
+
+Compose = one host — a single point of failure + capacity ceiling. An **orchestrator** runs containers across a *pool* of hosts.
+
+## The one idea
+
+**Declare a desired state; the cluster reconciles reality to it.**
+
+- **Cluster of nodes** — **managers** run the control plane (raft), **workers** run the containers (**tasks**).
+- **Services, not containers** — ask for "3 replicas of X"; Swarm schedules, self-heals, rolls updates.
+- **Cluster-wide net** — **overlay** (talk by name across hosts) + **routing mesh** (port on every node).
+
+```
+service create --replicas 3 web → tasks on Node A·B·C
+node dies → manager reschedules → back to 3/3
+```
+
+**Docker Swarm** — built in, same `docker` CLI, DCA-tested. Init a cluster, deploy stacks, roll updates, manage secrets + nodes.

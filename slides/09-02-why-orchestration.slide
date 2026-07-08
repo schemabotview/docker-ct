@@ -1,0 +1,22 @@
+# Why orchestration & Swarm vs K8s
+
+Compose's ceiling — five questions it can't answer:
+
+- one host **not enough** capacity? host **dies**?
+- **rolling deploy** without dropping traffic?
+- **secrets** off disk everywhere? cross-host **DNS**?
+
+## An orchestrator answers all five
+
+Manages a **cluster**, accepts a **desired state** ("3 replicas everywhere"), **continuously reconciles** — node dies → replace; new image → roll forward; publish port → route to a healthy replica.
+
+## Swarm vs Kubernetes (both run OCI images)
+
+| | Swarm | Kubernetes |
+|---|---|---|
+| install | `docker swarm init` | kubeadm / EKS — nontrivial |
+| CLI | `docker` | `kubectl` (separate model) |
+| concepts | service, task, stack | pod, Deployment, PVC… (dozens) |
+| ecosystem | small | vast |
+
+**Swarm = simple + instant; K8s = powerful + the prod default.** We teach Swarm (DCA + clearest concepts).

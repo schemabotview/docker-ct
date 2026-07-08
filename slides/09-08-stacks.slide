@@ -1,0 +1,23 @@
+# Stacks — Compose in cluster form
+
+15-flag `service create` lines are Swarm's `docker run`. Fix = **a declarative file.** A **stack** = Compose YAML + a **`deploy:`** block:
+
+```bash
+docker stack deploy -c stack.yaml my-app
+```
+
+```yaml
+services:
+  web:
+    image: myorg/web:1.2.3
+    ports: ["8080:80"]
+    networks: [app-net]
+    deploy:
+      replicas: 3
+      update_config: { parallelism: 1, failure_action: rollback }
+      resources: { limits: { cpus: "0.5", memory: 256M } }
+      placement: { constraints: ["node.role == worker"] }
+networks: { app-net: { driver: overlay } }
+```
+
+Mapping: a service's ***what*** (image/ports/nets) stays as in Compose; its ***how-in-a-cluster*** (replicas, rolling policy, limits, placement) → **`deploy:`** — ignored by `compose up`, honored by `stack deploy`. Version in git, `stack deploy` to apply.

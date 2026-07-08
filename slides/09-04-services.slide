@@ -1,0 +1,22 @@
+# Services, not containers
+
+A **service** is a *declaration*: "N replicas of image X, with these nets/secrets/policy — make it so." Swarm splits it into **tasks** (1/replica) → schedules → containers.
+
+```bash
+docker service create --replicas 3 --name web -p 8080:80 nginx:alpine
+docker service ps web        # tasks + which node each is on
+```
+
+**Self-healing:** a node crashes → manager reschedules its task → back to `3/3`, no human. That loop is the whole point.
+
+## Modes + verbs
+
+- **replicated** (default, N tasks) · **global** (1/node — agents).
+
+| verb | does |
+|---|---|
+| `scale web=5` | change replicas |
+| `update` | change def → **rolling update** |
+| `rollback` / `rm` | revert / delete |
+
+Shift: **don't `stop`/`start` — `scale` (0 = stop) or `update`.** State is desired, not imperative.

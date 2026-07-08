@@ -1,0 +1,9 @@
+Swarm architecture, and initialising a cluster.
+
+A Swarm cluster is a set of Docker hosts, called nodes, talking to each other, each in one of two roles. A manager runs the control plane: it accepts a-p-i calls, like docker service create, schedules tasks, and stores cluster state in a raft log. Managers also run workloads by default. A worker runs the containers, which Swarm calls tasks, that managers assign; workers take no part in control-plane decisions.
+
+So picture three managers, connected to each other by raft, and one of them elected leader. The leader schedules tasks onto a set of workers below them.
+
+The manager count is always odd, one, three, five, or seven, because raft needs a quorum. The cluster tolerates the loss of half, rounded down, of its managers: three managers survive one failure, five survive two. Workers are unlimited, and stateless as far as the control plane is concerned. Three managers is the standard high-availability setup.
+
+Initialising takes one command, on the first manager: docker swarm init, with an advertise-address of this machine's address. That single command turns the local daemon into a manager, generates two join tokens, one for workers and one for managers, starts the raft log with this node as leader, creates the default ingress overlay network, and prints a ready-to-paste worker-join command. On each worker, you run docker swarm join, with the worker token, and the manager's address on port twenty-three seventy-seven. You can re-print, or rotate, tokens later with docker swarm join-token. The cluster uses port twenty-three seventy-seven for management, seventy-nine forty-six for gossip, and forty-seven eighty-nine for the overlay. Open those between the nodes, and a cluster is about two minutes of work.
