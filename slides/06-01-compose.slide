@@ -1,0 +1,19 @@
+## Docker Compose & multi-container apps
+
+A real app is rarely one container — web **and** db **and** cache, wired with a network, volumes, env, and order. By hand: a page of `docker run` flags.
+
+## The fix
+
+**Describe the whole stack once, bring it up with one command.**
+
+```
+compose.yaml ─► docker compose up ─► web + db + cache
+(declare)                            (all wired)
+```
+
+## The module is one YAML file
+
+- **Shape** — `services:` + optional `networks:` / `volumes:` + per-service keys.
+- **Robust** — real order via healthchecks, tiered nets, layered config, gotchas.
+
+**Single-host tool** — brilliant for dev + small deploys, **not** a cluster orchestrator (that's Swarm / K8s, module 09).

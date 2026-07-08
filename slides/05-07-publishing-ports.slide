@@ -1,4 +1,4 @@
-## Publishing ports
+# Publishing ports
 
 Container ports are **private** by default. **Publish** to let traffic in:
 
@@ -7,8 +7,6 @@ docker run -d -p 8080:80 nginx:alpine
 ```
 
 "Host's 8080 → container's 80." Then `curl localhost:8080` hits it. **Host left, container right** — the classic mix-up.
-
-## The variations
 
 - **`-p 8080:80`** — all interfaces (`0.0.0.0`), reachable network-wide.
 - **`-p 127.0.0.1:8080:80`** — **localhost only**. Safer for dev.

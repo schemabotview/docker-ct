@@ -1,0 +1,22 @@
+## Why Compose
+
+A normal app — web + Postgres + Redis + worker — by hand is **four `docker run` lines** plus:
+
+- a network connecting them
+- named volumes (DB data, cache)
+- shared env vars
+- a startup order (DB before web)
+- port maps (only web exposed)
+
+A bash script *can* do it. It's miserable to maintain.
+
+## The fix
+
+**One `compose.yaml` declares the desired state**; `up` brings it up, `down` tears it down, git holds it. A teammate clones and runs the identical stack.
+
+## What it is / isn't
+
+- **Is** — local dev + single-host deploy; N containers, one daemon, declarative.
+- **Isn't** — a cluster orchestrator (Swarm / K8s).
+
+`docker-compose` (v1, hyphen) is dead → **`docker compose`** (v2, space).
