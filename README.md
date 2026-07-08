@@ -14,8 +14,8 @@ the plan we author against; the machine source of truth for structure is `manife
 **Status:** scaffolded + scene ported + full section spine settled (10 modules × 10 =
 **100 sections**, all mapped to a real `dk-*` scene node). The `docker` scene is **ported into
 graphl-movie** (`src/scenes/docker.ts`, registered + `catalog.ts` `docker` concept entry).
-**Modules 01–07 authored end-to-end** (70 sections: `.ipynb` + `.slide` + `.tts`) and wired in
-`manifest.json`; **modules 01–06 pushed**. Next: modules 08–10, one at a time — split from the
+**Modules 01–08 authored end-to-end** (80 sections: `.ipynb` + `.slide` + `.tts`) and wired in
+`manifest.json`; **modules 01–07 pushed**. Next: modules 09–10, one at a time — split from the
 matching `../docker-content` notebook. `audio/` stays empty until the **owner** generates the
 `.wav`s from `tts/` via Colab. (Slides lead with a single `#` title; `##` for sub-labels.)
 
@@ -197,9 +197,10 @@ Frames the `dk-registry` column. Source: 12 content headings → 10. Authored en
 | 9 | Mirroring & pull-through caching | `07-09-mirroring-caching` | `dk-registry` → `dk-private` |
 | 10 | Garbage collection & image scanning | `07-10-gc-and-scanning` | `dk-security` → `dk-sec-scan` |
 
-### 08 — Security, Secrets & Hardening  ⏳ draft (proposed 10)
+### 08 — Security, Secrets & Hardening  ✅ authored (10)
 Frames the `dk-security` block with the `dk-container` kernel primitives (`dk-ns-*`/`dk-caps`).
-Source: 15 content headings → 10.
+Source: 15 content headings → 10. Authored end-to-end (`.ipynb` + `.slide` + `.tts`) and wired
+in `manifest.json`.
 
 | # | Section | slug | focus → highlight |
 |---|---|---|---|

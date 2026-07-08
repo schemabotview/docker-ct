@@ -1,0 +1,9 @@
+A read-only root filesystem, and no-new-privileges.
+
+Two cheap, high-leverage flags that, together, blunt most post-compromise behaviour, meaning what an attacker can do after landing in your container.
+
+First, a read-only root filesystem. Most apps don't need to write to most of their filesystem; they write to a few specific paths, like logs, caches, and uploads. Marking the rest read-only blocks a whole class of attacks: dropping a webshell, modifying binaries, tampering with config. You run with the read-only flag, plus a couple of temp-filesystem mounts, plus a volume. The read-only flag freezes the root filesystem. The temp-filesystem mounts give back the specific writable scratch paths apps expect, like slash t-m-p, and process-I-D files in slash var slash run, as memory. And the volume keeps what you actually want persisted. A few minutes of, what does this app write, audit buys a much smaller attack surface.
+
+Second, no-new-privileges. Normally, executing a set-user-I-D binary can elevate a process. This flag tells the kernel: ignore set-user-I-D bits for this process tree; it can never gain privileges beyond what it started with. It breaks sudo, mount, and other set-user-I-D tools inside the container, which, for an app container, is a feature: an attacker who lands there can't set-user-I-D their way to root.
+
+Combined with the earlier moves, this is the hardened baseline, in Compose. You set the user to a non-root user-I-D. You set read-only to true. You add temp-filesystem mounts for slash t-m-p and slash var slash run. You drop all capabilities. And you set the no-new-privileges security option to true. Non-root, read-only, no capabilities, no escalation: a stack of independent walls, each one a single line.

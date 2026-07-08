@@ -1,0 +1,21 @@
+# Read-only rootfs & `no-new-privileges`
+
+Two cheap flags that blunt most *post-compromise* behaviour.
+
+## `--read-only` rootfs
+
+Apps write to a few paths (logs, caches). Freeze the rest → no webshell drop, no binary tampering.
+
+```bash
+docker run --read-only --tmpfs /tmp -v applogs:/app/logs myorg/api
+```
+
+`--tmpfs` gives back the specific writable scratch (`/tmp`, `/var/run`) in RAM; volumes keep what persists.
+
+## `no-new-privileges`
+
+Kernel ignores **setuid** bits → no privilege gain. Breaks `sudo`/`mount` — a *feature* for app containers.
+
+## The hardened baseline
+
+`user` non-root · `read_only: true` · `tmpfs` · `cap_drop: [ALL]` · `no-new-privileges` — independent walls, each a one-liner.

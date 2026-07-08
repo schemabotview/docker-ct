@@ -1,0 +1,9 @@
+Linux capabilities.
+
+Linux splits the all-powerful root into about forty capabilities, individual privileges, like, bind a low port, or, change file ownership. Docker's default already drops about half, but the roughly fourteen it keeps still include some that have enabled escapes, like net-raw, set-user-I-D, and d-a-c-override. The hardened move is to drop everything, and then add back only what the app actually needs. So you run with cap-drop equals all, and cap-add equals, say, net-bind-service.
+
+For most application code, the add-back list is nothing at all; plain code needs no capabilities. Here are a few you might restore. Net-bind-service, for binding ports below one thousand twenty-four, which n-ginx or Apache need when running as non-root. Chown, for changing ownership beyond your own user-I-D, used by init scripts that fix ownership. Set-user-I-D and set-group-I-D, for servers that bind a port and then drop privileges. And net-admin, for configuring network interfaces, in v-p-n or network tools.
+
+In Compose, it's the same idea, declaratively: a cap-drop of all, and a cap-add list with just the ones you need.
+
+The principle is least privilege, made concrete. Instead of reasoning about which of forty powers are dangerous, you start from zero powers, and justify each one you add. It pairs naturally with running non-root: a non-root process, with all capabilities dropped, can do almost nothing beyond its own job, which is exactly the point. Cap-drop equals all, with an empty add list, should be your default, relaxed only when the app genuinely fails without a specific capability.

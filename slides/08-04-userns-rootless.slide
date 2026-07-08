@@ -1,0 +1,23 @@
+# User-ns remapping & rootless
+
+Change *who container-root maps to on the host* → a breakout gets less.
+
+## userns-remap
+
+Container UID 0 → host UID 100000, so container "root" is unprivileged on the host. A CVE breakout lands **unprivileged**.
+
+```json
+{ "userns-remap": "default" }
+```
+
+Trade-offs: all containers share one range; bind mounts get fiddly; `--privileged` incompatible. **Off for dev; on for less-trusted servers.**
+
+## Rootless Docker
+
+The **whole daemon** runs as your user — **no root daemon to compromise**. A breakout gets only *your* UID.
+
+```bash
+dockerd-rootless-setuptool.sh install
+```
+
+Trade-offs: slower net (`slirp4netns`), no `--network host` / `--privileged`, needs cgroup v2. Ideal for **shared dev hosts + CI runners**.

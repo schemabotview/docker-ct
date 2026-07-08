@@ -1,0 +1,20 @@
+# The container threat model
+
+**A container is process isolation, not a security boundary.** For hostile untrusted code, use VMs / gVisor / Kata.
+
+## Protects by default
+
+- files (**mount** ns) · processes (**PID** ns)
+- resources (**cgroups**) · host ports (**net** ns)
+
+## Does *not* protect against
+
+- **root** escaping via a kernel **CVE** (several/yr)
+- **`--privileged`** → anything to the host
+- `CAP_SYS_ADMIN` mounting host filesystems
+
+## The toolbox
+
+**namespaces** isolate · **cgroups** limit · **capabilities** slice root (~40) · **seccomp** filters syscalls · **AppArmor/SELinux** = MAC · **userns** remaps UIDs.
+
+Docker's **default** already drops ~26 caps + blocks ~50 syscalls. The module turns each dial toward **least privilege**.

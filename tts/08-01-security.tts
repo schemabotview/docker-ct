@@ -1,0 +1,13 @@
+Security, secrets, and hardening.
+
+Module seven ended on scanning, which is about detecting what's wrong in an image. This module is the other half: shrinking the attack surface, so there's less to go wrong, and handling secrets, so that credentials don't leak. It's the difference between a container that merely runs, and one you'd actually put on the internet.
+
+The module lives across the security block and the container's kernel primitives, and it's organised as a threat model, followed by a stack of defences.
+
+First, know the boundary. A container is a process-isolation mechanism, not a hard security boundary. It shares the host kernel. So every defence here is about making a breakout harder, and less useful, not about pretending the wall is unbreakable.
+
+Second, reduce privilege, layer by layer. Don't run as root. Remap, or go rootless. Drop capabilities. Filter system calls with seccomp. Add mandatory access control, with app-armor or s-e-linux. Make the root filesystem read-only, and block privilege escalation. Each is a small, independent step, and together they form the hardened baseline.
+
+Third, handle secrets properly. Environment variables are not secret; use mounted secret files instead. And prove where an image came from, with signing, software bills of materials, and attestations.
+
+So the shape is this: you take a container, and drop capabilities, apply seccomp, run as non-root, and make it read-only, all of which shrink the surface. Then you add secrets as files, not environment variables, plus signed images and a bill of materials, which gives you a trusted supply chain. By the end, you'll build the hardened service: pinned by digest, non-root, no capabilities, read-only, secrets as files. The config you can actually defend in a review.

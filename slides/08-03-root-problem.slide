@@ -1,0 +1,25 @@
+# The "root in container" & non-root
+
+Default: the main process is **root (UID 0) in its namespace** — and UID 0 in the container *is* UID 0 on the host.
+
+## Why it's not harmless
+
+- **root's reach** — edits root-owned host bind-mounts, uses any held **capability**, reads its own env secrets
+- **escape** — a kernel **CVE** → host context
+
+## The fix: don't run as root
+
+**Dockerfile** — dedicated user *after* root steps:
+
+```dockerfile
+RUN useradd --system --uid 10001 appuser
+USER appuser
+```
+
+High UID (10001), not `nobody`. **Run time** — `-u` overrides:
+
+```bash
+docker run -u "$(id -u):$(id -g)" -v "$(pwd)":/work alpine
+```
+
+That second form cures the bind-mount ownership gotcha (module 04). **Highest-value step** — everything later assumes it.

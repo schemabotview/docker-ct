@@ -1,0 +1,9 @@
+The container threat model.
+
+Before stacking defences, be clear about what a container is. A container is a process-isolation mechanism, not a security boundary. It keeps workloads from tripping over each other on a shared kernel. It is not designed to safely host hostile, untrusted code on a multi-tenant kernel; that's what virtual machines, and sandboxes like g-visor and Kata Containers, are for. Every technique in this module assumes that framing.
+
+What does container isolation protect against by default? These are the module-one primitives doing their job. One container reading or altering another's files, because each has its own mount namespace. One container seeing another's processes, because each has its own process-I-D namespace. One container hogging all the processor and memory, because see-groups cap resources per container. And one container binding the host's privileged ports, because of the network namespace.
+
+What does it not protect against, by default? A container running as root escaping via a kernel vulnerability, and several of those land every year. A privileged container doing essentially anything to the host. And a container with the sys-admin capability mounting host filesystems.
+
+The kernel primitives are the toolbox. Namespaces isolate the views. See-groups limit resources. Capabilities slice root into about forty fine-grained privileges. Seccomp allow-lists or block-lists system calls. App-armor and s-e-linux add mandatory access control. And user namespaces remap container user-I-Ds to unprivileged host user-I-Ds. Docker's default config is already far tighter than running the process bare on the host; it drops about twenty-six of forty capabilities, and blocks around fifty system calls, right out of the box. The rest of this module is about turning the remaining dials, from default toward least privilege, one primitive per section.

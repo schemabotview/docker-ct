@@ -1,0 +1,17 @@
+# Security, secrets & hardening
+
+Module 07 *detected* problems. This module **shrinks the attack surface** + handles **secrets** — a container you'd put on the internet.
+
+## Know the boundary
+
+A container is **process isolation, not a hard wall** — it shares the host kernel. Every defence makes a breakout *harder + less useful*, not impossible.
+
+## Reduce privilege, layer by layer
+
+non-**root** → remap / **rootless** → drop **caps** → **seccomp** → **AppArmor/SELinux** → **read-only** + **no-new-privileges**. Independent one-liners = the hardened baseline.
+
+## Secrets & supply chain
+
+Env vars **aren't** secret → mounted **files**. Prove origin with **signing** + **SBOMs**.
+
+By the end: the hardened service — pinned, non-root, no caps, read-only, secrets as files.

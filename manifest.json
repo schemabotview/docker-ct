@@ -851,6 +851,131 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "08-security-secrets-and-hardening",
+      "title": "Security, Secrets & Hardening",
+      "sections": [
+        {
+          "heading": "Security, secrets & hardening",
+          "notebook": "notebooks/08-01-security.ipynb",
+          "slide": "slides/08-01-security.slide",
+          "audio": "audio/08-01-security.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "The container threat model",
+          "notebook": "notebooks/08-02-threat-model.ipynb",
+          "slide": "slides/08-02-threat-model.slide",
+          "audio": "audio/08-02-threat-model.wav",
+          "scene": "docker",
+          "focus": "dk-container",
+          "highlight": [
+            "dk-ns-pid",
+            "dk-cgroups"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The \"root in container\" & running as non-root",
+          "notebook": "notebooks/08-03-root-problem.ipynb",
+          "slide": "slides/08-03-root-problem.slide",
+          "audio": "audio/08-03-root-problem.wav",
+          "scene": "docker",
+          "focus": "dk-container",
+          "highlight": [
+            "dk-ns-user"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "User-namespace remapping & rootless Docker",
+          "notebook": "notebooks/08-04-userns-rootless.ipynb",
+          "slide": "slides/08-04-userns-rootless.slide",
+          "audio": "audio/08-04-userns-rootless.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-rootless"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Linux capabilities",
+          "notebook": "notebooks/08-05-capabilities.ipynb",
+          "slide": "slides/08-05-capabilities.slide",
+          "audio": "audio/08-05-capabilities.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-capsdrop"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Seccomp profiles",
+          "notebook": "notebooks/08-06-seccomp.ipynb",
+          "slide": "slides/08-06-seccomp.slide",
+          "audio": "audio/08-06-seccomp.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-seccomp"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "AppArmor & SELinux",
+          "notebook": "notebooks/08-07-apparmor-selinux.ipynb",
+          "slide": "slides/08-07-apparmor-selinux.slide",
+          "audio": "audio/08-07-apparmor-selinux.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-apparmor"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Read-only rootfs & `no-new-privileges`",
+          "notebook": "notebooks/08-08-readonly-nonewprivs.ipynb",
+          "slide": "slides/08-08-readonly-nonewprivs.slide",
+          "audio": "audio/08-08-readonly-nonewprivs.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-readonly"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Secrets — and why env vars aren't secret",
+          "notebook": "notebooks/08-09-secrets.ipynb",
+          "slide": "slides/08-09-secrets.slide",
+          "audio": "audio/08-09-secrets.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-secrets"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Supply-chain — signing, SBOMs & the hardened service",
+          "notebook": "notebooks/08-10-supply-chain.ipynb",
+          "slide": "slides/08-10-supply-chain.slide",
+          "audio": "audio/08-10-supply-chain.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-sbom",
+            "dk-sec-scan"
+          ],
+          "spine": true
+        }
+      ]
     }
   ]
 }

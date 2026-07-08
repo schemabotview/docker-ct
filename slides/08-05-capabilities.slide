@@ -1,0 +1,24 @@
+# Linux capabilities
+
+Root split into ~40 **capabilities** (individual privileges). Docker's default keeps ~14 — some risky (`NET_RAW`, `SETUID`).
+
+## Drop all, add back what's needed
+
+```bash
+docker run --cap-drop=ALL --cap-add=NET_BIND_SERVICE myorg/api
+```
+
+For most app code the add-back list is **nothing**.
+
+| Cap | For |
+|---|---|
+| `NET_BIND_SERVICE` | ports < 1024 |
+| `CHOWN` | fix ownership |
+| `SETUID`/`SETGID` | drop privs after start |
+
+```yaml
+cap_drop: [ALL]
+cap_add: [NET_BIND_SERVICE]
+```
+
+**Least privilege made concrete** — start from *zero* powers, justify each. `--cap-drop=ALL` should be your default. Pairs with non-root: a non-root process with no caps can do almost nothing beyond its job.

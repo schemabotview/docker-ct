@@ -1,0 +1,7 @@
+Seccomp profiles.
+
+Seccomp, which stands for secure computing mode, is a kernel feature that filters which system calls a process may make. It's a layer below capabilities. Where a capability gates a privilege, seccomp gates the individual system calls themselves. Docker applies its default profile to every container, automatically, blocking about fifty system calls that have a history of vulnerabilities, or have no place in a normal app, things like mount, un-mount, key-control, and reboot.
+
+For most containers, the default is enough; you rarely touch seccomp. To tighten further, you point at a custom, allow-list profile, with the security-option seccomp flag and a path to your profile. A custom profile lets through only the system calls your app actually uses. Tools like falco, or the o-c-i seccomp b-p-f hook, can trace the app under normal load, and emit a minimal profile automatically. This is the tightest system-call filtering you can apply, but it's high-effort, so reserve it for genuinely sensitive workloads.
+
+And here's the anti-pattern to resist: disabling seccomp entirely, by setting the seccomp profile to unconfined. This is the, it didn't work, so I turned it off, fix that you'll see all over Stack Overflow. It removes an entire defensive layer, just to paper over one blocked system call. The right move is the opposite: find which system call is blocked, and either fix the app, or add that one call to the profile. Seccomp is on by default for a reason. Keep it on, and tune it, rather than removing it.

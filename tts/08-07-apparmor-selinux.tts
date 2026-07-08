@@ -1,0 +1,9 @@
+App-armor, and s-e-linux.
+
+App-armor and s-e-linux are the two mandatory-access-control systems that Linux distributions ship. They sit on top of ordinary file permissions and capabilities, deciding which paths, capabilities, and operations a process may perform, a policy that the process, even as root, cannot override. Where capabilities and seccomp constrain privileges and system calls, mandatory access control constrains access to resources, by policy.
+
+App-armor, on Ubuntu and Debian, is path-based. Docker ships a docker-default profile, applied automatically when app-armor is enabled. It stops containers writing to most of the process filesystem, mounting filesystems, and doing raw networking. You can override it with a custom profile, using the security-option app-armor flag, when you must.
+
+S-e-linux, on Red Hat, Fedora, and CentOS, is label-based. It uses type enforcement: every file and process gets a label, and only matching labels may interact. Docker sets container labels with the security-option label flag.
+
+The practical guidance here is different from the earlier sections: you usually don't touch either one. They're applied by default, and the defaults are correct. You reach for a custom profile only when an audit asks, why does this container have access it doesn't need? Then you tighten. Two things are worth internalising. First, which system you get is distro-dependent: app-armor on the Debian family, s-e-linux on the Red Hat family. And second, both are defense in depth, an extra wall that catches what a dropped capability, or a seccomp rule, missed. If you have no specific reason to override, leave the defaults on, and move to the higher-leverage moves: a read-only root filesystem, and blocking privilege escalation, which are next.

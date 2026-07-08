@@ -1,0 +1,11 @@
+The root-in-container problem, and running as non-root.
+
+By default, a container's main process runs as root, user-I-D zero, inside its namespace. People wave this away with, it's just root inside the container. It mostly isn't harmless. Root in the container can modify any file in the container's filesystem, including host files bind-mounted in as root. It can use any capability the container still holds, which is a lot in the default config. It can exploit a kernel vulnerability to escape into host context. And it can read its own secrets, including anything passed as an environment variable.
+
+And files it writes to a bind-mounted host directory are owned by user-I-D zero on the host; that's the module-four ownership gotcha. So root-in-container, plus a host mount, is effectively root over those host files. User-I-D zero in the container is user-I-D zero on the host; they share the user namespace.
+
+The fix is mundane, and effective: don't run as root. Most apps don't need to. You set the user in two places.
+
+In the docker file, create a dedicated system user, after the steps that need root. Use user-add to make a system user with a high user-I-D like ten thousand and one, then the user instruction to switch to it. Pick a high user-I-D that won't collide with host user-I-Ds, and don't reuse nobody. And put the user instruction after your package installs and ownership fixes that need root.
+
+At run time, the dash u flag overrides the image's user. You can run as a fixed user-I-D, or, very usefully, run as your own host user, with dash u and your user and group I-Ds. That second form is the standard cure for the bind-mount ownership problem: run as your host user-I-D, and the files the container creates belong to you. Non-root is the single highest-value hardening step; everything later assumes it.

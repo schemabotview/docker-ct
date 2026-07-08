@@ -1,0 +1,23 @@
+# Seccomp profiles
+
+**seccomp** filters *which syscalls* a process may make — a layer below capabilities (caps gate privileges; seccomp gates the syscalls themselves).
+
+Docker applies **`default.json`** to every container automatically — blocks ~50 CVE-prone syscalls (`mount`, `keyctl`, `reboot`…).
+
+## Tightening
+
+For most containers the **default is enough**. Custom allow-list profile:
+
+```bash
+docker run --security-opt seccomp=./my-profile.json myorg/api
+```
+
+`falco` / `oci-seccomp-bpf-hook` trace the app and emit a minimal profile. High-effort — reserve for sensitive workloads.
+
+## The anti-pattern
+
+```bash
+docker run --security-opt seccomp=unconfined …   # DON'T
+```
+
+The "turned it off to fix it" trap. Find the **one** blocked syscall + add it — don't drop the whole layer.

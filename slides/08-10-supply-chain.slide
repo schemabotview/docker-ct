@@ -1,0 +1,24 @@
+# Supply chain & the hardened service
+
+Trust the **image itself**: from us? what's inside?
+
+## Signing — "from us?"
+
+**Cosign** (Sigstore): `cosign sign/verify --key … <ref>`, stored against the digest. K8s admission (Kyverno) can **refuse unsigned**.
+
+## SBOM + provenance — "what & how?"
+
+`docker buildx build --sbom=true --provenance=true …` → **SBOM** = packages/licenses, **provenance** = Dockerfile + commit + base. **SLSA** grades the chain.
+
+## The hardened service
+
+```yaml
+image: …@sha256:…      # pinned (m07)
+user: "10001:10001"    # non-root
+read_only: true
+cap_drop: [ALL]
+security_opt: [no-new-privileges:true]
+secrets: [db_password] # file, not env
+```
+
+Signed, pinned, non-root, read-only, no caps — defensible in review.

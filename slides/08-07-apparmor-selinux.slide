@@ -1,0 +1,19 @@
+# AppArmor & SELinux
+
+The two **Mandatory Access Control (MAC)** systems — policy *on top of* file perms + caps that even root can't override. Caps gate privileges, seccomp gates syscalls; **MAC gates access to resources.**
+
+## AppArmor (Ubuntu/Debian) — path-based
+
+Docker's **`docker-default`** profile applies automatically: blocks writes to most of `/proc`, mounts, raw net.
+
+```bash
+docker run --security-opt apparmor=my-profile …
+```
+
+## SELinux (RHEL/Fedora) — label-based
+
+Type enforcement: every file + process labelled; only matching labels interact.
+
+## The guidance
+
+**You usually don't touch either** — defaults are correct; tighten only on an audit. Which you get is **distro-dependent**. Both = defense in depth. Leave on; move to read-only + no-new-privileges.

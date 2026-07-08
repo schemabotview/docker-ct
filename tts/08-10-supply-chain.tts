@@ -1,0 +1,9 @@
+The supply chain: signing, bills of materials, and the hardened service.
+
+The final layer isn't about the running container, but about trusting the image itself: was it really built by your continuous integration, and what's inside it?
+
+Image signing answers, did this come from us? Co-sign, from the Sigstore project, is the modern standard. You sign with a key, or keyless, using GitHub's identity, and the signature is stored in the registry against the image's digest. Then you verify with the public key. Kubernetes admission controllers, like Kyverno or Connaisseur, can then refuse unsigned images. The older content-trust path, based on Notary version one, still exists, but it's largely superseded by co-sign.
+
+Bills of materials, and provenance, answer, what's in it, and how was it built? A software bill of materials, in the s-p-d-x or cyclone-d-x format, lists every package, version, and license. A provenance attestation records the docker file, the source commit, the base image, and the build arguments. Build-kit emits both, when you build with the s-b-o-m and provenance flags. Both attach as separate artifacts, referenced from the manifest, so a consumer can scan or verify without running the image. And s-l-s-a is the framework that grades how trustworthy that build chain is.
+
+Finally, putting it all together, the hardened service, with every module-eight idea in one Compose block. The image is pinned by digest, from module seven. The user is non-root. Read-only is true. There are temp-filesystem mounts. All capabilities are dropped, and just net-bind-service is added back. No-new-privileges is on. The database password comes in as a secret file, not an environment variable. And there's a restart policy. Signed and bill-of-materials'd upstream, pinned by digest, non-root, read-only, no capabilities, no escalation, secrets as files: a container you can defend in a review. That's the whole module, in one manifest.
