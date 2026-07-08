@@ -13,6 +13,123 @@
           "scene": "docker",
           "spine": true,
           "role": "hook"
+        },
+        {
+          "heading": "Containers vs. virtual machines",
+          "notebook": "notebooks/01-02-containers-vs-vms.ipynb",
+          "slide": "slides/01-02-containers-vs-vms.slide",
+          "audio": "audio/01-02-containers-vs-vms.wav",
+          "scene": "docker",
+          "focus": "dk-container",
+          "highlight": [
+            "dk-ns-pid",
+            "dk-cgroups"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Installing Docker & the daemon",
+          "notebook": "notebooks/01-03-install-and-daemon.ipynb",
+          "slide": "slides/01-03-install-and-daemon.slide",
+          "audio": "audio/01-03-install-and-daemon.wav",
+          "scene": "docker",
+          "focus": "dk-host",
+          "highlight": [
+            "dk-dockerd"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The client / daemon architecture",
+          "notebook": "notebooks/01-04-client-daemon-arch.ipynb",
+          "slide": "slides/01-04-client-daemon-arch.slide",
+          "audio": "audio/01-04-client-daemon-arch.wav",
+          "scene": "docker",
+          "focus": "dk-host",
+          "highlight": [
+            "dk-cli",
+            "dk-dockerd",
+            "dk-containerd",
+            "dk-runc"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Your first container — `docker run`",
+          "notebook": "notebooks/01-05-first-run.ipynb",
+          "slide": "slides/01-05-first-run.slide",
+          "audio": "audio/01-05-first-run.wav",
+          "scene": "docker",
+          "focus": "dk-cli",
+          "highlight": [
+            "dk-run",
+            "dk-container"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Images vs. containers",
+          "notebook": "notebooks/01-06-images-vs-containers.ipynb",
+          "slide": "slides/01-06-images-vs-containers.slide",
+          "audio": "audio/01-06-images-vs-containers.wav",
+          "scene": "docker",
+          "focus": "dk-images",
+          "highlight": [
+            "dk-image"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Pulling from a registry",
+          "notebook": "notebooks/01-07-pull-from-registry.ipynb",
+          "slide": "slides/01-07-pull-from-registry.slide",
+          "audio": "audio/01-07-pull-from-registry.wav",
+          "scene": "docker",
+          "focus": "dk-registry",
+          "highlight": [
+            "dk-hub",
+            "dk-reg-pull"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Listing & inspecting — `ps`, `images`",
+          "notebook": "notebooks/01-08-listing-inspecting.ipynb",
+          "slide": "slides/01-08-listing-inspecting.slide",
+          "audio": "audio/01-08-listing-inspecting.wav",
+          "scene": "docker",
+          "focus": "dk-cli",
+          "highlight": [
+            "dk-ps",
+            "dk-inspect"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Container lifecycle — start / stop / rm",
+          "notebook": "notebooks/01-09-lifecycle.ipynb",
+          "slide": "slides/01-09-lifecycle.slide",
+          "audio": "audio/01-09-lifecycle.wav",
+          "scene": "docker",
+          "focus": "dk-lifecycle",
+          "highlight": [
+            "dk-start",
+            "dk-stop",
+            "dk-rm"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Getting help & the docker CLI shape",
+          "notebook": "notebooks/01-10-cli-and-help.ipynb",
+          "slide": "slides/01-10-cli-and-help.slide",
+          "audio": "audio/01-10-cli-and-help.wav",
+          "scene": "docker",
+          "focus": "dk-cli",
+          "highlight": [
+            "dk-cli"
+          ],
+          "spine": true
         }
       ]
     }

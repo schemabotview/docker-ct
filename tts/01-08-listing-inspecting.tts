@@ -1,0 +1,11 @@
+Listing and inspecting containers and images.
+
+Once you've run a few containers, you need to see what's on your machine. Modern Docker organises its commands as an object, then a verb. You name what kind of thing you mean, a container, an image, a volume, a network, and then what to do with it. So docker container list, lists containers, and docker image list, lists images. For the most common objects, Docker keeps short aliases. Docker p-s is the same as docker container list, and docker images is the same as docker image list. You'll see the short forms everywhere.
+
+Let's list containers. Docker p-s, on its own, shows only the running containers. Add dash a, and it shows all of them, including the ones that have stopped or exited. The columns that matter are the container I-D, the image, the status, which reads something like up three minutes or exited zero one minute ago, the ports, and the names. Here's the key point: a container that has vanished from docker p-s is not gone. It simply exited, and dash a reveals it.
+
+Listing images is similar. Docker images shows the repository, the tag, the image I-D, and the size, so you can see what's cached and what it's costing you on disk.
+
+To look closer at any one thing, use docker inspect. Give it a container or image name, and it dumps the full details as j-son: every mount, every network, every environment variable, every config value. That's a lot, so you'll usually pull out just one field with the format flag. For example, you can ask for just the state's status, or just the network's eye-pee address.
+
+And to see disk usage at a glance, there's docker system d-f, which is like the Unix d-f command, but for Docker's images, containers, and volumes. All of these verbs, p-s, images, inspect, and system d-f, are read-only. They're how you orient yourself before you change anything.

@@ -1,0 +1,21 @@
+# The client / daemon architecture
+
+`docker` is a thin **client**. It does no work — it sends a **REST API** call to the **daemon**.
+
+## The stack
+
+```
+docker CLI ──REST──► dockerd ──gRPC──► containerd ──► runc
+(client)             (daemon)          (supervisor)   (ns+cgroups)
+```
+
+- **dockerd** — the brain: images, networks, volumes, builds, all state.
+- **containerd** — runtime supervisor (CNCF), tracks running containers.
+- **runc** — talks to the kernel, makes namespaces + cgroups, execs PID 1, exits.
+
+## Two consequences
+
+- **The client is remote-able** — point `DOCKER_HOST` at another machine's daemon and the same CLI drives it.
+- **The daemon runs as root** — so socket access ≈ **root on the host** (a security point for module 08).
+
+Kill the daemon → every `docker` command fails, even if containers keep running.

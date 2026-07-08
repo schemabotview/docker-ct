@@ -74,20 +74,21 @@ highlight" column names the `dk-*` node(s) each section frames. These are the ag
 content is then **authored one reviewed slice at a time** (see the working agreement in
 `CLAUDE.md`), and `manifest.json` becomes the machine source of truth once authored.
 
-### 01 — Getting Started with Docker  ⏳ draft (proposed 10)
+### 01 — Getting Started with Docker  ✅ authored (10)
 Establishes "you are here" on the whole map — what Docker is, the client → daemon → image →
-container flow, and the first commands.
+container flow, and the first commands. Authored end-to-end (`.ipynb` + `.slide` + `.tts`) and
+wired in `manifest.json` (the authoritative `focus`/`highlight` below).
 
 | # | Section | slug | focus → highlight |
 |---|---|---|---|
 | 1 | What Docker is — and the shape of the whole platform | `01-01-what-docker-is` | **hook** — whole map |
 | 2 | Containers vs. virtual machines | `01-02-containers-vs-vms` | `dk-container` → `dk-ns-pid`,`dk-cgroups` |
 | 3 | Installing Docker & the daemon | `01-03-install-and-daemon` | `dk-host` → `dk-dockerd` |
-| 4 | The client / daemon architecture | `01-04-client-daemon-arch` | `dk-client` → `dk-cli` |
-| 5 | Your first container — `docker run` | `01-05-first-run` | `dk-run` → `dk-container` |
+| 4 | The client / daemon architecture | `01-04-client-daemon-arch` | `dk-host` → `dk-cli`,`dk-dockerd`,`dk-containerd`,`dk-runc` |
+| 5 | Your first container — `docker run` | `01-05-first-run` | `dk-cli` → `dk-run`,`dk-container` |
 | 6 | Images vs. containers | `01-06-images-vs-containers` | `dk-images` → `dk-image` |
-| 7 | Pulling from a registry | `01-07-pull-from-registry` | `dk-registry` → `dk-hub` |
-| 8 | Listing & inspecting — `ps`, `images` | `01-08-listing-inspecting` | `dk-cli` → `dk-ps` |
+| 7 | Pulling from a registry | `01-07-pull-from-registry` | `dk-registry` → `dk-hub`,`dk-reg-pull` |
+| 8 | Listing & inspecting — `ps`, `images` | `01-08-listing-inspecting` | `dk-cli` → `dk-ps`,`dk-inspect` |
 | 9 | Container lifecycle — start/stop/rm | `01-09-lifecycle` | `dk-lifecycle` → `dk-start`,`dk-stop`,`dk-rm` |
 | 10 | Getting help & the docker CLI shape | `01-10-cli-and-help` | `dk-cli` |
 

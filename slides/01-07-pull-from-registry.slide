@@ -1,0 +1,25 @@
+# Pulling from a registry
+
+A **registry** stores and serves images. Default: **Docker Hub**.
+
+```bash
+docker pull nginx:1.27
+```
+
+The daemon downloads the image's **layers** (skipping any you have), caches them locally — then `docker run` starts instantly, offline.
+
+## Reading an image reference
+
+```
+registry-1.docker.io / library / nginx : 1.27
+└── registry ──────┘  └namespace┘ └name┘ └tag┘
+```
+
+- **registry** — defaults to Docker Hub.
+- **namespace** — the owner; official images live under `library/` (never typed).
+- **name** — the repository.
+- **tag** — a version label, defaults to **`latest`**.
+
+`latest` is just a **conventional tag**, *not* magically newest — **pin real versions** in production.
+
+So `nginx` means `docker.io/library/nginx:latest`. Pull = download; **push** = upload (module 07).

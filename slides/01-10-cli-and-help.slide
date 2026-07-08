@@ -1,0 +1,27 @@
+# Getting help & the CLI shape
+
+You won't memorise every flag — the CLI is regular and its help is excellent.
+
+## The shape
+
+`docker <object> <verb> [flags] [args]`
+
+Know the objects (container · image · volume · network · system · compose · swarm …) and verbs repeat: **ls · inspect · rm · prune**. So `docker volume ls` behaves like `docker network ls`.
+
+## Help, three levels deep
+
+- **`docker --help`** — all objects.
+- **`docker <object> --help`** — its verbs.
+- **`docker run --help`** — every flag (the most-read page in Docker).
+
+Then **docs.docker.com** + each image's Hub README.
+
+## Cleaning up
+
+```bash
+docker system prune          # stopped ctrs, dangling images, unused nets
+docker system prune -a       # + ALL unused images
+docker system prune -a --volumes   # + volumes — DATA LOSS
+```
+
+Habit: **`<command> --help` first**, docs second.

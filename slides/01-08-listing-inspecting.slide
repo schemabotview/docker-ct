@@ -1,0 +1,23 @@
+# Listing & inspecting — `ps`, `images`
+
+Commands read **object then verb**: `docker <object> <verb>`. The everyday ones have short aliases.
+
+## See what's there
+
+- **`docker ps`** — *running* containers · **`docker ps -a`** — *all*, incl. stopped.
+- **`docker images`** — cached images + `SIZE`.
+
+A container gone from `ps` isn't deleted — it **exited**; `-a` reveals it. Watch the `STATUS` column (`Up 3 min` vs `Exited (0)`).
+
+## Look closer
+
+```bash
+docker inspect --format '{{.State.Status}}' web
+docker inspect --format '{{.NetworkSettings.IPAddress}}' web
+```
+
+**`inspect`** dumps full JSON — every mount, network, env var. **`--format`** pulls one field.
+
+**`docker system df`** — like Unix `df`, but for images / containers / volumes.
+
+These read-only verbs — **ps · images · inspect · system df** — orient you *before* you change anything.

@@ -1,0 +1,11 @@
+Installing Docker, and the daemon.
+
+You only really learn Docker by running containers, so the first job is to get a working Docker on your machine. Whatever route you take, the goal is the same: a running daemon, the docker daemon, on a Docker host, and a docker client that can talk to it. There are four common ways in, roughly ordered by ease.
+
+The first option is Docker Desktop, which is the easiest on a laptop. It's free for personal use and paid for large companies, and it runs on Mac, Windows, and Linux. You install it, launch it, and the docker command is ready to use. It even bundles Compose. The one catch: on Mac and Windows it quietly runs a small Linux virtual machine, because containers need a Linux kernel, so sharing files between your host and a container can be slow.
+
+The second option is Docker Engine directly on Linux. This is the real thing: native, no virtual machine, and the fastest experience. It's also what production uses. You install it with a single script, and then add your user to the docker group so you can run it without using sudo every time.
+
+The third option is Colima, a free, open-source alternative to Docker Desktop for Mac and Linux. It spins up a small virtual machine and runs the engine inside it. And the fourth option is a cloud virtual machine: a small Linux server with the engine installed, used over s-s-h. That's the most production-like of all.
+
+Once it's installed, two commands tell you it's healthy. The first is docker version. It prints both the client version and the server version. If you see both, the daemon is running and you can reach it. The second is docker info, which shows the daemon's configuration: its storage driver, its logging driver, the kernel version, and how many containers you have. If docker version shows a client but errors on the server, the daemon isn't running, or you don't have permission to its socket. That is the single most common first-day snag.

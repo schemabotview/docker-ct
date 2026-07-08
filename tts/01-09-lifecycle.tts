@@ -1,0 +1,9 @@
+The container lifecycle: start, stop, and remove.
+
+A container has just a small set of states, and a handful of commands that move it between them. Docker run fuses the first two steps, create and start, but pulling them apart shows the whole map.
+
+It begins with create, which turns an image into a container in the created state. Then start moves it to running. From running, stop takes it back to stopped, and from stopped, start can bring it to running again, or remove can delete it for good.
+
+Let's go through the everyday verbs. Docker stop is a graceful shutdown. The daemon sends the container the term signal, waits ten seconds by default, and then sends the kill signal if the process ignored the first one. Well-behaved programs use that ten-second window to flush their data and close cleanly. Docker start brings a stopped container back to running, with its writable layer intact. Docker restart is just stop followed by start in one step. Docker remove deletes a stopped container, along with its writable layer; add dash f to force-remove one that's still running. And docker kill is an immediate kill signal, with no grace period at all.
+
+When a container exits, its exit code tells you how it ended, and docker p-s dash a shows it, for example, exited one thirty-seven. The convention is that zero means a clean success. One twenty-five means the docker run command itself failed. One twenty-six and one twenty-seven mean the container's command wasn't executable, or wasn't found. One thirty-seven means the process was killed by the kill signal, which very often means it ran out of memory. And one forty-three means it was killed by the term signal, which is what a clean docker stop looks like. That math, one twenty-eight plus the signal number, is a Linux convention, and Docker surfaces it faithfully, so it's a fast way to read exactly why a container died.

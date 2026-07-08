@@ -1,0 +1,22 @@
+# Installing Docker & the daemon
+
+Goal, whatever the route: a running **daemon** (`dockerd`) + a `docker` client that reaches it.
+
+## Four ways in
+
+- **Docker Desktop** — easiest on a laptop; bundles Compose. On Mac/Win runs a hidden **Linux VM**.
+- **Docker Engine on Linux** — native, no VM, fastest (what production uses).
+- **Colima** — free Desktop alternative (Lima VM + engine).
+- **Cloud VM** — most production-like, over SSH.
+
+```bash
+curl -fsSL https://get.docker.com | sh
+sudo usermod -aG docker $USER   # docker without sudo
+```
+
+## Verify it's healthy
+
+- **`docker version`** — prints *both* client **and** server (daemon). Both = daemon up, reachable.
+- **`docker info`** — storage driver, logging driver, kernel, container counts.
+
+Client shows but **server errors** → daemon not running (or no socket permission). The classic day-one snag.

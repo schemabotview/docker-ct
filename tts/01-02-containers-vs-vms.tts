@@ -1,0 +1,13 @@
+Containers versus virtual machines.
+
+Here is the cleanest one-line definition of a container. A container is an isolated process on a host, running its own filesystem and seeing its own network, while sharing the host's kernel. That sentence does a lot of work, so let's pick it apart.
+
+An isolated process. When you start a container, the kernel gives it its own process I-D namespace. Inside the container, the p-s command shows only that container's own processes, and process I-D one is its process I-D one, not the host's. From the host, those same processes are still there with different numbers. The kernel is simply lying to the container about who else is on the box.
+
+Its own filesystem. The container sees a root filesystem that was assembled from an image. Its configuration and system directories are not the host's. They live in a separate area of disk and get mounted in when it starts.
+
+Its own network. By default the container gets a virtual network interface, with its own eye-pee address, on a bridge that Docker manages.
+
+And now the punchline: sharing the host's kernel. A container does not boot its own Linux. There is no kernel inside it. Every system call it makes goes straight to the host's kernel. A virtual machine is the opposite. It virtualises the hardware, so every guest ships a full operating system and its own kernel. That's why a container starts in milliseconds and weighs megabytes, while a virtual machine takes seconds to boot and weighs gigabytes. A container's isolation is kernel-strong; a virtual machine's is hypervisor-strong.
+
+Docker doesn't invent any of this isolation. It just composes Linux features that already existed. Namespaces give each container its own view of processes, mounts, network, and users. Control groups, written see groups, meter and cap how much processor, memory, and disk a container can use. Capabilities slice the all-powerful root user into about forty fine-grained privileges, so a container's root isn't really your root. And seccomp, app-armor, and s-e-linux restrict which system calls a container may make. We'll meet each of these properly in later modules.

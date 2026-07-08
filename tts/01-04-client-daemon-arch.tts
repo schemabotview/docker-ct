@@ -1,0 +1,9 @@
+The client and daemon architecture.
+
+When you type docker run, the docker you invoked is just a small client. It does no container work itself. It packages your command as an ay-pee-eye request and sends it, over a local socket or a network port, to a long-running daemon. Understanding this split explains almost every surprising thing Docker does.
+
+The daemon, called the docker daemon, is the brain. It manages images, networks, volumes, and builds, and it holds all the state. If you kill the daemon, every docker command fails, even though your container processes may keep running.
+
+Underneath the daemon sits a small stack. The docker daemon hands work to container-d, which is an industry-standard runtime supervisor, a cloud native computing foundation project. Container-d actually tracks the lifecycle of your running containers. Below that is run-see, the low-level tool that does the final act. It talks to the kernel, creates the namespaces and the control groups, and then starts your process as the container's process I-D one. Run-see does its job, hands off, and exits, while the container keeps running.
+
+Two consequences are worth holding onto. First, the client is thin and can be remote. If you point the docker host variable at another machine's daemon, the very same command line drives that machine. The client never needed to be on the same box. Second, the daemon runs as root, because it must, in order to create namespaces. That means having access to the docker socket is effectively the same as being root on the host. It's a security point we'll come back to in module eight.

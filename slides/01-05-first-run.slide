@@ -1,0 +1,23 @@
+# Your first container — `docker run`
+
+```bash
+docker run hello-world
+```
+
+## What one line actually does
+
+```
+Unable to find image 'hello-world:latest' locally   ← 1. resolve
+Pulling from library/hello-world                     ← 2. pull (Docker Hub)
+Status: Downloaded newer image ...                   ← 3. create
+Hello from Docker!                                   ← 4. start → run → exit
+```
+
+Every container follows this: **resolve → pull if missing → create → start.** The whole platform in one line: client → daemon → registry → image → container.
+
+## `run` = `create` + `start`, plus flags
+
+- **`-d`** — detached (background), returns your prompt.
+- **`-it`** — interactive + TTY: `docker run -it ubuntu bash`.
+- **`--name web`** — a stable name, not a random one.
+- **`--rm`** — auto-remove on exit (no lingering stopped container).

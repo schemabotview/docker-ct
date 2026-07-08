@@ -1,0 +1,9 @@
+Pulling from a registry.
+
+In that first docker run, the daemon said it was unable to find the image locally, and then it went and fetched it. Fetched it from where? From a registry, a server that stores and serves images. The default one is Docker Hub, but you can also pull from private registries or from cloud registries.
+
+You can pull an image explicitly, without running anything, using docker pull. For example, docker pull n-ginx, version one point twenty-seven. The daemon contacts the registry, downloads the image's layers, skipping any layers you already have, and stores them in your local cache. After that, running n-ginx starts instantly, with no network needed.
+
+Now let's read an image reference, because its full name has four parts, and most of them are optional. Take docker dot i-o, slash library, slash n-ginx, tag one point twenty-seven. The first part is the registry, which defaults to Docker Hub if you leave it off. The second part is the namespace, the owner. Official images live under library, which you never have to type. Something like my-org slash app names an organisation's image. The third part is the name, the repository itself. And the last part is the tag, a label for a version, which defaults to latest if you leave it off.
+
+One important warning about that default tag. Latest is just a conventional label. It does not magically mean the newest version. In production, always pin a real version. So when you type just n-ginx, Docker really reads it as docker dot i-o, slash library, slash n-ginx, tag latest. Pulling is the download half of distribution. Docker push is the upload half. Module seven covers registries, tags, digests, and even running your own, end to end.

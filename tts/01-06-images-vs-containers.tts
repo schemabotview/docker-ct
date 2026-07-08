@@ -1,0 +1,11 @@
+Images versus containers.
+
+These are two words you'll use every single day, and they are not the same thing.
+
+An image is a frozen, read-only template. It's a snapshot of a filesystem, plus a little metadata: what command to run, which user, which environment variables. It doesn't do anything on its own. It just sits there as a blueprint. If you know object-oriented programming, think of an image as a class.
+
+A container is a running, or stopped, instance of an image. It's like an object created from that class, with its own state. You can start many containers from a single image, and each one gets its own thin writable layer stacked on top of the image's read-only layers. Writes go to that layer, and the image underneath never changes.
+
+Here are a couple of analogies that make it stick. In object-oriented programming, the image is the class and the container is the object. In cooking, the image is the recipe and the container is the actual dish you cooked. In software, the image is the installer and the container is the installed, running program.
+
+The verbs line up cleanly with this split. You build or pull an image. You run an image to create a container. And you stop, start, and remove containers. One image can back many containers, and because they all share the same read-only layers on disk, ten containers from one image cost almost nothing extra to store. That copy-on-write layering is exactly what makes containers so cheap. For now, just keep the two words straight. An image is the template; a container is a running instance of it.

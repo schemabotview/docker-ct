@@ -1,0 +1,15 @@
+Your first container, with docker run.
+
+The Docker equivalent of hello world is a single command: docker run, followed by hello world. Run it, and you'll see a few lines of output. That output is dense, and it matters, because every container you ever run goes through this exact sequence.
+
+First, it says it was unable to find the hello world image locally. The daemon checked your local image cache for an image called hello world with the tag latest, and it wasn't there.
+
+Second, it says it's pulling from library slash hello world. Since the image wasn't local, the daemon went out to Docker Hub, the default registry, and downloaded it. The word library is the namespace for official images.
+
+Third, it reports that it downloaded a newer image. The image now lives in your local cache, so the next run will skip the download entirely.
+
+And fourth, it prints, hello from Docker. The daemon created a container from that image, ran its one command, which prints the message, and then the container exited.
+
+So a single docker run did four things: it resolved the image name, it pulled the image because it was missing, it created a container, and it started that container. That is the entire platform in one line: client, to daemon, to registry, to image, to container.
+
+In fact, docker run is really two steps fused together, create and start. A few flags you'll reach for right away. Dash d runs the container detached, in the background, and gives you your prompt back. Dash i-t gives you an interactive session with a terminal, which is how you get a shell, for example docker run, interactive, ubuntu, bash. The name flag gives the container a stable name instead of a random one. And the remove-on-exit flag automatically deletes the container when it stops, so it doesn't linger around as a stopped container.

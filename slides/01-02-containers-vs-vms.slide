@@ -1,0 +1,26 @@
+# Containers vs. VMs
+
+A container is an **isolated process** sharing the **host kernel** — not a tiny VM.
+
+## What "isolated" means
+
+- **Own process tree** — its own **PID namespace**; inside, PID 1 is *its* PID 1.
+- **Own filesystem** — a root `/` assembled from an **image**, not the host's.
+- **Own network** — a virtual interface + IP on a Docker bridge.
+
+## The punchline
+
+A container **shares the host kernel** — no guest OS, no second kernel. A **VM** virtualises the **hardware**, so each guest ships a full OS + kernel.
+
+```
+   VM:  App | Guest OS | Hypervisor | Hardware   ← seconds, GBs
+  Ctr:  App | Docker Engine | Host kernel        ← ms, MBs
+```
+
+## The kernel primitives Docker composes
+
+- **namespaces** — isolate PIDs, mounts, net, users
+- **cgroups** — cap CPU, memory, I/O
+- **capabilities** · **seccomp** / **AppArmor** — shrink what root can do
+
+Kernel-strong isolation, not hypervisor-strong.

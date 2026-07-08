@@ -1,0 +1,23 @@
+# Container lifecycle — start / stop / rm
+
+```
+create        start              stop (SIGTERM→SIGKILL)
+image ─► created ─► running ─────────────► stopped ─► rm ─► removed
+                       ▲                       │
+                       └──────── start ────────┘
+```
+
+## The everyday verbs
+
+- **`stop`** — graceful: **SIGTERM**, wait 10s, then **SIGKILL**. Apps flush + close in that window.
+- **`start`** — resume a stopped container, writable layer intact.
+- **`restart`** — stop + start.
+- **`rm`** — delete a *stopped* container (`-f` forces a running one).
+- **`kill`** — immediate SIGKILL, no grace.
+
+## Exit codes — how it ended
+
+`docker ps -a` → `Exited (137)`. Convention (`128 + signal`):
+
+- **0** clean · **125** `run` itself failed · **126/127** cmd not executable / not found
+- **137** SIGKILL (often **OOM**) · **143** SIGTERM (a clean `stop`)

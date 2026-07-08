@@ -1,0 +1,25 @@
+# Images vs. containers
+
+Two everyday words, **not** the same thing.
+
+## Image = the template
+
+A frozen, **read-only** snapshot of a filesystem + metadata. It doesn't *do* anything — a blueprint. Like a **class**.
+
+## Container = a running instance
+
+Created from an image, with its own state + a thin **writable layer** on top. Like an **object**.
+
+| | Image | Container |
+|---|---|---|
+| OOP | class | object |
+| Cooking | recipe | the dish |
+| Software | installer | running program |
+
+## The verbs follow the split
+
+- **build** / **pull** an *image*
+- **run** an image → a *container*
+- **stop** · **start** · **rm** *containers*
+
+**One image, many containers** — they share the read-only layers on disk, so 10 containers cost almost nothing extra. Copy-on-write layering is why containers are cheap.
