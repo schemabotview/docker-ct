@@ -1,4 +1,4 @@
-# Gotchas — UID/GID & Mac/Windows
+## Gotchas — UID/GID & Mac/Windows
 
 Two things bite bind-mount users, both from the container↔host boundary.
 
