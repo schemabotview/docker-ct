@@ -1,0 +1,21 @@
+## Profiles, overrides & project name
+
+## Profiles — opt-in services
+
+```yaml
+debugger:
+  image: nicolaka/netshoot
+  profiles: [debug]
+```
+
+`up` skips it; `--profile debug up` includes it. No `profiles:` = always runs.
+
+## Overrides — layer files
+
+`compose.override.yaml` auto-merges (override wins) — base = prod-ish, override = dev + gitignored. More layers: `-f a.yaml -f b.yaml` (later wins). **Scalars replace, lists append.**
+
+## Project name — the collision
+
+Namespaces everything (`<project>-<svc>-N`); default = dir name. **Two clones both named `myapp` fight** over names/volumes.
+
+Fix: `name:` in file · `-p myapp-scratch` · `COMPOSE_PROJECT_NAME`.

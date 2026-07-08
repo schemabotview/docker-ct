@@ -1,0 +1,11 @@
+Networks, volumes, and environment.
+
+Three service-shaping blocks, each carrying a module you already know into Compose.
+
+First, networks. You can go years on the auto-created default network, but explicit networks buy you tier separation: a reverse proxy that can see the a-p-i, an a-p-i that can see the database, but a proxy that cannot reach the database directly. You do it by giving the proxy the frontend network, the a-p-i both frontend and backend, and the database only the backend network. That's the segmentation-by-attachment idea from module five. An external network connects to one created outside this file, by another project or by docker network create.
+
+Second, volumes, which carry module four straight over. You declare named volumes at the top level and reference them in services. The Compose bonus is that their lifecycle is tied to the project: down dash v removes them, plain down keeps them. And Compose resolves bind-mount relative paths against the compose-file's own directory, so a path like dot-slash-s-r-c colon slash app slash s-r-c works no matter where you ran up from.
+
+Third, environment, which has three layers, from lowest precedence to highest. First, the image's built-in env. Second, env-file, which points at files of key-equals-value lines. And third, the environment block in the y-a-m-l, which wins.
+
+And here's the big gotcha. Compose also reads a file literally named dot-env, but for a totally different job: substituting dollar-brace variables into the y-a-m-l text itself, like an image tag, resolved at parse time. So dot-env fills in the y-a-m-l; env-file fills in the container's environment. They're constantly confused, so read the keyword, not the dots. Substitutions also support defaults and required values: a dash sets a default, and a question mark makes a variable required, erroring if it's missing.

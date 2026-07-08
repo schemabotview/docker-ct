@@ -1,0 +1,9 @@
+Scaling, and a realistic stack.
+
+Scaling looks trivial: run many copies of a service, with docker compose up, dash d, dash dash scale, web equals three. That starts web-one, web-two, and web-three, all on the project network, all answering to the d-n-s name web, with the embedded resolver round-robining between them. It's great for local load testing, and for stateless tiers.
+
+But mind two hard limits. First, a service with a pinned port, like eighty-eighty to eighty, can only bind that host port once, so only one replica starts. To scale a published service, drop the host-port pin and put a load balancer, like n-ginx or traefik, in front. Second, never scale a stateful service like Postgres; you'd get many containers fighting over one data directory. And scaling across machines is Swarm or Kubernetes, not single-host Compose.
+
+Now, a realistic stack ties the whole module together: the Flask app from module two, now with Postgres for storage and Redis for caching. The database service uses Postgres, with a required password variable, a named data volume, and a health check. The cache service uses Redis, also with a health check. And the web service builds from a subdirectory, publishes on local-host only, sets its database and Redis u-r-l-s from environment variables, and depends on both the database and the cache being healthy, with a restart policy of unless-stopped. At the bottom, a volumes block declares the Postgres data volume.
+
+Every idea from the module is right here: build for our own code and image for dependencies, name-based d-n-s for db and cache, a persistent volume, service-healthy startup order, a required password variable, a local-host-only publish, and a restart policy. One file, docker compose up, and the whole app is running. Which is exactly what Compose is for.

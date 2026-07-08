@@ -1,0 +1,23 @@
+## Startup order — `depends_on` + healthchecks
+
+## The trap
+
+`depends_on: [db]` waits only for the container to **start**, not for the service to be **ready**. Postgres's process exists in a millisecond; the server accepts connections seconds later. `web` connects too early and **crashes**. *Started ≠ ready.*
+
+## The fix — healthcheck + condition
+
+```yaml
+db:
+  healthcheck:
+    test: ["CMD-SHELL", "pg_isready -U postgres"]
+    interval: 5s   retries: 5   start_period: 10s   # grace window
+web:
+  depends_on:
+    db: { condition: service_healthy }
+```
+
+## The conditions
+
+- **`service_started`** — old default (container start).
+- **`service_healthy`** — check passes ← **the one you want.**
+- **`service_completed_successfully`** — a one-shot (migrations) exits 0.

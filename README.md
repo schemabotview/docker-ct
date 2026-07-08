@@ -14,8 +14,8 @@ the plan we author against; the machine source of truth for structure is `manife
 **Status:** scaffolded + scene ported + full section spine settled (10 modules × 10 =
 **100 sections**, all mapped to a real `dk-*` scene node). The `docker` scene is **ported into
 graphl-movie** (`src/scenes/docker.ts`, registered + `catalog.ts` `docker` concept entry).
-**Modules 01–05 authored end-to-end** (50 sections: `.ipynb` + `.slide` + `.tts`) and wired in
-`manifest.json`; **modules 01–04 pushed**. Next: modules 06–10, one at a time — split from the
+**Modules 01–06 authored end-to-end** (60 sections: `.ipynb` + `.slide` + `.tts`) and wired in
+`manifest.json`; **modules 01–05 pushed**. Next: modules 07–10, one at a time — split from the
 matching `../docker-content` notebook. `audio/` stays empty until the **owner** generates the
 `.wav`s from `tts/` via Colab.
 
@@ -163,8 +163,9 @@ Authored end-to-end (`.ipynb` + `.slide` + `.tts`) and wired in `manifest.json`.
 | 9 | Inspecting & runtime connect/disconnect | `05-09-inspect-and-connect` | `dk-networks` |
 | 10 | Advanced — `overlay` & `macvlan`/`ipvlan` | `05-10-overlay-macvlan` | `dk-networks` → `dk-net-overlay` |
 
-### 06 — Docker Compose & Multi-Container Apps  ⏳ draft (proposed 10)
-Frames the `dk-orchestrate` band → `dk-compose`. Source: 13 content headings → 10.
+### 06 — Docker Compose & Multi-Container Apps  ✅ authored (10)
+Frames the `dk-orchestrate` band → `dk-compose`. Source: 13 content headings → 10. Authored
+end-to-end (`.ipynb` + `.slide` + `.tts`) and wired in `manifest.json`.
 
 | # | Section | slug | focus → highlight |
 |---|---|---|---|

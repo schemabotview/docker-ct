@@ -1,0 +1,11 @@
+Why Compose.
+
+Picture a normal web app: a web server, a Postgres database, a Redis cache, and a background worker. Launched by hand, that's four docker run lines, plus everything that ties them together. A user-defined network to connect them. Two named volumes, for the Postgres data and the Redis dump. Environment variables shared by the web server and the worker. A startup order, since the database must be up before the web server. Port mappings, since only the web server should be exposed. And the same flags repeated across every docker run.
+
+You can wrap all that in a bash script. Teams have. It's miserable to maintain, because one edit means re-reasoning about four commands and their order.
+
+Docker Compose replaces the script with one declarative file. A single compose file describes the whole stack. Docker compose up brings it all up, docker compose down tears it all down, and the file is checked into git, so a teammate clones it and runs the identical stack. You describe the desired state, these services, this network, these volumes, and Compose figures out the commands.
+
+Now, what Compose is, and isn't. It's a local-development and single-host deployment tool: it runs many containers, on one Docker daemon, declaratively. It is not a cluster orchestrator. Spreading containers across many machines, with self-healing and rolling updates, is Swarm, in module nine, or Kubernetes. Keep that boundary clear, and Compose is exactly the right tool for the huge middle ground: dev environments, continuous integration, and small single-box deployments.
+
+One naming note. Compose version one was the old standalone docker-compose, hyphenated, a Python binary; it's end-of-life. Compose version two is the modern docker compose subcommand, with a space, built right into the command line. Everything here is version two. If you see the hyphen in an old tutorial, just mentally translate it.

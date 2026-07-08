@@ -1,0 +1,18 @@
+## The everyday commands
+
+Module-03 verbs, scoped to the **whole project**.
+
+| Command | Does |
+|---|---|
+| `up [-d]` | create + start all (`-d` detached) |
+| `up -d --build` | rebuild `build:` images first |
+| `down [-v]` | stop + remove (+ volumes) |
+| `ps` / `logs [-f]` | state / tail logs |
+| `exec svc sh` | shell into a **running** service |
+| `run --rm svc cmd` | **new** one-off container (migrations) |
+| `config` | print resolved YAML |
+
+## Two to burn in
+
+- **`exec` vs `run`** — `exec` = inside the running container; `run` = a fresh, separate one for a task. Inspect vs. do.
+- **`config` is your debugger** — prints the final YAML after `.env` + overrides. See what Compose *thinks* you asked for.

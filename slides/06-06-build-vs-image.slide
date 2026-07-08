@@ -1,0 +1,24 @@
+## `build:` vs `image:`
+
+Each service says *what* to run — pull, or build.
+
+## `image:` — pull a ready image
+
+`image: redis:7-alpine` — for off-the-shelf dependencies.
+
+## `build:` — build your code
+
+```yaml
+web:
+  build:
+    context: ./web
+    target: production      # multi-stage (module 02)
+    args: { APP_VERSION: 1.2.3 }
+  image: myorg/web:1.2.3    # tag the result
+```
+
+Both keys → Compose builds, then tags with `image:` (what `push` publishes).
+
+## The gotcha
+
+`up` only builds if the image **doesn't exist** — it reuses a stale one. Force with **`up --build`** (dev) or explicit `build` (CI).

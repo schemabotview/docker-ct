@@ -1,0 +1,9 @@
+The shape of the compose file.
+
+The conventional filename is compose-dot-yaml, though the older docker-compose-dot-y-m-l still works. The minimum valid file is tiny: a services block, with one service called web, whose image is n-ginx alpine. That's it. Docker compose up starts it, auto-creating a network for the project and joining web to it.
+
+Everything else is optional structure layered on top. At the top level, you can set a name, which is the project name, defaulting to the directory name. Then comes the services block, which is the heart of every file. Each service can set an image, or a build; ports, for host-to-container publishing; environment, for variables; volumes, for mounts; depends-on, for startup order; a health check, for readiness; and a restart policy. Below the services, an optional networks block declares named networks, though one default is auto-created. And an optional volumes block declares named volumes, just like docker volume create.
+
+The shape to internalise is this. The services block is the only required part, and each service is essentially a declarative docker run. The flags you learned in modules three through five become y-a-m-l keys: dash p becomes ports, dash e becomes environment, dash v becomes volumes, and the restart flag becomes restart. The top-level networks and volumes blocks declare shared resources that services then reference by name.
+
+A few keys pay for themselves early: build, to build an image instead of pulling one; depends-on, for order; and health check, for real readiness. Each gets its own section. But the mental model is simply this: a file of services, each one a docker run written in y-a-m-l, plus the named resources they share.

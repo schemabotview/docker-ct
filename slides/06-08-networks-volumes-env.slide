@@ -1,0 +1,22 @@
+## Networks, volumes & environment
+
+## Networks — tier separation
+
+```yaml
+services:
+  proxy: { networks: [frontend] }
+  api:   { networks: [frontend, backend] }
+  db:    { networks: [backend] }
+```
+
+Proxy can't reach `db`. `external: true` joins a net from outside.
+
+## Volumes
+
+Top-level named + referenced; `down -v` removes, `down` keeps. Bind paths resolve against the **`compose.yaml` dir** (`./src` always works).
+
+## Environment — 3 layers (low→high)
+
+image `ENV` → **`env_file:`** → **`environment:`** (wins).
+
+**The `.env` gotcha:** a file named **`.env`** substitutes `${VAR}` **into the YAML** (`image:myorg/api:${TAG}`) — *not* the container's env. `env_file:` = container env. Different jobs. Defaults `${TAG:-latest}`, required `${PW:?must be set}`.

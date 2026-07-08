@@ -1,0 +1,11 @@
+Build, versus image.
+
+Every service has to say what to run, using one of two keys. Either pull a ready-made image, or build one from a docker file.
+
+The image key runs a pre-built image, pulled from a registry if it's not already local. This is what you use for off-the-shelf dependencies. For example, a cache service whose image is redis, version seven, alpine.
+
+The build key builds an image from a docker file in your project. That's for the code you wrote. The short form just points at a context directory: build, then a dot, which means the build context is the current directory and the docker file is right there. The long form gives you the module-two build controls, right in the y-a-m-l: a subdirectory context, a named docker file, build arguments, and a multi-stage target, like production. You can also add an image key to give the built image a tag.
+
+In fact, you can give one service both build and image. Compose builds the image, then tags the result with the image name, and that tag is what docker compose push would publish.
+
+Now, the behaviour that trips people up. Docker compose up only builds an image if it doesn't already exist locally. So if you change your docker file, or your source, and run up again, Compose happily reuses the stale image. To force a rebuild, use docker compose up, dash dash build, or an explicit docker compose build. A good habit during active development is to run up with dash dash build; in continuous integration, use an explicit build step before up.

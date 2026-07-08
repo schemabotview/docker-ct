@@ -1,0 +1,11 @@
+Startup order: depends-on, plus health checks.
+
+Depends-on does less than everyone assumes, and it's the single most common Compose bug.
+
+Here's the trap. By default, depends-on waits only for the container to have started, not for the service inside it to be ready. Compose starts the database before the web server, yes, but the Postgres process exists after a millisecond, while the server isn't accepting connections for another second or two. So the web server starts, tries to connect, and crashes before the database is ready. Started is not the same as ready.
+
+The fix is a health check on the dependency, plus a condition on depends-on. On the database service, you add a health check: a test command, like p-g-isready, run on an interval, with a timeout, a number of retries, and a start period. Then, on the web service, instead of just listing the database under depends-on, you give it a condition of service-healthy. Now Compose starts the database, polls its health check, and only starts the web server once the check reports healthy.
+
+There are a few conditions you'll use. Service-started is the old default: wait for container start only. Service-healthy waits for the health check to pass, and that's the one you want for databases and a-p-i's. And service-completed-successfully waits for a one-shot service, like a migration container, to exit with code zero, which is the clean way to run migrations before the app.
+
+The health check itself is worth understanding. The test is the probe command, where exit zero means healthy. The interval, timeout, and retries govern the polling. And the start period is a grace window, where early failures don't count against the retries, which is essential for services that are slow to warm up. Get this pattern right once, and those flaky, connection-refused-on-startup bugs simply disappear.

@@ -1,0 +1,9 @@
+Docker Compose, and multi-container apps.
+
+Everything so far ran one container at a time, with docker run. But a real app is rarely one container. It's a web server, and a database, and a cache, and maybe a worker, all wired together with a network, volumes, shared environment variables, and a startup order. Launching that by hand is a page of docker run flags that you retype every single time. This module is the fix: describe the whole stack once, in a file, and bring it up with one command.
+
+That file-and-one-command tool is Docker Compose, and this module lives in the orchestrate and compose corner of the map. The core idea is simple. You write a compose file that declares the stack, you run docker compose up, and you get the web server, the database, and the cache, all brought up and wired together: the network, the volumes, the startup order, everything.
+
+The whole module is really just one y-a-m-l file, learned piece by piece. First, the shape: a services block, which holds your containers, plus optional networks and volumes blocks, and per-service keys like image or build, ports, environment, and depends-on. Then, making it robust: real startup order using health checks, tiered networks, layered configuration for dev versus prod, and the gotchas, like project names and scaling limits.
+
+One thing to be clear about up front. Compose is a single-host tool. It's brilliant for local development and small deployments, but it is not a cluster orchestrator. Running containers across many machines is Swarm, in module nine, or Kubernetes. Compose runs many containers, declaratively, on one Docker daemon. And that covers an enormous amount of real work.

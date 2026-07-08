@@ -1,0 +1,24 @@
+## Scaling & a realistic stack
+
+## Scaling
+
+`docker compose up -d --scale web=3` → 3× `web`, all answer DNS `web` (round-robin). Good for **load testing** + **stateless** tiers. Limits: a pinned `ports:` binds **once** (→ LB in front); **never `--scale` Postgres**; cross-host = Swarm/K8s.
+
+## The whole module in one file
+
+```yaml
+services:
+  db:    { image: postgres:16, healthcheck: {...} }
+  cache: { image: redis:7-alpine }
+  web:
+    build: ./web
+    ports: ["127.0.0.1:8080:8080"]   # localhost only
+    environment:
+      DATABASE_URL: postgres://app:${DB_PASSWORD}@db:5432/app
+    depends_on:
+      db:    { condition: service_healthy }
+      cache: { condition: service_healthy }
+volumes: { pgdata: {} }
+```
+
+`build`+`image`, name DNS, volume, `service_healthy`, required `${VAR}`, localhost publish — one `up`.

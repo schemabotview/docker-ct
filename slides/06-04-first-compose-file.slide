@@ -1,0 +1,23 @@
+## A first compose file — web + db
+
+```yaml
+services:
+  db:
+    image: postgres:16
+    volumes: [pgdata:/var/lib/postgresql/data]
+  web:
+    image: nginx:alpine
+    ports: ["8080:80"]
+    depends_on: [db]
+volumes: { pgdata: {} }
+```
+
+## Three payoffs of earlier modules
+
+1. **No network declared** — both on `<project>_default`; `web` reaches `db` by name (module 05 DNS).
+2. **Named volume** — `pgdata` persists the DB (module 04).
+3. **`depends_on: db`** — starts `db` first (necessary, not sufficient — next).
+
+```bash
+docker compose up -d      docker compose down    # volumes survive (down -v wipes)
+```

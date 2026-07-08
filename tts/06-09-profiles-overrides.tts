@@ -1,0 +1,9 @@
+Profiles, overrides, and the project name.
+
+Three features for running the same stack differently across dev, continuous integration, and prod, plus one gotcha that bites everyone.
+
+First, profiles: opt-in services. You tag a service with a profile, and it's skipped unless you enable that profile. That's perfect for a debug sidecar, a seed-data job, or a load tester that shouldn't pollute a normal up. So you might tag a debugger service with the debug profile. Then, docker compose up starts only your normal services, while docker compose, dash dash profile debug, up, adds the debugger. A service with no profile always runs; one with a profile runs only when that profile is on.
+
+Second, overrides: layering files. A compose-override file, sitting next to the main compose file, is auto-loaded and merged, with the override winning. The convention is that the main compose file is the production-ish base, and the override file is dev-only and git-ignored, so a new dev clones, runs up, and gets the dev-friendly stack. For more layers, you stack dash f explicitly, passing several compose files, with later files winning. And the merge rule to remember: scalars replace, but lists append, so things like ports and volumes can accumulate unexpected duplicates.
+
+Third, the project name, and its collision gotcha. Compose namespaces everything it creates by a project name, which defaults to the directory's base name: containers are named project-service-number, networks and volumes are prefixed too. So if you clone the same repo into two folders that are both named my-app, and run up in each, they fight over identical names; the second one errors, or steals the first's containers. The fix is a unique name per checkout: set a name in the file, pass dash p with a name, or set the compose-project-name variable in dot-env.

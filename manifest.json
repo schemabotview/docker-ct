@@ -614,6 +614,121 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "06-docker-compose-and-multi-container-apps",
+      "title": "Docker Compose & Multi-Container Apps",
+      "sections": [
+        {
+          "heading": "Docker Compose & multi-container apps",
+          "notebook": "notebooks/06-01-compose.ipynb",
+          "slide": "slides/06-01-compose.slide",
+          "audio": "audio/06-01-compose.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "Why Compose",
+          "notebook": "notebooks/06-02-why-compose.ipynb",
+          "slide": "slides/06-02-why-compose.slide",
+          "audio": "audio/06-02-why-compose.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "spine": true
+        },
+        {
+          "heading": "The `compose.yaml` shape",
+          "notebook": "notebooks/06-03-compose-yaml-shape.ipynb",
+          "slide": "slides/06-03-compose-yaml-shape.slide",
+          "audio": "audio/06-03-compose-yaml-shape.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "highlight": [
+            "dk-cmp-services"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "A first compose file — web + db",
+          "notebook": "notebooks/06-04-first-compose-file.ipynb",
+          "slide": "slides/06-04-first-compose-file.slide",
+          "audio": "audio/06-04-first-compose-file.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "highlight": [
+            "dk-cmp-services"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The everyday commands",
+          "notebook": "notebooks/06-05-everyday-commands.ipynb",
+          "slide": "slides/06-05-everyday-commands.slide",
+          "audio": "audio/06-05-everyday-commands.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "spine": true
+        },
+        {
+          "heading": "`build:` vs `image:`",
+          "notebook": "notebooks/06-06-build-vs-image.ipynb",
+          "slide": "slides/06-06-build-vs-image.slide",
+          "audio": "audio/06-06-build-vs-image.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "highlight": [
+            "dk-cmp-services"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Startup order — `depends_on` + healthchecks",
+          "notebook": "notebooks/06-07-depends-on-healthchecks.ipynb",
+          "slide": "slides/06-07-depends-on-healthchecks.slide",
+          "audio": "audio/06-07-depends-on-healthchecks.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "highlight": [
+            "dk-cmp-depends"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Networks, volumes & environment",
+          "notebook": "notebooks/06-08-networks-volumes-env.ipynb",
+          "slide": "slides/06-08-networks-volumes-env.slide",
+          "audio": "audio/06-08-networks-volumes-env.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "highlight": [
+            "dk-cmp-networks",
+            "dk-cmp-volumes"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Profiles, overrides & project name",
+          "notebook": "notebooks/06-09-profiles-overrides.ipynb",
+          "slide": "slides/06-09-profiles-overrides.slide",
+          "audio": "audio/06-09-profiles-overrides.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "spine": true
+        },
+        {
+          "heading": "Scaling & a realistic stack",
+          "notebook": "notebooks/06-10-scaling-real-stack.ipynb",
+          "slide": "slides/06-10-scaling-real-stack.slide",
+          "audio": "audio/06-10-scaling-real-stack.wav",
+          "scene": "docker",
+          "focus": "dk-compose",
+          "highlight": [
+            "dk-cmp-services"
+          ],
+          "spine": true
+        }
+      ]
     }
   ]
 }

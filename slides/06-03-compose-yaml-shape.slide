@@ -1,0 +1,20 @@
+## The `compose.yaml` shape
+
+Minimum valid file — `services:` with one `web:` running `image: nginx:alpine`.
+
+## The full skeleton
+
+```yaml
+name: my-app         # default = dir name
+services:            # containers — only required block
+  web:
+    image: / build:      # what to run
+    ports: environment: volumes:
+    depends_on: healthcheck: restart:
+networks: { backend: {} }    # default auto-created
+volumes:  { pgdata:  {} }    # like docker volume create
+```
+
+## The mental model
+
+Each service = a **`docker run` in YAML**: `-p`→`ports`, `-e`→`environment`, `-v`→`volumes`. Top-level `networks:` / `volumes:` = shared resources referenced by name.
