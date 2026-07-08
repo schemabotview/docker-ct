@@ -20,5 +20,4 @@ Each `FROM` / `RUN` / `COPY` adds a **layer** — "what changed vs. below." A **
 
 - **Layers are cached** — unchanged instructions are reused. The basis of fast builds.
 - **Nothing leaves a lower layer** — `RUN rm bigfile` later just adds a whiteout; the bytes still ship. **Clean up in the same `RUN`.**
-
-The writable layer is **ephemeral** — gone with the container (volumes = module 04).
+- The writable layer is **ephemeral** — gone with the container (volumes → module 04).

@@ -1,13 +1,9 @@
 # `CMD` vs `ENTRYPOINT`
 
-Both set what runs by default. Difference: how they **combine** with run-time args.
+Both set the default run: `final = ENTRYPOINT + (run-time args OR CMD)`.
 
 - **`CMD`** — default **args**; replaced by anything after `docker run`.
 - **`ENTRYPOINT`** — fixed **executable**; run-time args *appended*.
-
-```
-final = ENTRYPOINT + (run-time args OR CMD)
-```
 
 ## The combinations
 
