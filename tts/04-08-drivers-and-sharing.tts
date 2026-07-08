@@ -1,0 +1,11 @@
+Volume drivers, and sharing.
+
+Every volume has a driver, the plugin that actually stores the bytes. The default is local, which just means a directory on this host, under slash var slash lib slash docker slash volumes. You can pass options at creation time to change what local points at, most usefully an n-f-s share: you'd run docker volume create, driver local, with n-f-s type and address options, and a device path.
+
+Third-party plugins extend the list to cloud block storage, like a-w-s e-b-s, and distributed filesystems, like ceph and gluster, and object-storage shims. But for a single-host install, the default local driver is what about ninety-five percent of teams use. Drivers really start to matter with multi-host orchestrators. Swarm shares state across nodes using volume drivers directly, and Kubernetes has its own storage ecosystem.
+
+Now, sharing a volume between containers. The modern way is simply to mount the same named volume in each one. You create a volume called shared, then run a producer container that mounts it at slash out and writes to it, and a consumer container that mounts the very same volume at slash in and reads from it. The volume is the source of truth, and each container mounts it wherever it likes.
+
+There's an older flag, dash dash volumes-from, followed by a container, which copies all of that container's mounts into the new one. That's the legacy data-container pattern. Recognise it in old setups, but don't reach for it now that volumes are first-class objects.
+
+One important caution: volumes give you shared storage, but not coordinated writes. Two containers writing the same files can corrupt data, unless the application itself coordinates. Postgres refuses to let two servers use one data directory, and s-q-lite struggles with concurrent writers. The volume shares the bytes; safe concurrency is the app's job.

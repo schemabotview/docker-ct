@@ -1,0 +1,19 @@
+# Gotchas — UID/GID & Mac/Windows
+
+Two things bite bind-mount users, both from the container↔host boundary.
+
+## UID / GID ownership
+
+A container writes as its numeric **UID** (from `USER`, often root or `999`). Docker doesn't remap ids by default, so the **host records that same UID** — a root container leaves `root:root` files; `999` leaves `999:999`.
+
+- **Match UIDs** — `docker run -u "$(id -u):$(id -g)" …`.
+- **Pre-create the dir** `chmod 775 ./data` (dev only).
+
+## The Mac / Windows sync caveat
+
+Linux shares the kernel (bind = free). Mac/Win bridge the fs into a **hidden VM** — **slow**: an `npm install` over a bind can be 5–10× slower.
+
+1. **Hot dirs in named volumes** (`node_modules`, `target/`); bind only edited source.
+2. **`:cached` / `:delegated`** on binds for a speed win.
+
+Through-line: **volumes for data, binds for code** — a misbehaving bind is almost always **UIDs or the VM bridge.**

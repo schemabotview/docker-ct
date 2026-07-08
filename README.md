@@ -14,8 +14,8 @@ the plan we author against; the machine source of truth for structure is `manife
 **Status:** scaffolded + scene ported + full section spine settled (10 modules × 10 =
 **100 sections**, all mapped to a real `dk-*` scene node). The `docker` scene is **ported into
 graphl-movie** (`src/scenes/docker.ts`, registered + `catalog.ts` `docker` concept entry).
-**Modules 01–03 authored end-to-end** (30 sections: `.ipynb` + `.slide` + `.tts`) and wired in
-`manifest.json`; **modules 01–02 pushed**. Next: modules 04–10, one at a time — split from the
+**Modules 01–04 authored end-to-end** (40 sections: `.ipynb` + `.slide` + `.tts`) and wired in
+`manifest.json`; **modules 01–03 pushed**. Next: modules 05–10, one at a time — split from the
 matching `../docker-content` notebook. `audio/` stays empty until the **owner** generates the
 `.wav`s from `tts/` via Colab.
 
@@ -128,9 +128,10 @@ in `manifest.json`.
 | 9 | Looking inside *(exec/attach/inspect/top/stats/diff)* | `03-09-looking-inside` | `dk-cli` → `dk-exec`,`dk-inspect`,`dk-ps` |
 | 10 | Moving files & snapshotting *(docker cp + commit)* | `03-10-cp-and-commit` | `dk-container` → `dk-ns-mnt` |
 
-### 04 — Storage, Volumes & Bind Mounts  ⏳ draft (proposed 10)
+### 04 — Storage, Volumes & Bind Mounts  ✅ authored (10)
 Frames the `dk-resources` band → `dk-volumes`, with `dk-layer-model` for the ephemeral
-writable layer. Source: 13 content headings → 10.
+writable layer. Source: 13 content headings → 10. Authored end-to-end (`.ipynb` + `.slide` +
+`.tts`) and wired in `manifest.json`.
 
 | # | Section | slug | focus → highlight |
 |---|---|---|---|

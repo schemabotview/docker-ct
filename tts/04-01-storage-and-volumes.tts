@@ -1,0 +1,15 @@
+Storage, volumes, and bind mounts.
+
+So far, every container has been disposable. You remove it, and it's gone, writable layer and all. That's exactly what you want for a stateless web server, and exactly what you do not want for a database. This module is about making data outlive the container: how storage attaches to a container, and which of the three mechanisms to reach for.
+
+The whole module lives in the resources and volumes corner of the map, and it turns on one single move: take a path inside the container, and mount something else there, something that lives outside the throwaway writable layer.
+
+Docker gives you three flavours of mount, and choosing between them is really ninety percent of this module.
+
+The first is a volume. That's storage managed by Docker, and it's the default choice for persistent application data, like a database's files, or user uploads. It's independent of any container's lifecycle.
+
+The second is a bind mount, which maps a specific path on your host straight into the container. It's the local-development workhorse: you mount your source code in, so your edits show up live.
+
+The third is t-m-p-f-s, a memory-backed scratch area that never touches disk. It's for secrets and for high-throughput temporary data.
+
+So picture a container with three different paths mounted three different ways. Its database directory is a volume, so the data persists. Its source directory is a bind mount, pointing at a host path. And its secrets directory is t-m-p-f-s, existing only in memory. By the end of the module, you'll know the default, which is volumes, the dev tool, which is binds, the escape hatch, which is t-m-p-f-s, how to spell them with dash v versus dash dash mount, and how to back them up, share them, and dodge the classic user-I-D and Mac and Windows gotchas.

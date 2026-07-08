@@ -1,0 +1,23 @@
+# Backup, restore & migrate
+
+Volumes are daemon-owned (inside the VM on Desktop) — you can't just `cp -r`. Use a **helper container** that tars the volume.
+
+```bash
+# backup → tarball in cwd
+docker run --rm -v pgdata:/data:ro -v $(pwd):/backup \
+  alpine tar czf /backup/pgdata.tar.gz -C /data .
+```
+
+**Restore** = mirror: fresh volume, bind the tar back, extract. **Migrate** = backup on host A, `scp`, restore on host B.
+
+## Live databases — don't tar
+
+Tarring live data files can catch a mid-write and corrupt the backup. Use the app's dump tool:
+
+```bash
+docker exec db pg_dump -U postgres app > app.sql
+```
+
+## Where it lives (Linux)
+
+Under `/var/lib/docker/`: `overlay2/` (layers), **`volumes/<name>/_data/`** (contents), `containers/<id>/`. `docker system df -v` breaks down space; `volume inspect` prints the `_data` path.

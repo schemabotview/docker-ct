@@ -1,0 +1,11 @@
+Dash v short form, versus dash dash mount long form.
+
+Docker has two ways to spell a mount, and they mostly do the same thing. But they fail differently, and that's the whole reason to care.
+
+The short form is dash v: a source, a colon, a destination, and optionally some options. The source is a volume name, or an absolute host path, which makes it a bind mount, or it's omitted, which makes it an anonymous volume. The options are a comma-separated list, like r-o for read-only, or the SELinux relabel options. So dash v, p-g-data, colon, the data path, is a named volume; and dash v, a host source path, colon, an app path, colon, r-o, is a read-only bind mount.
+
+The long form is dash dash mount: type equals volume, bind, or t-m-p-f-s, then source, then target, then optional flags like read-only. So you write type equals volume, source p-g-data, target the data path; or type equals bind, source a host path, target an app path, read-only.
+
+The trade-off is safety versus brevity. Dash v is shorter, but ambiguous. Dash v, foo colon slash data, is a volume named foo. But dash v, slash foo colon slash data, is a bind mount of slash foo. One leading slash flips the meaning. A typo silently sends your data to the wrong place, and worse, pointing dash v at a missing host directory auto-creates it, instead of erroring.
+
+Dash dash mount is verbose, but unambiguous. You write type equals volume or type equals bind explicitly, and a bad source errors, instead of guessing. The Docker docs recommend dash dash mount for new code. You'll meet both in Compose, in module six: short volume strings are dash v style, and long volume mappings are dash dash mount style. Read either, but prefer dash dash mount when you're writing something you'll keep.

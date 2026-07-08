@@ -1,0 +1,20 @@
+# `tmpfs` — RAM-backed mounts
+
+Host **RAM** the container sees as a filesystem. Nothing on disk; gone when the container stops.
+
+```bash
+docker run --tmpfs /tmp:size=64m,mode=1777 alpine sh
+```
+
+## Three jobs
+
+- **Fast scratch** — build steps, caches; needn't survive.
+- **Secrets off disk** — write tokens to `/run/secrets`; the platter never sees them.
+- **Writable space for a read-only container** — pair **`--read-only`** with `--tmpfs /tmp` so must-write processes have a spot.
+
+## Keep in mind
+
+- Counts against **host memory** — cap with `size=`.
+- **Linux-container only** — no host disk, which is the point.
+
+The deliberate opposite of a volume: a volume is data that must **survive**; `tmpfs` is data that must **never persist**.

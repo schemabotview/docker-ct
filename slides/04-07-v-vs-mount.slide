@@ -1,0 +1,22 @@
+# `-v` vs `--mount`
+
+Two spellings, same job — but they **fail differently.**
+
+## `-v` — short, terse
+
+`-v <source>:<dest>[:opts]` — source is a volume name, an absolute host path (bind), or omitted (anonymous).
+
+```bash
+-v pgdata:/data          -v /host/src:/app/src:ro
+```
+
+## `--mount` — long, explicit
+
+```bash
+--mount type=volume,source=pgdata,target=/data
+```
+
+## Safety vs. brevity
+
+- **`-v` is ambiguous** — `foo:/data` = volume; `/foo:/data` = bind. One slash flips it; a bad path is **auto-created**, not an error.
+- **`--mount` is unambiguous** — explicit `type=`; a bad source **errors**. Docs recommend it; you'll see both in Compose.

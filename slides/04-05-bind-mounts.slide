@@ -1,0 +1,22 @@
+# Bind mounts
+
+A **host path mapped straight in** — no Docker storage, no copy. The container sees the host's bytes.
+
+```bash
+docker run -d -v /home/me/site:/usr/share/nginx/html:ro nginx:alpine
+```
+
+Edit on the host, refresh the browser, see it. **`:ro`** = read-only inside (good default).
+
+## The dev workflow
+
+Source on the host → run the app with it bind-mounted → hot-reload (`nodemon`, `flask --reload`).
+
+Trade-off: **hardcodes the host path** — breaks on a teammate's box. So prod uses volumes; Compose uses **relative** paths (module 06).
+
+## Two gotchas
+
+- **No content copy** — a bind *masks* whatever the image had at that path.
+- **Ownership** — files come out owned by the container's UID (§10).
+
+**Bind for code you edit; volume for data you keep.**

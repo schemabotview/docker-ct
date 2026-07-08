@@ -1,0 +1,11 @@
+Backup, restore, and migrate.
+
+Volumes are owned by the daemon, so you can't reliably copy them with a plain recursive copy, since on Docker Desktop they live inside the virtual machine. The standard pattern is a helper container that mounts the volume and tars its contents.
+
+To back up a volume to a tarball on the host, you run a throwaway alpine container. You mount the volume read-only at slash data, you bind-mount your current directory at slash backup, and you tar one into the other. The result is a p-g-data tar-g-z file, sitting in your working directory.
+
+Restore is the mirror image. You create a fresh volume, bind the tarball back in, and extract it into the new volume. Migrating between hosts is the same trick: back up to a tar on host A, secure-copy it to host B, and restore there. The same pattern moves a volume between Docker Desktop and a Linux server.
+
+But for a live database, do not tar the data files. You can catch them mid-write and corrupt the backup. Instead, use the database's own dump tool. For Postgres, that's running p-g-dump inside the container and redirecting it to a s-q-l file on the host. Tarring the volume is for cold data; app-level dumps are for live databases.
+
+And for curiosity and troubleshooting, here's where it all lives on Linux. Everything sits under slash var slash lib slash docker. Overlay-two holds the image and container layers. The volumes directory holds each volume's actual contents, under a data folder. And the containers directory holds per-container runtime state and its j-son log. Two handy moves: docker system d-f, dash v, breaks down what's using space, and docker volume inspect prints the exact data path, so you can peek from the host.

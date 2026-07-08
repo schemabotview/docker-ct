@@ -1,0 +1,13 @@
+The three mount types.
+
+Docker gives you three ways to mount storage over a container path. They differ in where the bytes live, and whose lifecycle governs them. Get this into your head, and the rest of the module is just detail.
+
+The first is a volume. Its bytes live in a Docker-managed area on the host. Its lifecycle is independent of any container; it's deleted only when you explicitly run docker volume remove. And it's best for persistent application data: database files, uploads, anything that must outlive a container.
+
+The second is a bind mount. Its bytes live at any path on the host filesystem you choose. Its lifecycle is the host path's lifecycle; Docker never touches it. And it's best for local development, where you mount your source in, plus config files and host log access.
+
+The third is t-m-p-f-s. Its bytes live in host memory. Its lifecycle is the container only; it's gone the moment the container stops. And it's best for sensitive scratch data you want to keep off disk, and high-throughput caches.
+
+Here's the rule that decides almost every case. Use a volume by default. Use a bind mount when you need a specific host path. And use t-m-p-f-s when the data must never hit disk.
+
+Why a volume by default? Because a volume is a first-class Docker object. You name it, you inspect it, you back it up, and you move it, all without caring where on disk it sits, and it's decoupled from any container. A bind mount ties you to an exact host path, which breaks on a teammate's machine, and t-m-p-f-s vanishes on stop. So volumes are the safe default, and you step down to the other two only for their specific jobs. The rest of the module unpacks each type in turn.

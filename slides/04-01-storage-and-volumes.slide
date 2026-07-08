@@ -1,0 +1,22 @@
+# Storage, volumes & bind mounts
+
+Containers are disposable — great for a web server, **fatal for a database.** This module makes data **outlive the container**.
+
+## The one move
+
+Take a path *inside* the container and **mount** something else there — outside the throwaway writable layer.
+
+## Three flavours (choosing = 90% of it)
+
+- **Volume** — Docker-managed; the **default** for persistent app data.
+- **Bind mount** — a host path mapped in; the **local-dev** workhorse.
+- **`tmpfs`** — RAM-backed scratch; never hits disk.
+
+```
+Container:
+ /var/lib/postgresql/data ◄ volume     (persistent)
+ /app/src                 ◄ bind mount (a host path)
+ /run/secrets             ◄ tmpfs      (RAM only)
+```
+
+Default + dev tool + escape hatch, then how to spell, share, back up, and dodge the gotchas.

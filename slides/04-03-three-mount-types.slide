@@ -1,0 +1,19 @@
+# The three mount types
+
+Differ in **where bytes live** + **whose lifecycle** governs them.
+
+| Type | Lives | Lifecycle | Best for |
+|---|---|---|---|
+| **Volume** | Docker area | own; `volume rm` | persistent **app data** |
+| **Bind** | any host path | the host path's | **local dev**, config |
+| **`tmpfs`** | host RAM | container only | secrets, fast scratch |
+
+## The rule
+
+> **Volume by default. Bind when you need a host path. `tmpfs` when it must never hit disk.**
+
+## Why volume by default
+
+A volume is a **first-class object** — name it, `inspect`, back up, move — decoupled from any container. A bind ties you to an exact host path (breaks on a teammate's box); `tmpfs` vanishes on stop.
+
+Next: named/anonymous volumes → binds → `tmpfs`, then spelling, sharing, backup.

@@ -1,0 +1,19 @@
+# Named volumes — the default
+
+Docker-managed storage you mount by name.
+
+```bash
+docker volume create pgdata
+docker run -d --name db -v pgdata:/var/lib/postgresql/data postgres:16
+```
+
+`docker rm db` **doesn't touch `pgdata`** — start a fresh DB with the same mount, data's still there. Auto-created if missing; `ls` / `inspect` / `rm` to manage.
+
+## Mount over a non-empty path
+
+Fresh empty volume over an image dir with files → Docker **copies the image's files in** (how DB images seed data). A **bind mount does not** — it masks.
+
+## Volumes without a name (both surprise you)
+
+- **Anonymous** — `-v /path` (no source) → random-hex volume; piles up unless `--rm` / `volume prune`.
+- **`VOLUME` instruction** — declares a path must be a volume; run with no mount → auto anonymous. How `postgres`/`mysql` protect your data.

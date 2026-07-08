@@ -1,0 +1,22 @@
+# Why the container filesystem isn't enough
+
+```
+ writable container layer   ← ephemeral: dies with the container
+ read-only image layers
+```
+
+Writes to a container's own fs land in that **writable layer**. Three problems:
+
+## Three problems
+
+1. **Ephemeral** — `docker rm` takes the layer with it. Database gone.
+2. **Not shareable** — no container sees another's writable layer.
+3. **Slow for heavy writes** — overlay2 does a **copy-up** per file.
+
+## The fix (the whole module)
+
+**Mount external storage over a container path** — storage that lives *outside* the writable layer and *survives* the container.
+
+Mount a volume at `/var/lib/postgresql/data` → `docker rm` the DB, start a fresh one, **data still there.**
+
+Only question left: *what kind* of storage — volume, bind, or `tmpfs`.

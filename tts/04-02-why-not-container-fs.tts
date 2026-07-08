@@ -1,0 +1,15 @@
+Why the container filesystem isn't enough.
+
+Recall the layer stack from module two: read-only image layers, with one thin writable layer on top, where a running container's changes land.
+
+When a container's process writes to its own filesystem, say a Postgres container writing to its data directory, those bytes go into that writable layer. It works, but it has three problems that make it wrong for real data.
+
+The first problem: it's ephemeral. When you remove the container, the writable layer goes with it, and your database is gone. That's the module-two point that the writable layer dies with the container. Fine for scratch, but fatal for data.
+
+The second problem: it's not shareable. Two containers can't see each other's writable layers, so you can't have a sidecar container reading another container's files.
+
+The third problem: it's slow for heavy writes. The overlay filesystem does a copy-up on the first write of each file. That's fine for the occasional config change, but it's expensive for write-heavy workloads like databases.
+
+The fix is a single idea: take a path inside the container, and mount something else there, storage that lives outside the writable layer, and survives the container's lifecycle. Mount a volume at the Postgres data directory, and now you can remove the database container, start a fresh one with the same mount, and the data is still there.
+
+That one move, mounting external storage over a container path, is what the whole module is built on. The only remaining question is what kind of storage you mount, and that's the next section: volumes, bind mounts, or t-m-p-f-s.

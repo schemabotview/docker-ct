@@ -384,6 +384,120 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "04-storage-volumes-and-bind-mounts",
+      "title": "Storage, Volumes & Bind Mounts",
+      "sections": [
+        {
+          "heading": "Storage, volumes & bind mounts",
+          "notebook": "notebooks/04-01-storage-and-volumes.ipynb",
+          "slide": "slides/04-01-storage-and-volumes.slide",
+          "audio": "audio/04-01-storage-and-volumes.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "Why the container filesystem isn't enough",
+          "notebook": "notebooks/04-02-why-not-container-fs.ipynb",
+          "slide": "slides/04-02-why-not-container-fs.slide",
+          "audio": "audio/04-02-why-not-container-fs.wav",
+          "scene": "docker",
+          "focus": "dk-layer-model",
+          "highlight": [
+            "dk-overlay2"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The three mount types",
+          "notebook": "notebooks/04-03-three-mount-types.ipynb",
+          "slide": "slides/04-03-three-mount-types.slide",
+          "audio": "audio/04-03-three-mount-types.wav",
+          "scene": "docker",
+          "focus": "dk-volumes",
+          "spine": true
+        },
+        {
+          "heading": "Named volumes — the default choice",
+          "notebook": "notebooks/04-04-named-volumes.ipynb",
+          "slide": "slides/04-04-named-volumes.slide",
+          "audio": "audio/04-04-named-volumes.wav",
+          "scene": "docker",
+          "focus": "dk-volumes",
+          "highlight": [
+            "dk-vol-named"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Bind mounts",
+          "notebook": "notebooks/04-05-bind-mounts.ipynb",
+          "slide": "slides/04-05-bind-mounts.slide",
+          "audio": "audio/04-05-bind-mounts.wav",
+          "scene": "docker",
+          "focus": "dk-volumes",
+          "highlight": [
+            "dk-vol-bind"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "`tmpfs` — RAM-backed mounts",
+          "notebook": "notebooks/04-06-tmpfs.ipynb",
+          "slide": "slides/04-06-tmpfs.slide",
+          "audio": "audio/04-06-tmpfs.wav",
+          "scene": "docker",
+          "focus": "dk-volumes",
+          "highlight": [
+            "dk-vol-tmpfs"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "`-v` short form vs `--mount` long form",
+          "notebook": "notebooks/04-07-v-vs-mount.ipynb",
+          "slide": "slides/04-07-v-vs-mount.slide",
+          "audio": "audio/04-07-v-vs-mount.wav",
+          "scene": "docker",
+          "focus": "dk-volumes",
+          "spine": true
+        },
+        {
+          "heading": "Volume drivers & sharing",
+          "notebook": "notebooks/04-08-drivers-and-sharing.ipynb",
+          "slide": "slides/04-08-drivers-and-sharing.slide",
+          "audio": "audio/04-08-drivers-and-sharing.wav",
+          "scene": "docker",
+          "focus": "dk-volumes",
+          "highlight": [
+            "dk-vol-driver"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Backup, restore & migrate",
+          "notebook": "notebooks/04-09-backup-restore.ipynb",
+          "slide": "slides/04-09-backup-restore.slide",
+          "audio": "audio/04-09-backup-restore.wav",
+          "scene": "docker",
+          "focus": "dk-volumes",
+          "spine": true
+        },
+        {
+          "heading": "Gotchas — UID/GID & the Mac/Windows sync caveat",
+          "notebook": "notebooks/04-10-gotchas.ipynb",
+          "slide": "slides/04-10-gotchas.slide",
+          "audio": "audio/04-10-gotchas.wav",
+          "scene": "docker",
+          "focus": "dk-container",
+          "highlight": [
+            "dk-ns-user"
+          ],
+          "spine": true
+        }
+      ]
     }
   ]
 }

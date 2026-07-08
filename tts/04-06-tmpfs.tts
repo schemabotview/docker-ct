@@ -1,0 +1,9 @@
+T-m-p-f-s, memory-backed mounts.
+
+A t-m-p-f-s mount is a chunk of host memory that the container sees as a filesystem, at a path you choose. Nothing lands on disk, and the data vanishes the moment the container stops. You create one by running with dash dash t-m-p-f-s, then a path, and optionally a size and mode.
+
+There are three jobs it's made for. The first is high-throughput scratch: build steps, compilers, cache dumps, anything that wants a fast filesystem and doesn't need to survive. The second is secrets you don't want on disk: mount t-m-p-f-s at the run-secrets path and write tokens there, and the host's disk never sees them; proper secret management is module eight, this just keeps them off the platter. The third is writable space for a read-only container: pair the read-only flag, which makes the whole root filesystem read-only, a hardening win, with a t-m-p-f-s mount at slash t-m-p, so processes that insist on writing somewhere have a small memory area to use.
+
+The dash dash t-m-p-f-s flag is the short form. The long form, dash dash mount, type equals t-m-p-f-s, takes more options.
+
+Two things to keep in mind. First, t-m-p-f-s counts against the host's memory, so a runaway writer can pressure the box; cap it with the size option. And second, it's Linux-container only; there's no host disk involved, which is the whole point. Think of t-m-p-f-s as the deliberate opposite of a volume. A volume is for data that must survive; t-m-p-f-s is for data that must never persist.

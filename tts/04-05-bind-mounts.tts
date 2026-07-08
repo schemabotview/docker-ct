@@ -1,0 +1,11 @@
+Bind mounts.
+
+A bind mount maps a path on your host directly into a container. There's no Docker-managed storage and no copying; the container sees the host's actual bytes. For example, you run n-ginx with dash v, a host site directory, colon, the n-ginx web root, colon, r-o.
+
+This serves the host directory as n-ginx's web root. Edit a file on the host, refresh the browser, and you see the change. The r-o makes it read-only inside the container, which is a good default when the container shouldn't be writing to your source tree.
+
+The classic dev workflow is what bind mounts are made for. First, keep your source on the host, where your editor and git live. Second, run the app in a container with that source bind-mounted in. Third, either restart on each change, or use a hot-reloading runtime, like node-mon, flask reload, or u-vicorn reload.
+
+The trade-off is that a bind mount hardcodes the host path. So the same docker run command won't work on a teammate's machine unless their layout matches. That's exactly why production deploys use volumes, not binds, and why Compose files, in module six, use relative paths that resolve against the project root.
+
+Two gotchas to remember. First, there's no image-content copy. Unlike a fresh named volume, a bind mount silently masks whatever the image had at that path. Mount over slash app, and the image's slash app disappears behind the host's, possibly empty, directory. Second, ownership surprises: files the container writes are owned by the container's user I-D on the host, the classic, why is this owned by root, that section ten unpacks. The rule of thumb: bind mounts for code you're actively editing, and volumes for data you're keeping.

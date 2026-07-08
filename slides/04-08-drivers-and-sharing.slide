@@ -1,0 +1,19 @@
+# Volume drivers & sharing
+
+## Drivers — who stores the bytes
+
+Default **`local`** = a dir at `/var/lib/docker/volumes/<name>/_data`. Options point it elsewhere (e.g. `--opt type=nfs …`).
+
+Plugins add EBS, Ceph, S3 — but single-host, `local` is ~95% of use. Drivers matter with **multi-host** orchestrators (Swarm, K8s CSI).
+
+## Sharing between containers
+
+**Mount the same named volume in each** — the volume is the source of truth:
+
+```bash
+docker run -v shared:/out …   docker run -v shared:/in …
+```
+
+(Legacy `--volumes-from <ctr>` copies all its mounts — recognise it, don't use it.)
+
+**Caution:** shared storage ≠ safe concurrent writes. Postgres refuses two servers on one dir — **coordination is the app's job.**
