@@ -1,0 +1,16 @@
+# Registries, tags & distribution
+
+Images have lived only on your machine. **Distribution** moves them — the thing in the middle is a **registry**.
+
+## Three ideas
+
+- **Content-addressable storage** — **blobs** (layers+config by SHA-256) + **manifests** (JSON listing them). A **tag** = a mutable pointer to a manifest digest.
+- **Names & pins** — `registry/namespace/repo:tag@digest` decides *which* image and moving-tag vs. immutable-digest. How "works in staging" becomes "works in prod."
+- **Run your own** — private `registry:2`, a **pull-through cache** for rate limits, GC + scanning.
+
+```
+build ─► docker push ─► [ Registry ] ─► docker pull ─► run
+         (blobs + manifest, tag → digest)   (elsewhere)
+```
+
+Push anywhere, read a reference precisely, pin prod by digest, run a cache + private registry.

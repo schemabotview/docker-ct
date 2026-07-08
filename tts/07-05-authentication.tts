@@ -1,0 +1,11 @@
+Authentication.
+
+Docker login, with a registry, prompts for a username and a password, or a token, and then stores the credential, so that later pushes and pulls to that registry authenticate automatically. Login with no argument defaults to docker dot i-o; you can also name a specific registry. For non-interactive use, the safe form pipes the token through standard input, using the password-standard-in flag. And docker logout forgets it.
+
+Prefer that password-standard-in form over passing the token directly with dash p on the command line; the latter lands your token in your shell history and in the process list.
+
+Now, where do the credentials go, and here's the catch. By default, they're written to tilde slash dot docker slash config dot j-son, as an auth value that is the base-sixty-four of your username and token. But base-sixty-four is just encoding, not encryption. Anyone who can read that file has your credentials.
+
+The right answer is a credential helper, which offloads storage to the operating system's keychain, or a secret manager, instead of a plaintext file. The config file then holds only the name of a credential store, not the secret itself. On macOS, that's the o-s-x-keychain helper, which Docker Desktop installs. On Windows, it's win-cred. On Linux, it's pass or secret-service. And for the cloud, there are helpers like the e-c-r login helper, which uses a-w-s identity and access management to mint short-lived tokens from your cloud identity.
+
+In continuous integration, you don't type docker login at all. The platform injects a short-lived token, like a GitHub Actions token, or an e-c-r login via an identity role, so that no long-lived password sits in the pipeline. The principle across all of this: keep registry credentials out of plaintext, and short-lived where you can. It's a theme module eight returns to, for secrets in general.

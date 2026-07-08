@@ -1,4 +1,4 @@
-## Startup order — `depends_on` + healthchecks
+# Startup order — `depends_on` + healthchecks
 
 ## The trap
 

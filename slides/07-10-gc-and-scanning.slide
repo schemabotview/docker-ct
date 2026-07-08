@@ -1,0 +1,24 @@
+# Garbage collection & scanning
+
+## Garbage collection — reclaim space
+
+Months of pushes leave orphaned blobs. GC sweeps them (`registry:2`):
+
+```bash
+docker exec registry registry garbage-collect --delete-untagged .../config.yml
+```
+
+Walks manifests → their blobs → **deletes unreferenced**. Storage grows *fast* (one image/commit → GBs a quarter) → pair with a **retention policy** ("keep last 10 tags"). Harbor/cloud do it via rules.
+
+## Image scanning — know what's inside
+
+Registries scan pushes vs **CVE databases**; or locally:
+
+```bash
+trivy image ghcr.io/myorg/api:1.2.3
+# Total: 47 (HIGH: 6, CRITICAL: 1)
+```
+
+Act via a **CI gate** (fail on new HIGH/CRITICAL) or **admission control** (K8s).
+
+Scanning = **detection**; *reducing* the surface (small bases, non-root, distroless) = **module 08**.

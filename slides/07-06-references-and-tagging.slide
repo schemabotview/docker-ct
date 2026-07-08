@@ -1,0 +1,24 @@
+# Image references & tagging
+
+```
+[registry/][namespace/]repository[:tag][@digest]
+```
+
+| Piece | Default | Determines |
+|---|---|---|
+| registry | `docker.io` | which registry |
+| namespace | `library` | owner |
+| tag | `latest` | manifest *now* — **mutable** |
+| `@digest` | none | exact manifest — **immutable** |
+
+**Tag + digest together** = prod pattern: `myapp:1.4.2@sha256:…` — reads clear, resolves exact.
+
+## In practice
+
+CI tags one build many ways — **git SHA**, **semver**, **channel** (`:main`) — all the same digest, one upload.
+
+## Is `:latest` OK?
+
+- **publish** — almost never · **consume locally** — fine · **prod** — never.
+
+Enforce with **tag immutability** (ECR/Harbor). Rule: **tags for humans, digests for certainty.**

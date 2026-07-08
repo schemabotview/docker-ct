@@ -1,0 +1,23 @@
+# Mirroring & pull-through caching
+
+At scale, pulling `nginx:alpine` 1000s×/day off Hub is **slow, fragile, rate-limited.**
+
+## The fix — a pull-through cache
+
+A local registry that fetches upstream on a miss, then caches. Same `registry:2`, proxy mode:
+
+```bash
+docker run -d -p 5000:5000 -e REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io registry:2
+```
+
+Point the daemon at it (`/etc/docker/daemon.json`):
+
+```json
+{ "registry-mirrors": ["http://my-cache:5000"] }
+```
+
+First pull traverses the cache; the rest serve at **LAN speed**, Hub hit **once**.
+
+## Mirror vs proxy
+
+Same idea, two names. **Pull-through cache** (transparent, on-demand) = what you want; full **mirror** = an active copy. One small container saves money, latency + a dependency on Hub's uptime.

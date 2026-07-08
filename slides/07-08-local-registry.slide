@@ -1,0 +1,19 @@
+# Running a local registry
+
+The OSS **`registry:2`** image = a full OCI server in one container.
+
+```bash
+docker run -d -p 5000:5000 --restart=always registry:2
+docker tag flask-demo:0.1 localhost:5000/flask-demo:0.1
+docker push localhost:5000/flask-demo:0.1
+```
+
+Same protocol as Hub — only the host (`localhost:5000/`) changes.
+
+## Toy → usable
+
+- **Persistence** — `-v registry-data:/var/lib/registry` (else blobs die with it).
+- **TLS + auth** — plain HTTP by default; behind a TLS proxy + `htpasswd`/OIDC for non-localhost.
+- **A real front end** — prod runs **Harbor** (same server + UI, RBAC, replication, scanning).
+
+The protocol is one container; **"production registry" = the storage, TLS, access control + retention around it.**

@@ -1,0 +1,9 @@
+Running a local registry.
+
+For testing, for air-gapped networks, or as the core of a private registry, the open-source registry-two image runs a fully-functional open-container-initiative distribution server in a single container. You start it with docker run, dash d, publishing port five thousand, with a restart-always policy. Then you tag an image as local-host colon five thousand, slash the image name, and push it, and pull it back.
+
+That's a working registry in two commands. And it speaks the exact same protocol as Docker Hub, so tag, push, and pull are identical; only the host, local-host colon five thousand, changes.
+
+Three things turn that toy into something usable. First, persistence. Without a volume, the blobs vanish when the container dies, so you mount one, at slash var slash lib slash registry. That's module four's named volume, doing exactly its job. Second, transport security and auth. Registry-two speaks plain h-t-t-p by default. For anything beyond local-host, you put it behind a t-l-s-terminating proxy, like n-ginx or Caddy, and enable auth, with h-t-passwd or o-i-d-c, via its environment variables. In fact, Docker refuses to talk to a non-local-host registry over plain h-t-t-p, unless you explicitly mark it insecure. And third, a real front end. For production, most teams don't run bare registry-two; they run Harbor, which wraps the same server with a u-i, role-based access control, replication, and built-in scanning.
+
+The takeaway: the registry protocol is simple enough that a private one is a single container. But a production registry means adding the storage, transport security, access control, and lifecycle policy around it, which is why hosted options and Harbor exist. The next two sections cover two of those operational concerns: caching upstream pulls, and reclaiming space.

@@ -1,0 +1,22 @@
+# Manifests, digests & multi-arch
+
+## The manifest = identity
+
+JSON listing the **config + layer digests**:
+
+```json
+{ "config": {"digest":"sha256:0123…"}, "layers": [{"digest":"sha256:abcd…"}] }
+```
+
+SHA-256 those exact bytes → the image **digest**; one byte changes it. So **digest = identity**. Inspect: `docker buildx imagetools inspect`.
+
+## Multi-arch — one tag, many CPUs
+
+A tag points at a **manifest list**, one manifest per platform:
+
+```
+nginx:alpine → ┬ linux/amd64 → layers
+               └ linux/arm64 → layers
+```
+
+`pull` picks *your* arch, downloads only that. Build: `docker buildx build --platform linux/amd64,linux/arm64 --push .` — `--push` mandatory (a list lives only in a registry).

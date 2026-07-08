@@ -1,0 +1,22 @@
+# The push/pull workflow
+
+Four steps: **tag → login → push → pull.**
+
+```bash
+docker tag flask-demo:0.1 ghcr.io/myorg/flask-demo:0.1
+docker login ghcr.io
+docker push ghcr.io/myorg/flask-demo:0.1
+docker pull ghcr.io/myorg/flask-demo:0.1     # elsewhere
+```
+
+## `docker tag` copies nothing
+
+Just adds a **name** at the same image — same layers, same digest. Tag `:0.1` **and** `:latest`, push both for one upload.
+
+## What uploads on push
+
+Per layer, a HEAD: *"have `sha256:abc…`?"* — **skip if yes, stream if no.** Share 90% → upload 10% (dedup).
+
+## The key idea
+
+**The registry name IS the image reference**, not a separate destination. Rename with a qualified name, push that. Wrong host/namespace → auth/not-found — check the **reference** first.

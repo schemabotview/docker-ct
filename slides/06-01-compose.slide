@@ -1,4 +1,4 @@
-## Docker Compose & multi-container apps
+# Docker Compose & multi-container apps
 
 A real app is rarely one container — web **and** db **and** cache, wired with a network, volumes, env, and order. By hand: a page of `docker run` flags.
 

@@ -1,0 +1,9 @@
+Manifests, digests, and multi-architecture images.
+
+When you push, the registry stores blobs, which are the layers and config, and manifests, which are j-son documents pointing at those blobs. The manifest is the source of truth for, what is this image. A simplified single-platform manifest lists a config, with its digest and size, and then an array of layers, each with its own digest and size.
+
+Here's the crucial part. That j-son, exactly as serialised, is the canonical bytes of the image. Take the s-h-a two fifty-six of those bytes, and you get the image's digest. Change anything at all, a layer's order, or a single byte in the config, and the digest changes. That is precisely why digest equals identity: it can't be tampered with without becoming a different image. You can inspect it with docker build-x image-tools inspect, and add dash dash raw for the actual j-son.
+
+Now, multi-architecture: one tag, many processors. A single tag like n-ginx alpine runs on an Intel Mac, on Apple Silicon, on an x-eighty-six server, and on an arm Raspberry Pi. How? The tag points, not at one manifest, but at a manifest list, officially an open-container-initiative image index. That's a thin j-son object listing one manifest per architecture: one for linux amd sixty-four, one for linux arm sixty-four, and so on.
+
+So when you run docker pull on an arm Mac, the daemon fetches the list, picks the arm sixty-four entry, and pulls only that manifest's layers; the other architectures' bytes are never downloaded. You build one yourself with build-x, across platforms: docker build-x build, dash dash platform, linux amd sixty-four and linux arm sixty-four, a tag, and dash dash push. The push flag is mandatory, because a manifest list can only live in a registry, not in a local image store. After that one command, the tag works on both architectures.

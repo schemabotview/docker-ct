@@ -1,4 +1,4 @@
-## Why the container filesystem isn't enough
+# Why the container filesystem isn't enough
 
 ```
  writable container layer   ← ephemeral: dies with the container

@@ -1,0 +1,9 @@
+What a registry actually is.
+
+A container registry is a web service that stores and serves images over a standard h-t-t-p a-p-i, the open container initiative distribution specification. Every registry, Docker Hub, g-h-c-r, e-c-r, your own, speaks the same protocol. That's why the docker command line doesn't care which one it's talking to; it just speaks the standard.
+
+A registry stores exactly two kinds of thing. First, blobs: content-addressable byte storage. Every layer is a blob, every image config is a blob, and each one is identified by its s-h-a two fifty-six digest. Upload the same bytes twice, and the second upload is a no-op, because the registry already has that digest. Second, manifests: small j-son documents describing one image, listing the layer digests, the config digest, and the platform. The manifest itself has a digest. And a tag is just a mutable pointer, from a name like one point twenty-seven point zero, to a manifest digest.
+
+So a docker push is really four steps. Upload each layer blob, deduplicated by digest, so only new layers cross the wire. Upload the config blob. Upload the manifest that lists them. And point the tag at the manifest's digest. A pull is the same steps reversed. There's no magic compression or diffing; just content-addressed blobs and a j-son manifest tying them together.
+
+Two consequences fall out of this design, and they explain most of the module. First, deduplication is free. Push a new build that shares ninety percent of its layers with the last one, and only the changed ten percent uploads; the rest already exist by digest. That's why push and pull are often far faster than the image size suggests. Second, the digest is the identity. The tag is a movable label; the manifest digest is the immutable truth. Pin by digest, and you get exactly those bytes, forever. That's the foundation for reproducible deploys later in the module.

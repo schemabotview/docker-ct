@@ -1,4 +1,4 @@
-## The `compose.yaml` shape
+# The `compose.yaml` shape
 
 Minimum valid file — `services:` with one `web:` running `image: nginx:alpine`.
 

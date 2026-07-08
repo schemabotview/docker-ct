@@ -1,0 +1,13 @@
+Registries, tags, and distribution.
+
+You can build images, in module two, and run them, in module three, but so far they've lived only on your own machine. Distribution is how an image gets from your laptop to a teammate, a continuous-integration runner, or a production server. And the thing in the middle is a registry. This module is that whole story: what a registry is, how push and pull work, how to name and pin images so you deploy exactly what you tested, and how to run and scale your own.
+
+The module lives in the registry column of the map, and it turns on a few ideas.
+
+First, a registry is content-addressable storage. It holds blobs, which are the layers and the config, keyed by their s-h-a two fifty-six digest, and manifests, which are j-son documents that list those blobs. A tag is just a mutable pointer to a manifest digest. And push and pull only move the blobs you don't already have.
+
+Second, names and pins. The full image reference, registry, namespace, repository, tag, and digest, decides which registry, which image, and whether you get a moving tag or an immutable digest. Getting this right is how, works in staging, becomes, works in prod.
+
+Third, running your own. Docker Hub is the default, but you can run a private registry, put a pull-through cache in front to survive rate limits, and keep it healthy with garbage collection and vulnerability scanning.
+
+So the shape is this: you build an image, docker push sends its blobs and manifest to a registry and points the tag at the digest, and then, elsewhere, docker pull brings it down to run. By the end, you'll push to any registry, read an image reference precisely, pin production by digest, and stand up a cache and a private registry of your own.

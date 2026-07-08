@@ -1,0 +1,22 @@
+# Authentication
+
+`docker login <registry>` stores a credential; later `push`/`pull` auth automatically.
+
+```bash
+echo "$TOKEN" | docker login -u USER --password-stdin ghcr.io
+```
+
+Prefer **`--password-stdin`** over `-p TOKEN` — that lands in shell history + process list.
+
+## Where creds go — the catch
+
+Default: `~/.docker/config.json` → `"auth": "base64(user:token)"`. **Base64 is encoding, not encryption** — anyone reading the file has your creds.
+
+## The right answer — credential helper
+
+Offloads storage to the OS keychain / secret manager (`config.json` holds only a `credsStore` name):
+
+- macOS `osxkeychain` · Windows `wincred` · Linux `pass`
+- Cloud: `ecr-login` (AWS IAM) — mints short-lived tokens
+
+CI injects a **short-lived token** (Actions `GITHUB_TOKEN`, ECR via IAM) — no long-lived password in the pipeline.

@@ -1,0 +1,9 @@
+The push and pull workflow.
+
+Getting an image you built onto a registry is a four-step cycle: tag, login, push, pull. First, you tag your local image with the registry-qualified name, for example, tagging flask-demo as g-h-c-r dot i-o, slash my-org, slash flask-demo, tag zero point one. Second, you authenticate, with docker login g-h-c-r dot i-o. Third, you push that reference. And fourth, elsewhere, someone pulls it and runs it.
+
+Now, what does docker tag actually do? Nothing to the data. It adds another name pointing at the same image: same layers, same digest. That's why you can tag one build as both zero point one and latest, and push both, for the cost of a single upload; they resolve to the same manifest.
+
+And what actually uploads on a push? The daemon walks the image's layers, and for each one, it asks the registry, do you have s-h-a two fifty-six, this digest? That's a head request. If yes, it skips, uploading no bytes. If no, it streams the layer. So a new build that shares ninety percent of its layers with the last one uploads only the changed ten percent. That's the content-addressable deduplication from the previous section, in action, and it's why a push is often far quicker than the image's total size implies.
+
+Here's the key mental correction. A registry name is part of the image reference, not a separate destination. You don't so much push to a place, as rename the image with a registry-qualified name, and then push that name. G-h-c-r dot i-o, slash my-org, slash flask-demo, tag zero point one, is the image's identity on g-h-c-r. Get the tag right, and push and pull are trivial. Get it wrong, with a missing namespace or the wrong host, and you'll get a confusing auth or not-found error. The reference, not the command, is almost always the thing to check.

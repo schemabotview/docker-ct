@@ -1,4 +1,4 @@
-## `build:` vs `image:`
+# `build:` vs `image:`
 
 Each service says *what* to run — pull, or build.
 

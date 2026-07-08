@@ -729,6 +729,128 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "07-registries-tags-and-distribution",
+      "title": "Registries, Tags & Distribution",
+      "sections": [
+        {
+          "heading": "Registries, tags & distribution",
+          "notebook": "notebooks/07-01-registries.ipynb",
+          "slide": "slides/07-01-registries.slide",
+          "audio": "audio/07-01-registries.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "What a registry actually is",
+          "notebook": "notebooks/07-02-what-a-registry-is.ipynb",
+          "slide": "slides/07-02-what-a-registry-is.slide",
+          "audio": "audio/07-02-what-a-registry-is.wav",
+          "scene": "docker",
+          "focus": "dk-registry",
+          "highlight": [
+            "dk-reg-stores"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Docker Hub & the alternatives",
+          "notebook": "notebooks/07-03-hub-and-alternatives.ipynb",
+          "slide": "slides/07-03-hub-and-alternatives.slide",
+          "audio": "audio/07-03-hub-and-alternatives.wav",
+          "scene": "docker",
+          "focus": "dk-registry",
+          "highlight": [
+            "dk-hub",
+            "dk-private"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The push/pull workflow",
+          "notebook": "notebooks/07-04-push-pull-workflow.ipynb",
+          "slide": "slides/07-04-push-pull-workflow.slide",
+          "audio": "audio/07-04-push-pull-workflow.wav",
+          "scene": "docker",
+          "focus": "dk-reg-dist",
+          "highlight": [
+            "dk-reg-push",
+            "dk-reg-pull"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Authentication",
+          "notebook": "notebooks/07-05-authentication.ipynb",
+          "slide": "slides/07-05-authentication.slide",
+          "audio": "audio/07-05-authentication.wav",
+          "scene": "docker",
+          "focus": "dk-registry",
+          "spine": true
+        },
+        {
+          "heading": "Image references & tagging in practice",
+          "notebook": "notebooks/07-06-references-and-tagging.ipynb",
+          "slide": "slides/07-06-references-and-tagging.slide",
+          "audio": "audio/07-06-references-and-tagging.wav",
+          "scene": "docker",
+          "focus": "dk-reg-identity",
+          "highlight": [
+            "dk-tag"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Manifests, digests & multi-arch",
+          "notebook": "notebooks/07-07-manifests-digests.ipynb",
+          "slide": "slides/07-07-manifests-digests.slide",
+          "audio": "audio/07-07-manifests-digests.wav",
+          "scene": "docker",
+          "focus": "dk-reg-identity",
+          "highlight": [
+            "dk-digest-pin"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Running a local registry",
+          "notebook": "notebooks/07-08-local-registry.ipynb",
+          "slide": "slides/07-08-local-registry.slide",
+          "audio": "audio/07-08-local-registry.wav",
+          "scene": "docker",
+          "focus": "dk-registry",
+          "highlight": [
+            "dk-private"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Mirroring & pull-through caching",
+          "notebook": "notebooks/07-09-mirroring-caching.ipynb",
+          "slide": "slides/07-09-mirroring-caching.slide",
+          "audio": "audio/07-09-mirroring-caching.wav",
+          "scene": "docker",
+          "focus": "dk-registry",
+          "highlight": [
+            "dk-private"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Garbage collection & image scanning",
+          "notebook": "notebooks/07-10-gc-and-scanning.ipynb",
+          "slide": "slides/07-10-gc-and-scanning.slide",
+          "audio": "audio/07-10-gc-and-scanning.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-scan"
+          ],
+          "spine": true
+        }
+      ]
     }
   ]
 }

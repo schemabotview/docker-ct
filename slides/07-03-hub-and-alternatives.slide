@@ -1,0 +1,18 @@
+# Docker Hub & the alternatives
+
+**Docker Hub** (`docker.io`) is the default — `docker pull nginx` hits it. Free public, but **rate-limited** anonymous pulls (~100 / IP / 6h) — the top reason to run a cache.
+
+## The ones you'll meet
+
+| Registry | Host | For |
+|---|---|---|
+| **GHCR** | `ghcr.io` | GitHub / OSS — Actions-integrated |
+| **AWS ECR** | `…dkr.ecr…` | AWS, IAM auth |
+| **Google AR** | `…pkg.dev` | GCP |
+| **Azure ACR** | `…azurecr.io` | Azure |
+| **Harbor** | self-host | on-prem: RBAC, scan, replicate |
+| **`registry:2`** | self-host | OSS server; testing, air-gapped |
+
+## They all speak OCI
+
+Mix freely — build in CI, push to GHCR, mirror to ECR, cache locally. **Same `push`/`pull`; only the hostname changes.** Choice = where workloads run + self-host or not.

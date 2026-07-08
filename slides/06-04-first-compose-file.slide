@@ -1,4 +1,4 @@
-## A first compose file — web + db
+# A first compose file — web + db
 
 ```yaml
 services:

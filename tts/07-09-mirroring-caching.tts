@@ -1,0 +1,9 @@
+Mirroring, and pull-through caching.
+
+At scale, a team pulls an image like n-ginx alpine thousands of times a day, across continuous integration and production. Hitting Docker Hub for every one of those pulls is slow, because of latency; it's fragile, because a Hub outage fails your deploys; and it's rate-limited, by the anonymous-pull cap from section three. The fix is a pull-through cache: a local registry that, on a miss, fetches from upstream once, and caches the result.
+
+It's the same registry-two image, put into proxy mode. You run it, publishing port five thousand, and set one environment variable, the registry proxy remote u-r-l, pointing at the upstream, which for Hub is registry dash one dot docker dot i-o. Then you point the daemon at it, as a registry mirror, in the daemon dot j-son file, by setting registry-mirrors to your cache's address.
+
+Now, the first pull of n-ginx alpine traverses the cache and stores its blobs; every later pull, across the whole fleet, is served from the cache, at local-network speed, and Hub is hit once, instead of thousands of times. G-h-c-r, e-c-r, and Google Artifact Registry all offer similar pull-through modes.
+
+Mirror versus proxy are the same idea under two names: the cache holds the same references as upstream, so n-ginx alpine resolves identically, and the daemon tries the cache first and falls back to the origin. The distinction that matters in practice is between a pull-through cache, which is transparent and on-demand, and which is what you almost always want, versus a full mirror, which is a complete copy you actively replicate. For organisations doing thousands of pulls a day, a pull-through cache is one small container that saves real money, latency, and a dependency on someone else's uptime. It's a natural companion to the private registry from the last section.

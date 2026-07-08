@@ -1,0 +1,22 @@
+# What a registry actually is
+
+A web service that stores + serves images over one standard API — the **OCI Distribution Spec**. Every registry speaks it, so the CLI doesn't care which.
+
+## Stores two things
+
+- **Blobs** — layers + config, keyed by **SHA-256 digest**. Same bytes twice = a no-op.
+- **Manifests** — JSON listing an image's blobs. A **tag** = a mutable pointer to a manifest digest.
+
+## A push is four steps
+
+```
+1. upload each layer blob   (dedup by digest)
+2. upload the config blob
+3. upload the manifest
+4. point the tag → manifest digest
+```
+
+## Two consequences
+
+- **Dedup is free** — share 90% of layers, upload 10%. Faster than the image size.
+- **Digest = identity** — tag moves, digest is truth. Pin → exact bytes forever.

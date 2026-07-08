@@ -97,9 +97,10 @@ teaching sections.
 ## Status
 
 **Scaffolded + scene ported + full section spine settled** (10 modules × 10 = 100 sections,
-all in `README.md`, each mapped to a real `dk-*` scene node). **Modules 01–06 authored
-end-to-end** (60 sections, `.ipynb` + `.slide` + `.tts`, wired in `manifest.json`); modules
-01–05 pushed. `audio/` empty pending the owner's Colab run.
+all in `README.md`, each mapped to a real `dk-*` scene node). **Modules 01–07 authored
+end-to-end** (70 sections, `.ipynb` + `.slide` + `.tts`, wired in `manifest.json`); modules
+01–06 pushed. `audio/` empty pending the owner's Colab run. **Slide convention:** first line is
+a single `#` title, `##` for sub-labels (never `##` on line 1).
 The `docker` scene is **ported into graphl-movie** (`src/scenes/docker.ts` from
 `../graphl-ux/src/scenes/docker.ts`, registered in `scenes/index.ts`, `docker` concept
 added to `content/catalog.ts` → this repo's raw-GitHub URL; `npm run build` green). No

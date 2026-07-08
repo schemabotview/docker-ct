@@ -1,4 +1,4 @@
-## Why Compose
+# Why Compose
 
 A normal app — web + Postgres + Redis + worker — by hand is **four `docker run` lines** plus:
 
