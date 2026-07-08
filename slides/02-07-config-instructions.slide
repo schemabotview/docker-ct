@@ -1,0 +1,18 @@
+# Config instructions
+
+The supporting cast — mostly **metadata-only** (no layer of bytes).
+
+## The everyday five
+
+- **`WORKDIR /app`** — the working dir for later steps; *persists* (unlike `RUN cd`).
+- **`ENV KEY=val`** — variable at **build + run** time, pinned into the image.
+- **`ARG NAME`** — **build-time only**, via `--build-arg`. Gone at run time.
+- **`EXPOSE 8080`** — *documentation only.* Does **not** publish (that's `-p`, module 05).
+- **`USER appuser`** — drop from **root**; pair with `RUN useradd` earlier.
+
+## Two more
+
+- **`LABEL`** — metadata (maintainer, source, version) for `inspect` + registries.
+- **`HEALTHCHECK`** — a liveness command → `healthy`/`unhealthy`; Compose can gate on it (module 06).
+
+Build-time vs run-time is the theme: **`ARG` disappears, `ENV` stays.**

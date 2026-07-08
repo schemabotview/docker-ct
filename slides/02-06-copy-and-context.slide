@@ -1,0 +1,19 @@
+# `COPY`, `ADD` & the build context
+
+## COPY vs ADD
+
+Bring files in — but only files **inside the context**.
+
+- **`COPY`** — files/dirs, no magic. **The default.**
+- **`ADD`** — `COPY` + URL download + tarball extract. Both footguns → use `COPY`; `RUN curl` over `ADD <URL>`.
+
+## The build context
+
+The `.` in `docker build -t img .` — **tarballed and shipped to the daemon** first.
+
+- Huge context = slow upload even for a 1-file copy → **keep it narrow.**
+- `COPY` can't see *above* the context: `COPY ../lib` fails.
+
+## `.dockerignore`
+
+`.gitignore`-style; trims the tarball (`.git`, `node_modules`, `.env`). **Faster builds · better cache · keeps secrets out of the image.**

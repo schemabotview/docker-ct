@@ -1,0 +1,11 @@
+A real build, a Flask app.
+
+Let's put it all together and build a tiny Flask app. There are three files, plus a docker-ignore. There's app-dot-p-y, a minimal Flask application that returns a hello message on the root route and listens on port eighty-eighty. There's requirements-dot-t-x-t, which pins Flask. And there's the docker file itself.
+
+Let's read the docker file. It starts from a slim Python image. It sets an environment variable so Python flushes its output immediately. It sets the working directory to slash app. Then it copies in just the requirements file and runs pip install. Then it copies in the application source. Then it creates a normal user and switches to it, exposes port eighty-eighty, and sets the default command to run the app. You build it with docker build, dash t, flask-hello, dot, and run it publishing the port.
+
+Now, every single line here is something from the last few sections. But the ordering is the real lesson, and it's the single highest-value habit in writing docker files. Watch the two copy instructions carefully.
+
+The requirements file and the pip install come first. Dependencies change rarely, so on most rebuilds these two layers are a cache hit, and pip install simply does not run again. The application source is copied afterwards. Your source changes constantly, but copying it only busts the cache from that line downward, so your dependency layers stay cached.
+
+Now imagine flipping the order: copy all your source first, then install. Every single code edit would invalidate the layer just before pip install, so pip install would re-run every time, turning a one-second rebuild into a full minute. So the rule is: order your instructions from least-changing to most-changing, and the build cache does the rest for you.

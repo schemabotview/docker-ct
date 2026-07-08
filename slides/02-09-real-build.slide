@@ -1,0 +1,24 @@
+# A real build — a Flask app
+
+```dockerfile
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .          # deps first — caches
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app.py .                    # source after
+RUN useradd appuser
+USER appuser
+EXPOSE 8080
+CMD ["python", "app.py"]
+```
+
+```bash
+docker build -t flask-hello .
+```
+
+## The ordering is the lesson
+
+- **Deps first** → a **cache hit** on most rebuilds.
+- **Source after** → a code edit busts only **from that line down**.
+
+Flip it and *every* edit re-runs `pip install` — a 1s rebuild becomes a minute. **Order least-changing → most-changing.**

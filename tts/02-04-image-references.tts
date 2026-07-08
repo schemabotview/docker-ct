@@ -1,0 +1,9 @@
+Image references, tags, and inspection.
+
+When you wrote docker run n-ginx, you used a hugely abbreviated name. The full image reference has several parts: optionally a registry host, optionally a namespace, then the repository, then optionally a tag, and optionally a digest.
+
+Every piece has a default, and Docker fills them in from left to right. Plain n-ginx expands to library slash n-ginx, because the library namespace is where Docker Hub keeps its official images. That expands to docker dot i-o slash library slash n-ginx, because Docker Hub is the default registry. And with no tag, it becomes tag latest, which, remember, is just the tag named latest, not the newest. A fully pinned reference names all of it: the registry, the namespace, the repo, the tag, and the digest.
+
+The crux is tag versus digest. A tag like one point twenty-seven point zero can be re-pointed at a new image by the publisher, so it's mutable. A digest cannot, so it's immutable. Tags are policy, not technology. Docker doesn't care what you write after the colon, but teams converge on a few patterns: semantic versions like one point four point two, sliding versions like one point four, a git hash, a date, or a channel name like stable or edge. The rule to remember: never deploy tag latest to production. Pin a version, or a digest for the strictest reproducibility.
+
+Finally, two commands let you open the box without ever running the image. Docker image inspect dumps the full j-son config: the layers with their digests, the default command, the environment variables, the exposed ports, the user, the working directory, the labels, and the architecture. It's the source of truth for, what will this image do when I run it? And docker image history lists the layers in order, showing which instruction created each one and how big it is. That's gold for understanding why an image is the size it is.

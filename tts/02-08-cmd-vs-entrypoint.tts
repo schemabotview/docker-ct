@@ -1,0 +1,11 @@
+The command instruction versus the entry-point.
+
+These are the two instructions everyone gets wrong at first. Both set what the container runs by default. The difference is in how they combine, and how arguments at run time override them.
+
+The command instruction sets the default arguments, and they're easily overridden by anything you pass to docker run. The entry-point sets the fixed executable, and arguments at run time are appended to it. So the mental model is this: the final command the container runs equals the entry-point, plus either the run-time arguments or the command's default arguments. If you pass arguments to docker run, they replace the command, but they're appended to the entry-point.
+
+Let's walk the combinations. If your docker file has just command, python app-dot-p-y, then plain docker run gives you python app-dot-p-y, but docker run with foo and bar replaces it entirely, and you just get foo and bar. If instead you have entry-point, python app-dot-p-y, then plain run gives the same thing, but run with foo and bar appends them, giving python app-dot-p-y foo bar. And the common pairing, entry-point python with command app-dot-p-y, runs python app-dot-p-y by default, but swaps in your arguments after python when you provide them.
+
+Two practical rules. For a tool that takes flags from the user, think curl, or git, use entry-point for the program and command for the default arguments; then docker run image, dash-dash version, just works. For a long-lived service configured by environment variables, think a web app, just use a command instruction and don't set an entry-point, so a user can still drop into a shell.
+
+And one strong recommendation: always prefer exec form, the j-son array like python, app-dot-p-y, over shell form. Shell form wraps your process in the shell, which becomes process I-D one instead of your program. That means it won't forward the term signal, so docker stop ends up killing it hard after the grace period, exactly the lifecycle problem we saw in module one.

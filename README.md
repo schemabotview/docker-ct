@@ -11,13 +11,13 @@ This file is the **course outline** — the human-facing map of modules and sect
 the plan we author against; the machine source of truth for structure is `manifest.json`
 (once authored).
 
-**Status:** scaffolded + scene ported + **full section spine settled** (10 modules × 10 =
-**100 sections**, all drafted below and each mapped to a real `dk-*` scene node). The `docker`
-scene is **ported into graphl-movie** (`src/scenes/docker.ts`, registered + `catalog.ts`
-`docker` concept entry; `npm run build` green). Next step: author each module's sections
-(`.ipynb` + `.slide` + `.tts`) one reviewed slice at a time — split from the matching
-`../docker-content` notebook — and wire them in `manifest.json`. `audio/` stays empty until
-the **owner** generates the `.wav`s from `tts/` via Colab. No sections authored or pushed yet.
+**Status:** scaffolded + scene ported + full section spine settled (10 modules × 10 =
+**100 sections**, all mapped to a real `dk-*` scene node). The `docker` scene is **ported into
+graphl-movie** (`src/scenes/docker.ts`, registered + `catalog.ts` `docker` concept entry).
+**Modules 01–02 authored end-to-end** (20 sections: `.ipynb` + `.slide` + `.tts`) and wired in
+`manifest.json`; **module 01 pushed**. Next: modules 03–10, one at a time — split from the
+matching `../docker-content` notebook. `audio/` stays empty until the **owner** generates the
+`.wav`s from `tts/` via Colab.
 
 ## The scene — one dense map, framed per section
 
@@ -92,9 +92,10 @@ wired in `manifest.json` (the authoritative `focus`/`highlight` below).
 | 9 | Container lifecycle — start/stop/rm | `01-09-lifecycle` | `dk-lifecycle` → `dk-start`,`dk-stop`,`dk-rm` |
 | 10 | Getting help & the docker CLI shape | `01-10-cli-and-help` | `dk-cli` |
 
-### 02 — Images, Layers & the Dockerfile  ⏳ draft (proposed 10)
+### 02 — Images, Layers & the Dockerfile  ✅ authored (10)
 Frames the `dk-images` + `dk-author` region — how an image is built, layer by layer, from a
-Dockerfile. Source: 16 content `## ` headings consolidated to 10.
+Dockerfile. Source: 16 content `## ` headings consolidated to 10. Authored end-to-end
+(`.ipynb` + `.slide` + `.tts`) and wired in `manifest.json`.
 
 | # | Section | slug | focus → highlight |
 |---|---|---|---|

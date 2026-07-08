@@ -1,0 +1,18 @@
+# Images, layers & the Dockerfile
+
+Module 01 gave the whole map. This module zooms into one corner: **where images come from.**
+
+## Three ideas carry the module
+
+- **An image is a stack of layers** — ordered, read-only, content-addressed by **digest**. Images that share a base **share bytes on disk**.
+- **A Dockerfile is the recipe** — `FROM` · `RUN` · `COPY` · `CMD`. `docker build` runs it top to bottom; *most instructions add a layer.*
+- **The build cache rewards ordering** — rarely-changing steps first, so rebuilds go from minutes to milliseconds.
+
+## The shape
+
+```
+Dockerfile ─build─► Image (layer stack) ─run─► Container
+FROM·RUN·COPY       L1·L2·L3 + config           writable layer
+```
+
+By the end: build a real **Flask** image, then make it small + fast with **multi-stage** + **BuildKit**.

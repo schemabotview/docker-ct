@@ -1,0 +1,19 @@
+# Image references, tags & inspection
+
+```
+[registry/][namespace/]repository[:tag][@digest]
+```
+
+Defaults fill in left→right: `nginx` → `docker.io/library/nginx:latest`.
+
+## Tag vs digest
+
+- **Tag** (`1.27.0`) — publisher can re-point it. **Mutable.**
+- **Digest** (`@sha256:…`) — pins exact bytes. **Immutable.**
+
+Tags are policy: **semver** `1.4.2` · **sliding** `1.4` · **git SHA** · **channel** `stable`. Rule: **never deploy `:latest`** — pin a version, or a digest.
+
+## Open the box (without running it)
+
+- **`docker image inspect`** — full JSON: layers, cmd, env, ports, user, OS.
+- **`docker image history`** — layers in order, which instruction made each + its **size**. Shows *why* an image is big.

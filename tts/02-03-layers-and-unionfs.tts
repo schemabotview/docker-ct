@@ -1,0 +1,11 @@
+Layers, and the union filesystem.
+
+Every filesystem-changing instruction in a docker file, from, run, copy, add, usually produces a new layer, a tarball of what changed relative to the layer below me. The layers stack from the bottom up, and a union filesystem driver inside the daemon presents them to the container as one single root filesystem.
+
+Picture the stack. At the bottom, a Debian root filesystem. Above it, a layer that installed Python. Above that, a layer that pip-installed Flask. Above that, a layer that copied your app in. And finally, on the very top, a thin writable layer, where any changes a running container makes will go.
+
+The default driver on Linux is overlay two, which uses the kernel's overlay filesystem to merge these directories with copy-on-write behaviour. Here's how the three operations work. A read falls through the stack: the file is served from the topmost layer that has it. A write triggers a copy-up: the file is copied from its read-only layer up into the writable layer, and modified there, so the original stays untouched. And a delete is recorded as a whiteout file in the writable layer, which masks the entry below it.
+
+Two consequences shape everything you do. First, layers are cached. When you re-run docker build, and the first several instructions haven't changed, the daemon reuses their existing layers instead of rebuilding them. That's the foundation of fast builds, and the next sections lean on it hard. Second, nothing is ever truly deleted from a lower layer. If you run, remove big file, in a later instruction, that just adds a whiteout. The bytes still sit in the layer that added them, and they still ship inside your image. That's why you clean up within the same run instruction that created the mess, not in a later one.
+
+And remember, the writable layer is ephemeral. Delete the container and it's gone. Persisting data is what volumes are for, which is module four.

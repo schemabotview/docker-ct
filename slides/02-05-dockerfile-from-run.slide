@@ -1,0 +1,24 @@
+# The Dockerfile — `FROM` & `RUN`
+
+A plain-text recipe at your project root. `docker build -t name .` runs it top to bottom.
+
+## Each instruction: layer or metadata
+
+- **Filesystem** (`RUN`, `COPY`, `ADD`) → a new layer.
+- **Metadata** (`CMD`, `ENV`, `WORKDIR`, `USER`, `EXPOSE`) → config only.
+
+## `FROM` — the base
+
+- **official** (`python`, `node`) — default choice.
+- **`-slim`** smaller · **`-alpine`** smallest (musl) · **`scratch`** empty.
+- **Pin the tag** (or digest) for repeatable builds.
+
+## `RUN` — execute at build time
+
+Runs a command, commits a layer. **Exec form** `["apt","install"]` vs **shell form** (gives `&&`, pipes). Chain related steps into one `RUN`:
+
+```dockerfile
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends curl \
+ && rm -rf /var/lib/apt/lists/*
+```

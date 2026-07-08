@@ -1,0 +1,19 @@
+# What is an image, really?
+
+An image is **two things, tied by a third**:
+
+## The parts
+
+- **Layer stack** — ordered tarballs of file *changes*: rootfs → install Python → copy app.
+- **Config blob** — JSON: `CMD`, entrypoint, env, ports, user, history.
+- **Manifest** — lists each layer + config **digest**; its own SHA-256 digest **is the image's identity**.
+
+## Tag vs digest
+
+`nginx:1.27.0` is a **tag** — a mutable nickname pointing at `sha256:abc…`. The **digest is immutable truth.** Deploy by digest for certainty.
+
+**Content-addressable** layers = cacheable: a shared base layer is the *same bytes on disk*, downloaded once.
+
+## What it isn't
+
+Not a running thing (that's a container) · not a VM disk (no kernel) · not one file (layers + config + manifest).

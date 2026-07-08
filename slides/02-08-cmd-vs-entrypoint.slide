@@ -1,0 +1,24 @@
+# `CMD` vs `ENTRYPOINT`
+
+Both set what runs by default. Difference: how they **combine** with run-time args.
+
+- **`CMD`** — default **args**; replaced by anything after `docker run`.
+- **`ENTRYPOINT`** — fixed **executable**; run-time args *appended*.
+
+```
+final = ENTRYPOINT + (run-time args OR CMD)
+```
+
+## The combinations
+
+| Dockerfile | `run img` | `run img foo` |
+|---|---|---|
+| `CMD [python,app.py]` | `python app.py` | `foo` |
+| `ENTRYPOINT [python,app.py]` | `python app.py` | `python app.py foo` |
+| `ENTRYPOINT [python]`+`CMD [app.py]` | `python app.py` | `python foo` |
+
+## Rules
+
+- **A tool taking flags** → `ENTRYPOINT` program + `CMD` defaults.
+- **A service** → just `CMD`, no `ENTRYPOINT` (so `run -it img bash` works).
+- **Always exec form** `["python","app.py"]` — shell form makes `sh` PID 1, which won't forward **SIGTERM**.

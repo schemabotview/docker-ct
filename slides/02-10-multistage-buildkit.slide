@@ -1,0 +1,24 @@
+# Multi-stage builds & BuildKit
+
+## Multi-stage — ship only what runs
+
+Compiled langs need a toolchain to *build*, not to *run*. Multiple `FROM`s; final image = last stage only.
+
+```dockerfile
+FROM golang:1.23 AS builder
+RUN go build -o /out/server ./cmd/server
+
+FROM gcr.io/distroless/static:nonroot
+COPY --from=builder /out/server /server
+ENTRYPOINT ["/server"]
+```
+
+`COPY --from=builder` pulls in **just the binary**. A 1.5 GB Go image → **~15 MB**: faster pulls, fewer CVEs.
+
+## BuildKit — the modern backend (default on 23+)
+
+- **Parallel** stages · **cache mounts** (`--mount=type=cache`)
+- **Build secrets** (`--mount=type=secret`) — never baked into a layer
+- **Cross-platform** — `amd64` + `arm64` from one file
+
+Driven by **`docker buildx`**. Together: small, fast, reproducible images.

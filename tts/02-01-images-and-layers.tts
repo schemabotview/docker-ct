@@ -1,0 +1,13 @@
+Images, layers, and the docker file.
+
+Module one gave you the whole map: client, daemon, image, container, and registry. This module zooms into just one corner of it, the question of where images actually come from. Every container you ran started from an image that someone built. Now you'll learn to build your own, and to understand what's really inside one.
+
+Three ideas carry this whole module, and it's worth seeing them together before we go deep on each.
+
+The first idea: an image is a stack of layers. It isn't a single blob. It's an ordered set of read-only filesystem layers, and each one records what changed relative to the layer below it. A union filesystem merges them into the single root directory a container sees. And because layers are content-addressed by a digest, images that share a base actually share the same bytes on disk. That's what makes them cheap to cache and ship.
+
+The second idea: a docker file is the recipe that builds those layers. It's a plain text file of instructions. You start from a base with the from instruction, run commands, copy your code in, and set metadata like the default command. Docker build runs it top to bottom, and most instructions add a layer. Learn to read a docker file and you can predict exactly what an image contains, and why it's the size it is.
+
+The third idea: the build cache rewards good ordering. Because each instruction's layer is cached and reused until something it depends on changes, the order of your instructions decides your build speed. Put the rarely-changing steps, like installing dependencies, before the often-changing ones, like copying your source, and rebuilds drop from minutes to milliseconds.
+
+So the shape of the module is: a docker file builds an image, which is a stack of layers, and you run that image to get a container. By the end, you'll build a real Flask image, understand every line of it, and know how to make it small and fast with multi-stage builds and build kit.

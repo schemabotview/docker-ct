@@ -1,0 +1,24 @@
+# Layers & the union filesystem
+
+Each `FROM` / `RUN` / `COPY` adds a **layer** — "what changed vs. below." A **union filesystem** merges them into one `/`.
+
+```
+ writable layer   ← the container's changes
+ L4 COPY app.py   read-only
+ L3 pip install   read-only
+ L2 apt install   read-only
+ L1 debian rootfs read-only
+```
+
+## overlay2 — copy-on-write
+
+- **Read** — served from the topmost layer that has the file.
+- **Write** — *copy-up* into the writable layer; original untouched.
+- **Delete** — a *whiteout* file masks the entry below.
+
+## Two consequences
+
+- **Layers are cached** — unchanged instructions are reused. The basis of fast builds.
+- **Nothing leaves a lower layer** — `RUN rm bigfile` later just adds a whiteout; the bytes still ship. **Clean up in the same `RUN`.**
+
+The writable layer is **ephemeral** — gone with the container (volumes = module 04).

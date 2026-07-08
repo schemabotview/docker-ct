@@ -1,0 +1,13 @@
+The config instructions.
+
+These are the supporting cast of the docker file. Each one is small, but together they shape how the image behaves when it runs. And most of them are metadata-only, meaning they change the config blob, not the filesystem, so they add no layer of bytes.
+
+Work-dir sets the working directory for the instructions that follow it, the runs, the command, the entry-point, the copies. It's like typing change-directory between instructions, except that it actually persists, which a run change-directory does not. It also creates the directory if it's missing.
+
+Env sets an environment variable that's visible at both build time and run time, and it's pinned into the image's config. Arg, by contrast, sets a build-time-only variable that is not present at run time. You pass it in with the build-arg flag on docker build. It's good for things like a dependency version or a build feature flag.
+
+Expose says that the container listens on a port, say eighty-eighty. But listen carefully: it does not publish the port. It's pure documentation. Actual publishing happens at run time with the publish flag, which is module five. Running with a capital dash P will use expose to auto-publish.
+
+User sets the user, and optionally the group, that later run instructions and the container's main process run as. The default is root, which you do not want in production, so you usually pair it with a run use-eradd earlier in the file to create a normal user.
+
+Two more you'll meet. Label adds metadata, like the maintainer, the source repo, or a version, which docker inspect and registries can read. And health-check gives Docker a command to test whether the container is alive, surfacing a healthy or unhealthy status, which Compose can even gate startup on, in module six. The theme across all of these is build-time versus run-time: arg disappears, but env stays.

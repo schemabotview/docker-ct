@@ -132,6 +132,136 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "02-images-layers-and-the-dockerfile",
+      "title": "Images, Layers & the Dockerfile",
+      "sections": [
+        {
+          "heading": "Images, layers & the Dockerfile",
+          "notebook": "notebooks/02-01-images-and-layers.ipynb",
+          "slide": "slides/02-01-images-and-layers.slide",
+          "audio": "audio/02-01-images-and-layers.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "What is an image, really?",
+          "notebook": "notebooks/02-02-what-is-an-image.ipynb",
+          "slide": "slides/02-02-what-is-an-image.slide",
+          "audio": "audio/02-02-what-is-an-image.wav",
+          "scene": "docker",
+          "focus": "dk-images",
+          "highlight": [
+            "dk-image"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Layers & the union filesystem",
+          "notebook": "notebooks/02-03-layers-and-unionfs.ipynb",
+          "slide": "slides/02-03-layers-and-unionfs.slide",
+          "audio": "audio/02-03-layers-and-unionfs.wav",
+          "scene": "docker",
+          "focus": "dk-layer-model",
+          "highlight": [
+            "dk-unionfs",
+            "dk-overlay2"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Image references, tags & inspection",
+          "notebook": "notebooks/02-04-image-references.ipynb",
+          "slide": "slides/02-04-image-references.slide",
+          "audio": "audio/02-04-image-references.wav",
+          "scene": "docker",
+          "focus": "dk-image",
+          "highlight": [
+            "dk-img-tag",
+            "dk-digest",
+            "dk-manifest"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The Dockerfile — `FROM` & `RUN`",
+          "notebook": "notebooks/02-05-dockerfile-from-run.ipynb",
+          "slide": "slides/02-05-dockerfile-from-run.slide",
+          "audio": "audio/02-05-dockerfile-from-run.wav",
+          "scene": "docker",
+          "focus": "dk-dockerfile",
+          "highlight": [
+            "dk-df-from",
+            "dk-df-run"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "`COPY`, `ADD` & the build context",
+          "notebook": "notebooks/02-06-copy-and-context.ipynb",
+          "slide": "slides/02-06-copy-and-context.slide",
+          "audio": "audio/02-06-copy-and-context.wav",
+          "scene": "docker",
+          "focus": "dk-dockerfile",
+          "highlight": [
+            "dk-df-copy"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Config instructions — `WORKDIR`, `ENV`, `ARG`, `EXPOSE`, `USER`",
+          "notebook": "notebooks/02-07-config-instructions.ipynb",
+          "slide": "slides/02-07-config-instructions.slide",
+          "audio": "audio/02-07-config-instructions.wav",
+          "scene": "docker",
+          "focus": "dk-dockerfile",
+          "highlight": [
+            "dk-df-env",
+            "dk-df-workdir"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "`CMD` vs `ENTRYPOINT`",
+          "notebook": "notebooks/02-08-cmd-vs-entrypoint.ipynb",
+          "slide": "slides/02-08-cmd-vs-entrypoint.slide",
+          "audio": "audio/02-08-cmd-vs-entrypoint.wav",
+          "scene": "docker",
+          "focus": "dk-dockerfile",
+          "highlight": [
+            "dk-df-cmd",
+            "dk-df-entry"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "A real build — a Flask app",
+          "notebook": "notebooks/02-09-real-build.ipynb",
+          "slide": "slides/02-09-real-build.slide",
+          "audio": "audio/02-09-real-build.wav",
+          "scene": "docker",
+          "focus": "dk-build-cache",
+          "highlight": [
+            "dk-buildkit"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Multi-stage builds & BuildKit",
+          "notebook": "notebooks/02-10-multistage-buildkit.ipynb",
+          "slide": "slides/02-10-multistage-buildkit.slide",
+          "audio": "audio/02-10-multistage-buildkit.wav",
+          "scene": "docker",
+          "focus": "dk-build-cache",
+          "highlight": [
+            "dk-multistage",
+            "dk-buildkit"
+          ],
+          "spine": true
+        }
+      ]
     }
   ]
 }
