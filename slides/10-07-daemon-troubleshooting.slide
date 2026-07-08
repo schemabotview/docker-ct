@@ -1,0 +1,23 @@
+# Daemon troubleshooting
+
+Start at the daemon — every command depends on it.
+
+## Healthy? what's it doing?
+
+```bash
+docker version   # server errors → daemon down
+docker info      # every setting
+docker system df # disk usage (prune to reclaim)
+```
+
+## Won't start → systemd + logs
+
+```bash
+sudo systemctl status docker
+sudo journalctl -u docker -n 200   # the real error lives here
+sudo dockerd --debug               # foreground, see it fail
+```
+
+**Usual causes:** bad `daemon.json` (`dockerd --validate`) · storage-driver mismatch (`/var/lib/docker` built by another).
+
+Method: **up? (`status`) → what said? (`journalctl`) → misconfig? (`--validate`/`info`)** — the loop for every playbook.

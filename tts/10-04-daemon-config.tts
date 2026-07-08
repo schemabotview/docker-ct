@@ -1,0 +1,9 @@
+The daemon configuration, daemon dot j-son.
+
+The docker daemon reads slash e-t-c slash docker slash daemon dot j-son at startup. The file is optional; with no file, defaults apply. But it's the one place you tune the engine. The schema is huge, so let's focus on the keys that matter in practice: things like the data-root, the storage driver, the log driver and its options, registry mirrors, user-namespace remapping, the userland proxy, and live-restore.
+
+Here are the ones you'll actually reach for, grouped by the module they connect to. Data-root moves Docker's data directory off the root partition, onto a dedicated disk; that's the fix for, slash is full. The storage driver and the log driver and its options are the drivers from the next section; and the log options, with a max-size and max-file, give you the log rotation that every production host needs, which is module three's unbounded-log warning. Registry-mirrors and insecure-registries let you point at the pull-through cache from module seven, and allow a plain-h-t-t-p internal registry. User-namespace remapping and the userland proxy are the security and networking toggles from modules eight and five.
+
+And live-restore set to true is a big one: it keeps your containers running while the daemon itself is restarted or upgraded, so a docker-daemon update doesn't take your workloads down.
+
+Two operational habits. After editing, validate before restarting: run sudo docker-daemon, dash dash validate, which catches a syntax error, or an unknown key, before it stops the daemon from coming back up. Then restart with systemctl. A malformed daemon dot j-son is the single most common reason a daemon won't start, which is exactly where troubleshooting begins.

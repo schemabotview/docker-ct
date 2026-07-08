@@ -1,0 +1,17 @@
+# The runtime layer
+
+Center of the map. The daemon **doesn't run containers** — `dockerd → containerd` (supervisor) `→ runc` (does ns/cgroup/exec, becomes PID 1).
+
+## `runc` is swappable (OCI runtimes)
+
+- **`crun`** — C rewrite, ~10× faster start. Drop-in.
+- **`kata-runtime`** — each container in a **lightweight VM** → real HW isolation (fixes m08's "not a boundary").
+- **`gvisor`/`runsc`** — **userspace kernel**, intercepts syscalls. Strong isolation, modest cost.
+
+```bash
+docker run --runtime=kata-runtime alpine sh
+```
+
+## The big picture
+
+**`containerd` is standalone** — **Kubernetes talks to it directly** (CRI), skipping `dockerd`. That's what "K8s deprecated Docker" meant (the shim, not your images). Same OCI images everywhere.

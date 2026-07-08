@@ -1,0 +1,23 @@
+# Container & build playbook
+
+Reflex: **status → logs → inside.**
+
+## Won't start / exits
+
+```bash
+docker ps -a --filter name=myc        # STATUS + exit code
+docker inspect myc | jq '.State'      # OOMKilled? timestamps
+```
+
+**137** = OOM (raise `--memory`) · **125/126/127** = bad command (m03). Can't tell? `docker run -it --entrypoint sh IMAGE`.
+
+## Running but unhealthy
+
+```bash
+docker exec -it myc sh      docker exec myc netstat -tlnp
+docker stats --no-stream myc
+```
+
+## Build — via BuildKit
+
+`docker buildx build --progress=plain` un-collapses steps; `docker builder prune` clears cache. Culprits map to **m02**: cache miss (`COPY` source / stale `.dockerignore`), huge context — almost every build bug is **context or cache**.

@@ -1,0 +1,9 @@
+Rootless Docker, the alternative install.
+
+Module eight introduced rootless Docker as the hardening move that runs the entire daemon as your unprivileged user, instead of as root. Here's the install side of it, which is a different path from the standard package install, and you run it as your normal user, never with sudo. You pipe the rootless get-docker script into a shell, then add the printed directory to your path, and set the docker-host variable, as the script instructs. Then you enable and start the user service, and check docker info, which should show, security options: rootless.
+
+Two things move, compared to a rootful install. The daemon's state lives under a directory in your home, at dot-local slash share slash docker, not slash var slash lib slash docker. And networking goes through slirp-four-net-n-s, a userspace network stack, rather than the host's firewall.
+
+The trade-offs are exactly the ones from module eight: slower networking, no privileged mode, no host firewall writes, so port publishing routes through the userspace stack, and see-group version two is required for resource limits. What you buy is a much smaller attack surface: there is no root daemon to compromise, so a container escape gets an attacker only your own user-I-D's privileges.
+
+The decision rule is the same as before. For a single-owner dev laptop, or a normal production server, the standard rootful install is fine, and faster. Reach for rootless on shared dev hosts, continuous-integration runners, and multi-tenant sandboxes, anywhere a compromised container or build step must not become a compromised host. It's the same daemon, and the same docker commands; only who owns the process changes.

@@ -1,0 +1,22 @@
+# The DCA exam & where next
+
+**55 questions · 90 min · ~65–70% · valid 2 yrs.** Its six domains *are* this course:
+
+| Domain | Wt | Modules |
+|---|---|---|
+| Orchestration | ~25% | 09 |
+| Images & registry | ~20% | 02, 07 |
+| Install & config | ~15% | 10 |
+| Networking | ~15% | 05 |
+| Security | ~15% | 08 |
+| Storage | ~10% | 04 |
+
+## Memorise vs look up · practise
+
+**Memorise:** `run` flags · volume/bind/tmpfs · name DNS + routing mesh · `CMD`/`ENTRYPOINT`, `COPY`/`ADD` · services vs tasks · `deploy:` keys. **Look up:** rare `daemon.json` keys. **Practise** a real 3-node Swarm.
+
+## Where next
+
+**Kubernetes** — same images, richer model: **CKAD → CKA → CKS**. Or cloud (ECS/EKS, GKE, AKS).
+
+You hold the whole model: **image → container → network → volume → registry → hardened → orchestrated.** Built one map at a time.

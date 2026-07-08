@@ -1,0 +1,20 @@
+# Rootless Docker — the install
+
+Module 08's hardening move: the **whole daemon runs as your user**, not root. Install **as your user, never `sudo`**:
+
+```bash
+curl -fsSL https://get.docker.com/rootless | sh
+systemctl --user enable --now docker
+docker info    # "Security Options: rootless"
+```
+
+## What moves
+
+- state → **`~/.local/share/docker/`** (not `/var/lib/docker`)
+- networking → **`slirp4netns`** (userspace, not host `iptables`)
+
+## Trade-off
+
+Slower net · no `--privileged` · cgroup v2 needed — **but no root daemon to compromise** (a breakout gets only your UID).
+
+**Rootful** for a dev laptop / normal server. **Rootless** for shared dev hosts, CI runners, sandboxes. Same daemon + commands; only *who owns it* changes.

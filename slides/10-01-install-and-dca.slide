@@ -1,0 +1,15 @@
+# Install, configure, troubleshoot & DCA
+
+From "what is a container" → a hardened, orchestrated cluster. Now the **operator's** half — and the **DCA** cert. Back down to the engine: `dockerd → containerd → runc`.
+
+## Three movements
+
+- **Install & configure** — official repos, post-install (`docker` group, boot), and the one tuning file: **`daemon.json`** (storage / logging / runtime).
+- **Troubleshoot** — a repeatable method for the daemon, a container/build, or the network — each with a few first commands.
+- **Certify** — what **DCA** tests, memorise vs. look up, where next.
+
+```
+install → daemon.json → [ dockerd → containerd → runc ] → troubleshoot → DCA
+```
+
+The DCA's six domains map 1:1 onto modules 01–09 — prep = consolidating the course you've done.

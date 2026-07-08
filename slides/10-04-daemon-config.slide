@@ -1,0 +1,23 @@
+# The daemon config — `daemon.json`
+
+`dockerd` reads `/etc/docker/daemon.json` at startup. Optional; the one place to tune the engine.
+
+```json
+{
+  "data-root": "/mnt/docker-data",
+  "storage-driver": "overlay2",
+  "log-driver": "json-file",
+  "log-opts": { "max-size": "10m", "max-file": "3" },
+  "registry-mirrors": ["https://my-cache.local"],
+  "userns-remap": "default",
+  "live-restore": true
+}
+```
+
+## Keys you'll reach for
+
+- **`data-root`** — move off a full `/` · **`log-opts`** — rotation (m03)
+- **`registry-mirrors`** — the cache (m07) · **`userns-remap`** (m08)
+- **`live-restore`** — containers keep running across a daemon restart
+
+**Validate before restart:** `sudo dockerd --validate` — a bad `daemon.json` is the #1 "daemon won't start."

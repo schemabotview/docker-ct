@@ -1,0 +1,18 @@
+# Installing Engine & post-install
+
+Install from **Docker's official repos** — not the distro's (stale) or the convenience script (skips checks).
+
+```bash
+sudo apt-get install -y docker-ce docker-ce-cli \
+  containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+The whole stack: `dockerd` · `docker` CLI · `containerd` · buildx · compose.
+
+## Post-install — three steps
+
+- **No `sudo`** — `sudo usermod -aG docker $USER`. ⚠️ the `docker` group ≈ **root** on the host.
+- **On boot** — `sudo systemctl enable --now docker`.
+- **Verify** — `docker version` / `info` / `run hello-world`.
+
+Data lives under **`/var/lib/docker/`** (`overlay2/`, `volumes/`, `containers/`) — the first thing you relocate when `/` fills (→ `daemon.json`).

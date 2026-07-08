@@ -1,0 +1,13 @@
+Installing Docker Engine, and the post-install steps.
+
+For any real use, install Docker Engine from Docker's official package repositories, not the distro's default repos, which are often months behind, and not the convenience script, which is fine for a throwaway virtual machine, but it skips integrity checks. On Ubuntu or Debian, you add Docker's g-p-g key, add the repo, and then install five packages: docker-c-e, docker-c-e-c-l-i, container-d, the build-x plugin, and the compose plugin.
+
+Those five are the whole stack you've been using: docker-c-e is the docker-daemon, docker-c-e-c-l-i is the docker client, container-d is the runtime supervisor, and the build-x and compose plugins.
+
+Post-install, three adjustments make it usable. First, run docker without sudo. The socket is owned by root and the docker group, so add yourself to the docker group, with use-eradd, dash a-G, docker, then re-evaluate your groups. But a security caveat: the docker group is effectively root. A member can run a container that mounts the whole host filesystem and own the box. So on shared hosts, prefer rootless, which is the next section.
+
+Second, enable on boot, so the daemon survives reboots, with systemctl enable, dash dash now, docker.
+
+Third, verify, end to end, with the three checks from module one: docker version, for the client and server; docker info, for the daemon config, storage driver, and kernel; and docker run hello-world, for a full round trip.
+
+And know where the data lives: everything sits under slash var slash lib slash docker, with overlay-two for layers, volumes for named volumes, and a containers directory for runtime state and logs. That path is the first thing you relocate when the root partition fills, which is exactly what daemon dot j-son handles next.

@@ -1103,6 +1103,126 @@
           "spine": true
         }
       ]
+    },
+    {
+      "id": "10-install-configure-troubleshoot-and-dca-prep",
+      "title": "Install, Configure, Troubleshoot & DCA Prep",
+      "sections": [
+        {
+          "heading": "Install, configure, troubleshoot & DCA prep",
+          "notebook": "notebooks/10-01-install-and-dca.ipynb",
+          "slide": "slides/10-01-install-and-dca.slide",
+          "audio": "audio/10-01-install-and-dca.wav",
+          "scene": "docker",
+          "spine": true,
+          "role": "hook"
+        },
+        {
+          "heading": "Installing Docker Engine & post-install",
+          "notebook": "notebooks/10-02-install-and-post-install.ipynb",
+          "slide": "slides/10-02-install-and-post-install.slide",
+          "audio": "audio/10-02-install-and-post-install.wav",
+          "scene": "docker",
+          "focus": "dk-host",
+          "highlight": [
+            "dk-dockerd"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Rootless Docker — the alternative install",
+          "notebook": "notebooks/10-03-rootless-install.ipynb",
+          "slide": "slides/10-03-rootless-install.slide",
+          "audio": "audio/10-03-rootless-install.wav",
+          "scene": "docker",
+          "focus": "dk-security",
+          "highlight": [
+            "dk-sec-rootless"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The daemon configuration — `daemon.json`",
+          "notebook": "notebooks/10-04-daemon-config.ipynb",
+          "slide": "slides/10-04-daemon-config.slide",
+          "audio": "audio/10-04-daemon-config.wav",
+          "scene": "docker",
+          "focus": "dk-engine",
+          "highlight": [
+            "dk-dockerd"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Storage & logging drivers",
+          "notebook": "notebooks/10-05-storage-logging-drivers.ipynb",
+          "slide": "slides/10-05-storage-logging-drivers.slide",
+          "audio": "audio/10-05-storage-logging-drivers.wav",
+          "scene": "docker",
+          "focus": "dk-layer-model",
+          "highlight": [
+            "dk-overlay2"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The runtime layer — `containerd`, `runc` & alternatives",
+          "notebook": "notebooks/10-06-runtime-layer.ipynb",
+          "slide": "slides/10-06-runtime-layer.slide",
+          "audio": "audio/10-06-runtime-layer.wav",
+          "scene": "docker",
+          "focus": "dk-engine",
+          "highlight": [
+            "dk-containerd",
+            "dk-runc"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Daemon troubleshooting",
+          "notebook": "notebooks/10-07-daemon-troubleshooting.ipynb",
+          "slide": "slides/10-07-daemon-troubleshooting.slide",
+          "audio": "audio/10-07-daemon-troubleshooting.wav",
+          "scene": "docker",
+          "focus": "dk-engine",
+          "highlight": [
+            "dk-dockerd"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Container & build troubleshooting playbook",
+          "notebook": "notebooks/10-08-container-build-troubleshooting.ipynb",
+          "slide": "slides/10-08-container-build-troubleshooting.slide",
+          "audio": "audio/10-08-container-build-troubleshooting.wav",
+          "scene": "docker",
+          "focus": "dk-build-cache",
+          "highlight": [
+            "dk-buildkit"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "Network troubleshooting",
+          "notebook": "notebooks/10-09-network-troubleshooting.ipynb",
+          "slide": "slides/10-09-network-troubleshooting.slide",
+          "audio": "audio/10-09-network-troubleshooting.wav",
+          "scene": "docker",
+          "focus": "dk-networks",
+          "highlight": [
+            "dk-net-bridge"
+          ],
+          "spine": true
+        },
+        {
+          "heading": "The DCA exam, prep tactics & where to go next",
+          "notebook": "notebooks/10-10-dca-exam-prep.ipynb",
+          "slide": "slides/10-10-dca-exam-prep.slide",
+          "audio": "audio/10-10-dca-exam-prep.wav",
+          "scene": "docker",
+          "spine": true
+        }
+      ]
     }
   ]
 }

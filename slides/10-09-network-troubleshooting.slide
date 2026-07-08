@@ -1,0 +1,23 @@
+# Network troubleshooting
+
+Universal tool: **`nicolaka/netshoot`** — `tcpdump`, `dig`, `curl`, `ip`, `mtr`. Attach to the *same network* and poke.
+
+```bash
+docker run --rm -it --network app-net nicolaka/netshoot
+dig api                     # resolves? (m05 DNS)
+curl -v http://api/health   # HTTP: TLS, status, timing
+tcpdump -i any -nn port 8080
+```
+
+Walk **name → route → connection → packets**: `dig` fails → DNS/wrong network · `curl` hangs → not listening / firewall · SYN, no reply → below the app.
+
+## Published port unreachable?
+
+```bash
+sudo iptables -t nat -L DOCKER -n -v   # the -p DNAT rules (m05)
+sudo iptables -L DOCKER-USER -n -v
+```
+
+Missing `DNAT` = publish never took; `DROP` / ufw = "works local, not remote."
+
+The loop for all playbooks: **reproduce → localise the layer → inspect → fix → verify.**

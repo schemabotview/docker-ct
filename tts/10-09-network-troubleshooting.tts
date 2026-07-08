@@ -1,0 +1,9 @@
+Network troubleshooting.
+
+When packets aren't flowing, the universal tool is net-shoot, a debug image packed with t-c-p-dump, dig, curl, i-p, m-t-r, n-map, and more. You attach it to the same network as the broken service, and poke from a container's point of view. You run it with dash dash network, the app network, and net-shoot. Then, inside, dig a-p-i checks whether the name resolves, using module five's embedded d-n-s. Curl, dash v, checks the h-t-t-p level: t-l-s, redirects, status, and timing. Ping checks basic reachability. And t-c-p-dump lets you see the actual packets.
+
+This walks the stack in order: name, then route, then connection, then packets. And each step localises the fault. If dig fails, it's a d-n-s or wrong-network problem; are both containers on the same user-defined network, from module five? If dig works, but curl hangs, the app isn't listening, or a firewall is dropping it. And if t-c-p-dump shows s-y-n packets with no reply, it's below the app.
+
+For published ports that aren't reachable from the host, the suspect is the daemon's own firewall rules, from module five's under-the-hood look at the publish flag. Sudo i-p-tables, listing the docker chain in the n-a-t table, shows the translation rules for published ports. And listing the docker-user chain shows the hook for your custom rules. A missing translation rule for your host port means the publish never took effect; and a drop in docker-user, or an external firewall like u-f-w, is the classic, port works from local-host but not remotely.
+
+The through-line for all of module ten's playbooks is one disciplined loop: reproduce, then localise, which layer is it, then inspect that layer's state, then fix, then verify. And knowing which layer, daemon, container, build, or network, owns the symptom, is what the whole course has been quietly teaching.

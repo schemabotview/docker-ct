@@ -1,0 +1,9 @@
+Daemon troubleshooting.
+
+When, Docker is broken, a small, fixed set of commands answers most questions, and you start with the daemon itself, the process every other command depends on.
+
+Is it healthy, and what's it doing? Docker version shows the client and server; if the server errors, the daemon is down. Docker info shows every current setting: the drivers, the root directory, the counts. Docker system d-f gives a disk-usage breakdown, with dash v for per-object detail. And docker system events is a live stream of everything the daemon does. Docker version is the fastest triage: a client with no server means the daemon isn't running, or you can't reach its socket. And docker system d-f, plus prune, is how you reclaim the disk that Docker quietly fills.
+
+When the daemon won't start, drop to systemd and its logs. Sudo systemctl status docker tells you if it's running, and why it stopped. Sudo journalctl, dash u, docker, shows the last lines of the daemon log. And sudo docker-daemon, dash dash debug, runs it in the foreground with debug output. That journal is where the real error lives, whether it's a Go stack trace, or a plain, unknown config key. And running the daemon in the foreground surfaces a startup failure immediately, instead of systemd swallowing it.
+
+Two causes account for most, won't start, cases. A bad daemon dot j-son, a syntax error or an unknown key; sudo docker-daemon, dash dash validate, checks it without starting the daemon. And a storage-driver mismatch, where the data directory was created by one driver, and the config now names another; the daemon refuses to start, so you either restore the original driver, or move the data directory aside. The method generalises: is the process up, with status; what did it say, with journalctl; and what's misconfigured, with validate and info. That same, up, then logs, then config, loop is the backbone of the container and network playbooks next.

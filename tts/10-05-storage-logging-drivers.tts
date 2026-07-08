@@ -1,0 +1,9 @@
+Storage and logging drivers.
+
+These are two pluggable subsystems, both set in daemon dot j-son. One decides how image layers stack on disk; the other decides where container output goes.
+
+Storage drivers implement the layered, copy-on-write filesystem from module two. Overlay-two, the default, uses the kernel's overlay filesystem; it's fast and stable, and it's what almost everyone uses. B-t-r-f-s and z-f-s use those filesystems for native snapshots, but they're niche. Fuse-overlay-f-s is for rootless Docker on older kernels. V-f-s uses full copies, with no copy-on-write, so it's slow and huge; it's for testing only. And device-mapper, the old l-v-m-based driver, is deprecated. The guidance is short: keep overlay-two. Check it with docker info, grep storage. And note that switching storage drivers is destructive; existing images and containers don't migrate, so it's a fresh-install decision, not a live change.
+
+Logging drivers decide where each container's output lands. The default, j-son-file, writes to a log file per container, which is what docker logs reads. And here's the catch from module three: docker logs only works with the j-son-file, local, and journal-d drivers. If you switch to sys-log, fluent-d, a-w-s-logs, gel-f, or splunk, the output goes straight to that system, and docker logs shows nothing.
+
+You set the driver at three levels: the daemon default, in daemon dot j-son; per container, with the log-driver flag; or per Compose service, with a logging block. The common shape is j-son-file with rotation, using max-size and max-file, on dev hosts, and a centralised driver, like fluent-d, a-w-s-logs, or splunk, shipping to a log aggregator in production. One gotcha: changing the daemon default doesn't migrate existing containers; only ones created afterward pick it up.

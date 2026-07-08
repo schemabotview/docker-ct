@@ -1,0 +1,20 @@
+# Storage & logging drivers
+
+Two pluggable subsystems in `daemon.json`.
+
+## Storage — how layers stack (m02)
+
+| Driver | Notes |
+|---|---|
+| **`overlay2`** *(default)* | fast, stable — **keep it** |
+| `btrfs`/`zfs` | native snapshots; niche |
+| `fuse-overlayfs` | rootless, older kernels |
+| `vfs` / `devicemapper` | testing / **deprecated** |
+
+Switching is **destructive** (no migration) → a fresh-install choice. Check: `docker info | grep -i storage`.
+
+## Logging — where output goes (m03)
+
+Default **`json-file`**; `docker logs` works with **json-file / local / journald** only. `syslog`/`fluentd`/`awslogs`/`splunk` → read at the destination.
+
+Set 3 ways: daemon default · `--log-driver` · Compose `logging:`. Prod = **json-file + rotation** on dev, **centralised** in prod. Changing the default **doesn't migrate** existing containers.

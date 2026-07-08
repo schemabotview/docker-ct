@@ -1,0 +1,9 @@
+The container and build troubleshooting playbook.
+
+Most container failures fall into a few shapes, each with a first set of commands. And the reflex is always the same: status, then logs, then inside.
+
+For, it won't start, or, it starts then exits: docker p-s, dash a, shows its status and exit code. Docker logs shows what the main process said. And docker inspect, piped to j-q for the state, shows the exit code, the out-of-memory flag, and the timestamps. Exit code one thirty-seven means it was out-of-memory-killed, so raise the memory limit. Codes one twenty-five, twenty-six, and twenty-seven mean the run command, or the container's command, was wrong; those are module three's exit codes. If the logs don't reveal it, boot a shell instead of the app, by running with dash dash entry-point, s-h, to bypass the entry-point and poke around.
+
+For, it's running, but the app is unhealthy: get inside and look. Docker exec, dash i-t, gives you a shell in the live container. Docker exec, then p-s, shows what's actually running. Docker exec, then net-stat, shows whether it's listening where you think. And docker stats shows processor, memory, and input-output right now.
+
+Build failures debug through build-kit's plumbing, and the key flag is dash dash progress plain, which un-collapses the log, so you can see each step's cache state. Docker builder prune clears a poisoned build cache. The usual culprits map back to module two: cache misses where you expected hits, from a copy whose source changed, or a stale docker-ignore leaking files into the context; a slow copy-dot step, from a huge context, which you check with d-u and trim with docker-ignore; and, failed to compute cache key, not found, from a source path that isn't in the context at all. Almost every build problem is really a context or a cache problem, which is why docker-ignore and instruction ordering, from module two, prevent most of them before they start.
