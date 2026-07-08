@@ -8,8 +8,6 @@ A container is an **isolated process** sharing the **host kernel** — not a tin
 - **Own filesystem** — a root `/` assembled from an **image**, not the host's.
 - **Own network** — a virtual interface + IP on a Docker bridge.
 
-## The punchline
-
 A container **shares the host kernel** — no guest OS, no second kernel; a **VM** virtualises the **hardware**, so each guest ships a full OS + kernel. Kernel-strong isolation, not hypervisor-strong.
 
 ```
