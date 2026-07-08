@@ -1,0 +1,21 @@
+What Docker is, and the shape of the whole platform.
+
+Ask ten people what Docker is and you'll get ten answers, all of them partly right. Let's untangle it, and in the process lay out the map this whole course zooms into.
+
+Start with the thing Docker exists to run: the container. The cleanest definition is this. A container is an isolated process on a host, running its own filesystem and seeing its own network, while sharing the host's kernel. When you start one, the Linux kernel gives it its own namespaces, its own private view of processes, mounts, and networking, and its own see groups, which cap how much processor and memory it's allowed to use.
+
+Notice what a container is not. It is not a small virtual machine. There is no guest operating system inside it, and no second kernel to boot. Every system call it makes goes straight to the host's kernel. That's why a container starts in milliseconds and weighs megabytes, where a virtual machine takes seconds to boot and weighs gigabytes.
+
+Now, Docker is the friendly front end sitting on top of those kernel features. But Docker isn't a single program. It's a platform with a few moving parts, and knowing how they fit together is really the whole game.
+
+First, the client. That's the docker command you type. It doesn't do any real work itself. It just sends requests to the engine.
+
+Those requests go to the daemon, the docker daemon, running on the docker host. This is the long-running engine that does the actual work: building images, running containers, and managing storage and networks. Underneath it sits a small stack. The docker daemon hands off to container-d, which in turn uses run-see to actually spawn the container using the kernel.
+
+The daemon works with two things you'll name every day: images and containers. An image is a frozen, read-only template, a snapshot of a filesystem plus a little metadata. A container is a running instance of an image. You build or pull an image, and then you run it to create a container.
+
+Finally, the registry. That's where images live so you can share them, either Docker Hub or a private registry. You push images up to it, and you pull images down from it.
+
+Hold on to that picture. On the left is the docker command line. It talks to the docker host in the middle, where the daemon stack builds images and runs containers. And off to the side is the registry, where images are stored. Around the edges sit the things we'll add later: writing images with a Dockerfile, attaching storage and networks, and orchestrating many containers with Compose and Swarm.
+
+Why is this worth your time? Every cloud runs containers. Kubernetes orchestrates them. Your build pipelines run inside them. And typing docker compose up has replaced installing five different things on your laptop. Learning Docker is the floor underneath all of it, and it's a prerequisite for Kubernetes. By the end of this course, you'll be ready to sit the dee-see-ay, the Docker Certified Associate exam.
