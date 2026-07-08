@@ -18,5 +18,3 @@
 ## Where next
 
 **Kubernetes** — same images, richer model: **CKAD → CKA → CKS**. Or cloud (ECS/EKS, GKE, AKS).
-
-You hold the whole model: **image → container → network → volume → registry → hardened → orchestrated.** Built one map at a time.
