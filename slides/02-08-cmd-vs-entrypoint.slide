@@ -13,8 +13,6 @@ Both set the default run: `final = ENTRYPOINT + (run-time args OR CMD)`.
 | `ENTRYPOINT [python,app.py]` | `python app.py` | `python app.py foo` |
 | `ENTRYPOINT [python]`+`CMD [app.py]` | `python app.py` | `python foo` |
 
-## Rules
-
 - **A tool taking flags** → `ENTRYPOINT` program + `CMD` defaults.
 - **A service** → just `CMD`, no `ENTRYPOINT` (so `run -it img bash` works).
 - **Always exec form** `["python","app.py"]` — shell form makes `sh` PID 1, which won't forward **SIGTERM**.
