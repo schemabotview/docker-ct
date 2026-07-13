@@ -10,7 +10,8 @@
           "notebook": "notebooks/01-01-what-docker-is.ipynb",
           "slide": "slides/01-01-what-docker-is.slide",
           "audio": "audio/01-01-what-docker-is.wav",
-          "scene": "docker",
+          "scene": "containers-vs-vms",
+          "focus": "docker",
           "spine": true,
           "role": "hook"
         },
@@ -19,12 +20,7 @@
           "notebook": "notebooks/01-02-containers-vs-vms.ipynb",
           "slide": "slides/01-02-containers-vs-vms.slide",
           "audio": "audio/01-02-containers-vs-vms.wav",
-          "scene": "docker",
-          "focus": "dk-container",
-          "highlight": [
-            "dk-ns-pid",
-            "dk-cgroups"
-          ],
+          "scene": "containers-vs-vms",
           "spine": true
         },
         {
