@@ -1,0 +1,8 @@
+{
+  "_comment": "Per-repo publishing identity, read by @graphlearning/shell's thumb / gen-descriptions scripts. Env vars (CONCEPT, SITE, APP_PATH, HASHTAGS, PANEL_BG) still override. SWAP every field but `site`.",
+  "concept": "Docker",
+  "site": "https://graphl.in",
+  "appPath": "/docker-ct",
+  "hashtags": "#Docker #Containers #DevOps #DockerCompose #TechEducation",
+  "panelBg": "radial-gradient(118% 104% at 70% 34%, #66b6f2 0%, #1d63a8 44%, #0b1220 100%)"
+}
