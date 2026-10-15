@@ -8,5 +8,6 @@
   "compose": "Docker Compose Explained: Services, Volumes, Health Checks and Secrets",
   "builds": "Docker BuildKit Explained: Build Cache, Multi-Stage, Build Secrets and Multi-Platform",
   "security": "Docker Security Explained: Socket Access, Rootless, Capabilities and Supply Chain",
-  "delivery": "Docker Registries and Delivery: Digests, Promotion and Safe Rollback"
+  "delivery": "Docker Registries and Delivery: Digests, Promotion and Safe Rollback",
+  "diagnose": "Docker Troubleshooting: Resource Limits, OOM Kills, Disk Space and Restart Loops"
 }
