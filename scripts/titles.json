@@ -3,5 +3,6 @@
   "system": "Docker Explained: Containers, Images and the Docker Engine",
   "run": "Docker Run, Logs, Exec and Stop: Container Lifecycle Explained",
   "build": "Dockerfile Explained: Build Context, Layers, CMD vs ENTRYPOINT and Tags",
-  "state": "Docker Volumes, Bind Mounts and tmpfs: Keeping Container Data Safe"
+  "state": "Docker Volumes, Bind Mounts and tmpfs: Keeping Container Data Safe",
+  "network": "Docker Networking Explained: Bridge Networks, DNS, Ports and localhost"
 }
