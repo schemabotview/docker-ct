@@ -65,8 +65,8 @@ breaks only on screen. Its comments carry the measured constants; the short vers
 - **A section with no wav narrates silence** and records a silent segment. Audio resolves purely by
   convention: `public/audio/<course>/<section-id>.wav`.
 
-What `check` does *not* model: an edge label landing on top of a card, or whether the frame is too
-empty. Look at the route.
+What neither `check` nor `density` models: an edge label landing on top of a card, or an edge
+between two leaves of one container (it routes out and back in). Look at the route.
 
 ### Density targets — the frame must use the space it has
 
@@ -84,17 +84,20 @@ Levers: **add real content, not padding**; **restack** a board toward the pane's
 scene `padding` to 0.04 for boards that float, **raise** it (0.12–0.17) for tall boards that touch
 the eyebrow.
 
-These are read off the rendered route by eye — `check` models no density at all. The two ratios come
-from one repo's ~80 frames of diagram-and-code-card boards, so a deliberately sparse board can sit
-under them. Targets, not thresholds.
+`npm run density` (`scripts/check-density.mjs`) **measures** all four on the rendered route: it
+renders every section headless at 1920×1080 and reports slide fill, scene w/h/area and eyebrow
+overlap per section, exiting 1 on a miss. `--only <slug,…>` narrows it, `--report` never fails,
+`--shots <dir>` saves each measured frame for the by-eye pass. The two scene ratios come from one
+repo's ~80 frames of diagram-and-code-card boards, so a deliberately sparse board can sit under them —
+waive it in the script's `WAIVE` table **with the reason**. Targets, not thresholds.
 
 ## Guards before handing over
 
 ```sh
-npm run build && npx tsc --noEmit && npm run check
+npm run build && npx tsc --noEmit && npm run check && npm run density
 ```
 
-All three are a **floor, not proof** — they pass on frames that are visually wrong. The rendered
+All four are a **floor, not proof** — they pass on frames that are visually wrong. The rendered
 route is the real bar, and the owner reviews it.
 
 ## Working agreement

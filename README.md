@@ -29,7 +29,7 @@ src/content/    courses → sections (one file per section) + registry
 src/scenes/     hand-authored scenes + registry
 src/main.tsx    mounts <ConceptApp> from @graphlearning/shell
 src/theme.css   --brand / --brand-hover / --accent-2
-scripts/        check-content.mjs · colab notebook · concept.json · titles.json
+scripts/        check-content.mjs · check-density.mjs · colab notebook · concept.json · titles.json
 public/audio/<course>/    narration wavs
 .github/workflows/deploy.yml    Pages deploy on push to main
 ```
@@ -37,11 +37,12 @@ public/audio/<course>/    narration wavs
 ## Verifying a change
 
 ```sh
-npm run build && npx tsc --noEmit && npm run check
+npm run build && npx tsc --noEmit && npm run check && npm run density
 ```
 
-…and **the section looked at in the browser**. The three commands pass on frames that are visually
-wrong; the rendered route (`#/<course>-<section>`) is the real bar. `#/` is the catalog.
+`density` renders every section headless and measures slide fill and scene coverage against the
+CLAUDE.md targets. Then **look at the section in the browser**: the four commands pass on frames
+that are visually wrong, and the rendered route (`#/<course>-<section>`) is the real bar. `#/` is the catalog.
 
 ## Sources and evidence
 
