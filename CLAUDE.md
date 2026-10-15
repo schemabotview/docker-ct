@@ -68,6 +68,14 @@ breaks only on screen. Its comments carry the measured constants; the short vers
 What neither `check` nor `density` models: an edge label landing on top of a card, or an edge
 between two leaves of one container (it routes out and back in). Look at the route.
 
+Two engine facts learned the hard way:
+
+- **An edge's `dir` moves only its handles, not the node.** To fill an empty corner, change which
+  rank the node sits in (a group of leaves, or `cols`), not the edge direction.
+- **A shell line continuation in a code card must be `\\` in the TS source.** A single `\` before a
+  newline is a template-literal line continuation: the newline vanishes and two command lines render
+  as one.
+
 ### Density targets — the frame must use the space it has
 
 The guarded failure is a slide that overflows. The unguarded one is its opposite: a frame that
