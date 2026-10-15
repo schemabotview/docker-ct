@@ -6,5 +6,6 @@
   "state": "Docker Volumes, Bind Mounts and tmpfs: Keeping Container Data Safe",
   "network": "Docker Networking Explained: Bridge Networks, DNS, Ports and localhost",
   "compose": "Docker Compose Explained: Services, Volumes, Health Checks and Secrets",
-  "builds": "Docker BuildKit Explained: Build Cache, Multi-Stage, Build Secrets and Multi-Platform"
+  "builds": "Docker BuildKit Explained: Build Cache, Multi-Stage, Build Secrets and Multi-Platform",
+  "security": "Docker Security Explained: Socket Access, Rootless, Capabilities and Supply Chain"
 }
