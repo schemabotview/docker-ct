@@ -4,5 +4,6 @@
   "run": "Docker Run, Logs, Exec and Stop: Container Lifecycle Explained",
   "build": "Dockerfile Explained: Build Context, Layers, CMD vs ENTRYPOINT and Tags",
   "state": "Docker Volumes, Bind Mounts and tmpfs: Keeping Container Data Safe",
-  "network": "Docker Networking Explained: Bridge Networks, DNS, Ports and localhost"
+  "network": "Docker Networking Explained: Bridge Networks, DNS, Ports and localhost",
+  "compose": "Docker Compose Explained: Services, Volumes, Health Checks and Secrets"
 }
